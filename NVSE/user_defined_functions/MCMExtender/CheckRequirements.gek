@@ -1,0 +1,111 @@
+array_var aJSON
+
+int iSize
+int iPassed
+int iRequirementsMet
+int iRequirementsTotal
+array_var aEntry
+string_var sType
+string_var sFile
+
+Begin Function {aJSON}
+
+	; Loop
+	if eval (iSize = iRequirementsTotal = Ar_Size (aJSON["requirements"])) > 0
+		while (iSize -= 1) > -1
+			aEntry = aJSON["requirements"][iSize]
+
+			; check each entry in the requirements, if a single one is missing return false
+			if eval (TypeOf aEntry) == "Array" ; handle OR checks
+				if eval (iSize = Ar_Size aEntry) > 0
+					iPassed = 0
+					while (iSize -= 1) > -1
+						if eval (TypeOf aEntry) != "StringMap"
+							continue
+						endif
+						sType = aEntry[iSize]["type"]
+						if eval (sType) == "nvse"
+							if eval GetNVSEVersionFull > (aEntry["version"])
+								iPassed = 1
+							endif
+							continue
+						else
+							sFile = aEntry[iSize]["file"]
+							if eval (sType) == "mod"
+								if eval IsModLoaded (sFile)
+									iPassed = 1
+									break
+								endif
+								continue
+							elseif eval (sType) == "file"
+								if eval FileExists (sFile)
+									iPassed = 1
+									break
+								endif
+								continue
+							elseif eval (sType) == "folder"
+								if eval FileExists (sFile) 1
+									iPassed = 1
+									break
+								endif
+								continue
+							elseif eval (sType) == "dll"
+								if eval GetPluginVersion (sFile) > (aEntry[iSize]["version"])
+									iPassed = 1
+									break
+								endif
+								continue
+							endif
+						endif
+
+					loop
+					iRequirementsMet += iPassed
+				endif
+
+			; "And" checks
+			else
+				if eval (TypeOf aEntry) != "StringMap"
+					continue
+				endif
+				sType = aEntry["type"]
+				if eval (sType) == "nvse"
+					if eval GetNVSEVersionFull > (aEntry["version"])
+						iRequirementsMet += 1
+					endif
+					continue
+				else
+					sFile = aEntry["file"]
+					if eval (sType) == "plugin"
+						if eval IsModLoaded (sFile)
+							iRequirementsMet += 1
+						endif
+						continue
+					elseif eval (sType) == "file"
+						if eval FileExists (sFile)
+							iRequirementsMet += 1
+						endif
+						continue
+					elseif eval (sType) == "folder"
+						if eval FileExists (sFile) 1
+							iRequirementsMet += 1
+						endif
+						continue
+					elseif eval (sType) == "dll"
+						if eval GetPluginVersion (aEntry["file"]) > (aEntry["version"])
+							iRequirementsMet += 1
+						endif
+						continue
+					endif
+				endif
+			endif
+
+		loop
+	endif
+
+	; Requirements met
+	SetFunctionValue (eval iRequirementsMet == iRequirementsTotal)
+
+	aJSON = aEntry = ar_Null
+	sv_Destruct sType sFile
+
+End

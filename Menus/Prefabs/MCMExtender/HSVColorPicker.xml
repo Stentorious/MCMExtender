@@ -1,0 +1,979 @@
+<!--
+### Mod Authors ###
+You can access the following UI traits directly or use the included CompileScript functions to interface with the color picker.
+
+## Output Color
+
+# RGB Conversion
+<_Red>
+<_Green>
+<_Blue>
+
+# HSV Conversion
+<_Hue>
+<_Saturation>
+<_Value>
+
+# Decimal Conversion
+<_Decimal>
+-->
+
+
+<!--
+### Default Interface Options ###
+You can change these when you include the prefab in your UI tile
+See HSVColorPickerHUD.xml for example.
+
+<_visible>				Tile visibility
+<_depth>				Tile depth
+<_x>					Screen x position
+<_y>					Screen y position
+<_window_size>			Controls width/height of Saturation/Value selection window. All other elements will be auto sized/positioned based on this value.
+<_background_alpha>		Main background alpha
+<_background_padding>	Padding between elements and main background edge
+-->
+<_visible> 0 </_visible>
+<_depth> 100 </_depth>
+<_x> 100 </_x>
+<_y> 100 </_y>
+<_line_thickness> 2 </_line_thickness>
+<_window_size> 256 </_window_size>
+<_background_alpha> 255 </_background_alpha>
+<_background_padding> 8 </_background_padding>
+
+<!-- Interface Control (DO NOT TOUCH) -->
+<visible> <copy src="me()" trait="_visible"/> </visible>
+<depth> <copy src="me()" trait="_depth"/> </depth>
+<x> <copy src="me()" trait="_x"/> </x>
+<y> <copy src="me()" trait="_y"/> </y>
+<locus> 1 </locus>
+
+<!--
+### Input Detection ###
+Check this trait to determine if the player is actively making a color selection. Eg. Clicking and dragging either the HUE or SV sliders.
+-->
+<_UserInput>
+	<copy src="child(SV_Picker)" trait="dragstartx"/> <gt> 0 </gt>
+	<or> <copy src="child(SV_Picker)" trait="dragstarty"/> <gt> 0 </gt> </or>
+	<or> <copy src="child(Hue_Picker)" trait="dragstartx"/> <gt> 0 </gt> </or>
+	<or> <copy src="child(Hue_Picker)" trait="dragstarty"/> <gt> 0 </gt> </or>
+</_UserInput>
+
+<!--
+### RGB to HSV Conversion ###
+Calculates the output RGB values resulting from the current color selection
+-->
+<_Saturation>
+	<copy src="child(SV_Picker)" trait="x"/>
+	<add>
+		<copy src="child(SV_Picker)" trait="width"/>
+		<div> 2 </div>
+	</add>
+	<div src="child(SV_Window)" trait="width"/>
+</_Saturation>
+<_Value>
+	<copy src="child(SV_Window)" trait="height"/>
+	<sub>
+		<copy src="child(SV_Picker)" trait="y"/>
+		<add>
+			<copy src="child(SV_Picker)" trait="height"/>
+			<div> 2 </div>
+		</add>
+	</sub>
+	<div src="child(SV_Window)" trait="height"/>
+</_Value>
+<_Chroma>
+	<copy src="me()" trait="_Saturation"/>
+	<mul src="me()" trait="_Value"/>
+</_Chroma>
+<_Minimum>
+	<copy src="me()" trait="_Value"/>
+	<sub src="me()" trait="_Chroma"/>
+</_Minimum>
+<_Hue>
+	<copy src="child(Hue_Window)" trait="height"/>
+	<sub>
+		<copy src="child(Hue_Picker)" trait="y"/>
+		<add>
+			<copy src="child(Hue_Picker)" trait="height"/>
+			<div> 2 </div>
+		</add>
+	</sub>
+	<div src="child(Hue_Window)" trait="height"/>
+	<mul> 360 </mul>
+</_Hue>
+<_HueNormal>
+	<copy src="me()" trait="_Hue"/>
+	<div> 60 </div>
+</_HueNormal>
+<_HueRed>
+	<copy src="me()" trait="_HueNormal"/>
+	<sub> 3 </sub>
+	<abs></abs>
+	<sub> 1 </sub>
+	<max> 0 </max>
+	<min> 1 </min>
+</_HueRed>
+<_HueGreen>
+	<copy> 2 </copy>
+	<sub>
+		<copy src="me()" trait="_HueNormal"/>
+		<sub> 2 </sub>
+		<abs></abs>
+	</sub>
+	<max> 0 </max>
+	<min> 1 </min>
+</_HueGreen>
+<_HueBlue>
+	<copy> 2 </copy>
+	<sub>
+		<copy src="me()" trait="_HueNormal"/>
+		<sub> 4 </sub>
+		<abs></abs>
+	</sub>
+	<max> 0 </max>
+	<min> 1 </min>
+</_HueBlue>
+<_FinalHueRed>
+	<copy src="me()" trait="_HueRed" />
+	<mul> 255 </mul>
+</_FinalHueRed>
+<_FinalHueGreen>
+	<copy src="me()" trait="_HueGreen" />
+	<mul> 255 </mul>
+</_FinalHueGreen>
+<_FinalHueBlue>
+	<copy src="me()" trait="_HueBlue" />
+	<mul> 255 </mul>
+</_FinalHueBlue>
+<_InvertedHueRed>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_FinalHueRed"/>
+</_InvertedHueRed>
+<_InvertedHueGreen>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_FinalHueGreen"/>
+</_InvertedHueGreen>
+<_InvertedHueBlue>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_FinalHueBlue"/>
+</_InvertedHueBlue>
+<_Red>
+	<copy src="me()" trait="_HueRed" />
+	<mul src="me()" trait="_Chroma"/>
+	<add src="me()" trait="_Minimum"/>
+	<mul> 255 </mul>
+	<add> 0.5 </add>
+	<floor></floor>
+</_Red>
+<_Green>
+	<copy src="me()" trait="_HueGreen" />
+	<mul src="me()" trait="_Chroma"/>
+	<add src="me()" trait="_Minimum"/>
+	<mul> 255 </mul>
+	<add> 0.5 </add>
+	<floor></floor>
+</_Green>
+<_Blue>
+	<copy src="me()" trait="_HueBlue" />
+	<mul src="me()" trait="_Chroma"/>
+	<add src="me()" trait="_Minimum"/>
+	<mul> 255 </mul>
+	<add> 0.5 </add>
+	<floor></floor>
+</_Blue>
+<_InvertedRed>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_Red"/>
+</_InvertedRed>
+<_InvertedGreen>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_Green"/>
+</_InvertedGreen>
+<_InvertedBlue>
+	<copy> 255 </copy>
+	<sub src="me()" trait="_Blue"/>
+</_InvertedBlue>
+<_Decimal>
+	<copy src="me()" trait="_Red" />
+	<shl> 16 </shl>
+	<add>
+		<copy src="me()" trait="_Green" />
+		<shl> 8 </shl>
+	</add>
+	<add>
+		<copy src="me()" trait="_Blue" />
+		<shl> 0 </shl>
+	</add>
+</_Decimal>
+
+
+<!--
+### RGB to HSV Conversion ###
+Calculates the SaturationValue/Hue Picker <dragx> and <dragy> trait values that will select the input color in the main window.
+See the SelectColor.gek CompileScript function for use case.
+-->
+<_InputRed> 160 </_InputRed>
+<_InputGreen> 0 </_InputGreen>
+<_InputBlue> 100 </_InputBlue>
+<_InputRedNorm>
+	<copy src="me()" trait="_InputRed"/>
+	<div> 255 </div>
+</_InputRedNorm>
+<_InputGreenNorm>
+	<copy src="me()" trait="_InputGreen"/>
+	<div> 255 </div>
+</_InputGreenNorm>
+<_InputBlueNorm>
+	<copy src="me()" trait="_InputBlue"/>
+	<div> 255 </div>
+</_InputBlueNorm>
+<_OutputChr>
+	<copy src="me()" trait="_OutputVal"/>
+	<sub>
+		<copy src="me()" trait="_InputRedNorm"/>
+		<min src="me()" trait="_InputGreenNorm"/>
+		<min src="me()" trait="_InputBlueNorm"/>
+	</sub>
+</_OutputChr>
+<_OutputVal>
+	<copy src="me()" trait="_InputRedNorm"/>
+	<max src="me()" trait="_InputGreenNorm"/>
+	<max src="me()" trait="_InputBlueNorm"/>
+</_OutputVal>
+<_OutputSat>
+	<copy> 0 </copy>
+	<add>
+		<copy>
+			<copy src="me()" trait="_OutputChr"/>
+			<div src="me()" trait="_OutputVal"/>
+		</copy>
+		<onlyif>
+			<copy src="me()" trait="_OutputVal"/>
+			<gt> 0 </gt>
+		</onlyif>
+	</add>
+</_OutputSat>
+<_OutputHue>
+	<copy> 0 </copy>
+	<add>
+		<copy> 60 </copy>
+		<mul>
+			<copy> 0 </copy>
+			<add>
+				<copy>
+					<copy src="me()" trait="_InputGreenNorm"/>
+					<sub src="me()" trait="_InputBlueNorm"/>
+					<div src="me()" trait="_OutputChr"/>
+				</copy>
+				<onlyif>
+					<copy src="me()" trait="_OutputVal"/>
+					<eq src="me()" trait="_InputRedNorm"/>
+				</onlyif>
+			</add>
+			<add>
+				<copy>
+					<copy src="me()" trait="_InputBlueNorm"/>
+					<sub src="me()" trait="_InputRedNorm"/>
+					<div src="me()" trait="_OutputChr"/>
+					<add> 2 </add>
+				</copy>
+				<onlyif>
+					<copy src="me()" trait="_OutputVal"/>
+					<eq src="me()" trait="_InputGreenNorm"/>
+					<and>
+						<copy src="me()" trait="_OutputVal"/>
+						<neq src="me()" trait="_InputRedNorm"/>
+					</and>
+				</onlyif>
+			</add>
+			<add>
+				<copy>
+					<copy src="me()" trait="_InputRedNorm"/>
+					<sub src="me()" trait="_InputGreenNorm"/>
+					<div src="me()" trait="_OutputChr"/>
+					<add> 4 </add>
+				</copy>
+				<onlyif>
+					<copy src="me()" trait="_OutputVal"/>
+					<eq src="me()" trait="_InputBlueNorm"/>
+					<and>
+						<copy src="me()" trait="_OutputVal"/>
+						<neq src="me()" trait="_InputRedNorm"/>
+					</and>
+					<and>
+						<copy src="me()" trait="_OutputVal"/>
+						<neq src="me()" trait="_InputGreenNorm"/>
+					</and>
+				</onlyif>
+			</add>
+		</mul>
+	</add>
+</_OutputHue>
+<_OutputSVDragX>
+	<copy src="me()" trait="_OutputSat"/>
+	<mul src="child(SV_Window)" trait="width"/>
+	<sub>
+		<copy src="child(SV_Picker)" trait="width"/>
+		<div> 2 </div>
+	</sub>
+</_OutputSVDragX>
+<_OutputSVDragY>
+	<copy src="child(SV_Window)" trait="height"/>
+	<sub>
+		<copy src="me()" trait="_OutputVal"/>
+		<mul src="child(SV_Window)" trait="height"/>
+	</sub>
+	<sub>
+		<copy src="child(SV_Picker)" trait="height"/>
+		<div> 2 </div>
+	</sub>
+</_OutputSVDragY>
+<_OutputHueDragY>
+	<copy src="child(Hue_Window)" trait="height"/>
+	<sub>
+		<copy src="me()" trait="_OutputHue"/>
+		<add>
+			<copy> 360 </copy>
+			<onlyif>
+				<copy src="me()" trait="_OutputHue"/>
+				<lt> 0 </lt>
+			</onlyif>
+		</add>
+		<div> 360 </div>
+		<mul src="child(Hue_Window)" trait="height"/>
+	</sub>
+	<sub>
+		<copy src="child(Hue_Picker)" trait="height"/>
+		<div> 2 </div>
+	</sub>
+</_OutputHueDragY>
+
+
+<!--
+### Main Window ###
+Automatically resizes.
+-->
+<image name="Main_Background">
+	<visible> 1 </visible>
+	<alpha> <copy src="parent()" trait="_background_alpha" /> </alpha>
+	<depth> 0 </depth>
+	<x>
+		<copy src="sibling(SV_Window_Background)" trait="x" />
+		<sub src="parent()" trait="_background_padding" />
+	</x>
+	<y>
+		<copy src="sibling(SV_Window_Background)" trait="y" />
+		<sub src="parent()" trait="_background_padding" />
+	</y>
+	<width>
+		<copy src="sibling(Result_Window_Background)" trait="x" />
+		<add src="sibling(Result_Window_Background)" trait="width" />
+		<add src="parent()" trait="_background_padding" />
+		<add src="parent()" trait="_background_padding" />
+		<add src="parent()" trait="_line_thickness" />
+	</width>
+	<height>
+		<copy src="sibling(SV_Window_Background)" trait="height" />
+		<add src="parent()" trait="_background_padding" />
+		<add src="parent()" trait="_background_padding" />
+	</height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> 0 </red>
+	<green> 0 </green>
+	<blue> 0 </blue>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+
+<!--
+### Saturation/Value Selection Window ###
+Accepts Saturation and Value input in the form of a x/y coordinate selection.
+Displays color gradient and updates automatically based on current selection.
+-->
+<image name="SV_Window">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 2 </depth>
+	<x> 0 </x>
+	<y> 0 </y>
+	<width> <copy src="parent()" trait="_window_size" /> </width>
+	<height> <copy src="me()" trait="width" /> </height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+<image name="SV_Window_Background">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(SV_Window)" trait="x" />
+		<sub src="parent()" trait="_line_thickness" />
+	</x>
+	<y>
+		<copy src="sibling(SV_Window)" trait="y" />
+		<sub src="parent()" trait="_line_thickness" />
+	</y>
+	<width>
+		<copy src="sibling(SV_Window)" trait="width" />
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</width>
+	<height> <copy src="me()" trait="width" /> </height>
+	<zoom> -1 </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+<image name="Saturation">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 3 </depth>
+	<x> <copy src="sibling(SV_Window)" trait="x" /> </x>
+	<y> <copy src="sibling(SV_Window)" trait="y" /> </y>
+	<width> <copy src="sibling(SV_Window)" trait="width" /> </width>
+	<height> <copy src="sibling(SV_Window)" trait="height" /> </height>
+	<zoom> -1 </zoom>
+	<rotateaxisx>
+		<copy src="me()" trait="width" />
+		<div> 2 </div>
+	</rotateaxisx>
+	<rotateaxisy>
+		<copy src="me()" trait="height" />
+		<div> 2 </div>
+	</rotateaxisy>
+	<rotateangle> 1.5708 </rotateangle>
+	<systemcolor> 0 </systemcolor>
+	<red> <copy src="parent()" trait="_FinalHueRed"/> </red>
+	<green> <copy src="parent()" trait="_FinalHueGreen"/> </green>
+	<blue> <copy src="parent()" trait="_FinalHueBlue"/> </blue>
+	<filename> Interface\Stentorious\HSVColorPicker\Gradient.dds </filename>
+</image>
+<image name="Value">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 4 </depth>
+	<x> <copy src="sibling(SV_Window)" trait="x" /> </x>
+	<y> <copy src="sibling(SV_Window)" trait="y" /> </y>
+	<width> <copy src="sibling(SV_Window)" trait="width" /> </width>
+	<height> <copy src="sibling(SV_Window)" trait="height" /> </height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> 0 </red>
+	<green> 0 </green>
+	<blue> 0 </blue>
+	<filename> Interface\Stentorious\HSVColorPicker\Gradient.dds </filename>
+</image>
+<hotrect name="SV_Picker">
+	<visible> 1 </visible>
+	<alpha> 0 </alpha>
+	<locus> 1 </locus>
+	<depth> 10 </depth>
+	<x>
+		<copy src="sibling(SV_Window)" trait="x" />
+		<add>
+			<copy src="me()" trait="dragx"/>
+			<sub src="me()" trait="dragoffsetx"/>
+		</add>
+		<max>
+			<copy src="sibling(SV_Window)" trait="x" />
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+		</max>
+		<min>
+			<copy src="sibling(SV_Window)" trait="width" />
+			<sub>
+				<copy src="me()" trait="width"/>
+				<div> 2 </div>
+			</sub>
+		</min>
+	</x>
+	<y>
+		<copy src="sibling(SV_Window)" trait="y" />
+		<add>
+			<copy src="me()" trait="dragy"/>
+			<sub src="me()" trait="dragoffsety"/>
+		</add>
+		<max>
+			<copy src="sibling(SV_Window)" trait="y" />
+			<sub>
+				<copy src="me()" trait="height"/>
+				<div> 2 </div>
+			</sub>
+		</max>
+		<min>
+			<copy src="sibling(SV_Window)" trait="height" />
+			<sub>
+				<copy src="me()" trait="height"/>
+				<div> 2 </div>
+			</sub>
+		</min>
+	</y>
+	<width> 12 </width>
+	<height> 12 </height>
+	<draggable> 1 </draggable>
+	<target> 1 </target>
+	<mouseoversound> UIMenuFocus </mouseoversound>
+	<clicksound> UIMenuPrevNext </clicksound>
+	<dragx> <copy src="parent()" trait="_OutputSVDragX"/> </dragx>
+	<dragy> <copy src="parent()" trait="_OutputSVDragY"/> </dragy>
+	<image name="Color">
+		<visible> 1 </visible>
+		<alpha> 255 </alpha>
+		<depth> -1 </depth>
+		<x> 2 </x>
+		<y> 2 </y>
+		<width> 8 </width>
+		<height> 8 </height>
+		<zoom> -1 </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> <copy src="grandparent()" trait="_Red"/> </red>
+		<green> <copy src="grandparent()" trait="_Green"/> </green>
+		<blue> <copy src="grandparent()" trait="_Blue"/> </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Background">
+		<visible> 1 </visible>
+		<alpha> 255 </alpha>
+		<depth> -2 </depth>
+		<x> 0 </x>
+		<y> 0 </y>
+		<width> <copy src="parent()" trait="width"/> </width>
+		<height> <copy src="parent()" trait="height"/> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> <copy src="grandparent()" trait="_InvertedRed"/> </red>
+		<green> <copy src="grandparent()" trait="_InvertedGreen"/> </green>
+		<blue> <copy src="grandparent()" trait="_InvertedBlue"/> </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+</hotrect>
+
+
+<!--
+### Hue Selection Window ###
+Accepts Hue input in the form of a slider.
+-->
+<image name="Hue_Window">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 2 </depth>
+	<x>
+		<copy src="sibling(SV_Window)" trait="width" />
+		<div> 16 </div>
+		<max> 8 </max>
+		<add src="sibling(SV_Window)" trait="x" />
+		<add src="sibling(SV_Window_Background)" trait="width" />
+	</x>
+	<y> <copy src="sibling(SV_Window)" trait="y" /> </y>
+	<width> <copy src="sibling(SV_Window)" trait="width" /> <div> 8 </div> </width>
+	<height> <copy src="sibling(SV_Window)" trait="height" /> </height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<filename> Interface\Stentorious\HSVColorPicker\Hue.dds </filename>
+</image>
+<image name="Hue_Window_Background">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(Hue_Window)" trait="x" />
+		<sub src="parent()" trait="_line_thickness" />
+	</x>
+	<y>
+		<copy src="sibling(Hue_Window)" trait="y" />
+		<sub src="parent()" trait="_line_thickness" />
+	</y>
+	<width>
+		<copy src="sibling(Hue_Window)" trait="width" />
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</width>
+	<height>
+		<copy src="sibling(Hue_Window)" trait="height" />
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</height>
+	<zoom> -1 </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+<hotrect name="Hue_Picker">
+	<visible> 1 </visible>
+	<alpha> 0 </alpha>
+	<locus> 1 </locus>
+	<depth> 10 </depth>
+	<x>
+		<copy src="sibling(Hue_Window_Background)" trait="x"/>
+		<sub src="parent()" trait="_line_thickness" />
+	</x>
+	<y>
+		<copy src="sibling(Hue_Window)" trait="y" />
+		<add>
+			<copy src="me()" trait="dragy"/>
+			<sub src="me()" trait="dragoffsety"/>
+		</add>
+		<max>
+			<copy src="sibling(Hue_Window)" trait="y" />
+			<sub>
+				<copy src="me()" trait="height"/>
+				<div> 2 </div>
+			</sub>
+		</max>
+		<min>
+			<copy src="sibling(Hue_Window)" trait="height" />
+			<sub>
+				<copy src="me()" trait="height"/>
+				<div> 2 </div>
+			</sub>
+		</min>
+	</y>
+	<width>
+		<copy src="sibling(Hue_Window_Background)" trait="width"/>
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</width>
+	<height> 12 </height>
+	<draggable> 1 </draggable>
+	<target> 1 </target>
+	<mouseoversound> UIMenuFocus </mouseoversound>
+	<clicksound> UIMenuPrevNext </clicksound>
+	<dragy> <copy src="parent()" trait="_OutputHueDragY"/> </dragy>
+	<image name="Color">
+		<visible> 1 </visible>
+		<alpha> 255 </alpha>
+		<depth> -1 </depth>
+		<x> 2 </x>
+		<y> 2 </y>
+		<width>
+			<copy src="parent()" trait="width"/>
+			<sub src="grandparent()" trait="_line_thickness" />
+			<sub src="grandparent()" trait="_line_thickness" />
+		</width>
+		<height> 8 </height>
+		<zoom> -1 </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> <copy src="grandparent()" trait="_FinalHueRed"/> </red>
+		<green> <copy src="grandparent()" trait="_FinalHueGreen"/> </green>
+		<blue> <copy src="grandparent()" trait="_FinalHueBlue"/> </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+	<image name="Background">
+		<visible> 1 </visible>
+		<alpha> 255 </alpha>
+		<depth> -2 </depth>
+		<x> 0 </x>
+		<y> 0 </y>
+		<width> <copy src="parent()" trait="width"/> </width>
+		<height> <copy src="parent()" trait="height"/> </height>
+		<zoom> -1 </zoom>
+		<systemcolor> 0 </systemcolor>
+		<red> <copy src="grandparent()" trait="_InvertedHueRed"/> </red>
+		<green> <copy src="grandparent()" trait="_InvertedHueGreen"/> </green>
+		<blue> <copy src="grandparent()" trait="_InvertedHueBlue"/> </blue>
+		<filename> Interface\Shared\solid.dds </filename>
+	</image>
+</hotrect>
+
+
+<!--
+### Resulting Color Window ###
+Displays the result color.
+-->
+<image name="Result_Window">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 2 </depth>
+	<x>
+		<copy src="sibling(SV_Window)" trait="width" />
+		<div> 16 </div>
+		<max> 8 </max>
+		<add src="sibling(Hue_Window)" trait="x" />
+		<add src="sibling(Hue_Window_Background)" trait="width" />
+	</x>
+	<y> <copy src="sibling(SV_Window)" trait="y" /> </y>
+	<width> <copy src="sibling(SV_Window)" trait="width" /> <div> 4 </div> </width>
+	<height> <copy src="me()" trait="width" /> </height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> <copy src="parent()" trait="_Red"/> </red>
+	<green> <copy src="parent()" trait="_Green"/> </green>
+	<blue> <copy src="parent()" trait="_Blue"/> </blue>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+<image name="Result_Window_Background">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(Result_Window)" trait="x" />
+		<sub src="parent()" trait="_line_thickness" />
+	</x>
+	<y>
+		<copy src="sibling(Result_Window)" trait="y" />
+		<sub src="parent()" trait="_line_thickness" />
+	</y>
+	<width>
+		<copy src="sibling(Result_Window)" trait="width" />
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</width>
+	<height>
+		<copy src="sibling(Result_Window)" trait="height" />
+		<add src="parent()" trait="_line_thickness" />
+		<add src="parent()" trait="_line_thickness" />
+	</height>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<red> <copy src="parent()" trait="_InvertedRed"/> </red>
+	<green> <copy src="parent()" trait="_InvertedGreen"/> </green>
+	<blue> <copy src="parent()" trait="_InvertedBlue"/> </blue>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>
+
+
+<!--
+### Output Color Text ###
+Displays and formats the output HSV and RGB color values.
+Decimal color has been included for debugging but is disabled by default.
+-->
+<_TextZoomMul> 84 </_TextZoomMul>
+<_TextZoom>
+	<copy src="me()" trait="_TextZoomMul" />
+	<mul>
+		<copy src="me()" trait="_window_size" />
+		<div> 256 </div>
+	</mul>
+</_TextZoom>
+<_LabelSpaceMul> 2.75 </_LabelSpaceMul>
+<_LabelSpace>
+	<copy src="me()" trait="_TextZoom" />
+	<div src="me()" trait="_LabelSpaceMul" />
+</_LabelSpace>
+<_ValueSpaceMul> 1.25 </_ValueSpaceMul>
+<_ValueSpace>
+	<copy src="me()" trait="_TextZoom" />
+	<div src="me()" trait="_ValueSpaceMul" />
+</_ValueSpace>
+
+<text name="RedLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(Result_Window)" trait="x" />
+		<sub>
+			<copy> 6 </copy>
+			<mul>
+				<copy src="parent()" trait="_window_size" />
+				<div> 256 </div>
+			</mul>
+		</sub>
+	</x>
+	<y>
+		<copy src="parent()" trait="_TextZoom" />
+		<div> 6 </div>
+		<add src="sibling(Result_Window_Background)" trait="height" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> R: </string>
+</text>
+<text name="RedValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(RedLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(RedLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string> <copy src="parent()" trait="_Red"/> <max> 0.00001 </max> </string>
+</text>
+<text name="GreenLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(RedLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> G: </string>
+</text>
+<text name="GreenValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(GreenLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(GreenLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string> <copy src="parent()" trait="_Green"/> <max> 0.00001 </max> </string>
+</text>
+<text name="BlueLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(GreenLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> B: </string>
+</text>
+<text name="BlueValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(BlueLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(BlueLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string> <copy src="parent()" trait="_Blue"/> <max> 0.00001 </max> </string>
+</text>
+<text name="HueLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(BlueLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> H: </string>
+</text>
+<text name="HueValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(HueLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(HueLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string> <copy src="parent()" trait="_Hue"/> </string>
+</text>
+<text name="SaturationLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(HueLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> S: </string>
+</text>
+<text name="SaturationValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(SaturationLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(SaturationLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string>
+		<copy src="parent()" trait="_Saturation"/>
+		<mul> 100 </mul>
+	</string>
+</text>
+<text name="ValueLabel">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(SaturationLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> V: </string>
+</text>
+<text name="ValueValue">
+	<visible> 1 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(ValueLabel)" trait="x" />
+		<add src="parent()" trait="_ValueSpace" />
+	</x>
+	<y> <copy src="sibling(ValueLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string>
+		<copy src="parent()" trait="_Value"/>
+		<mul> 100 </mul>
+	</string>
+</text>
+<text name="DecimalLabel">
+	<visible> 0 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>	<copy src="sibling(RedLabel)" trait="x" /> </x>
+	<y>
+		<copy src="sibling(ValueLabel)" trait="y" />
+		<add src="parent()" trait="_LabelSpace" />
+	</y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<string> D: </string>
+</text>
+<text name="DecimalValue">
+	<visible> 0 </visible>
+	<alpha> 255 </alpha>
+	<depth> 1 </depth>
+	<x>
+		<copy src="sibling(DecimalLabel)" trait="x" />
+		<add src="parent()" trait="_TextZoom" />
+	</x>
+	<y> <copy src="sibling(DecimalLabel)" trait="y" /> </y>
+	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
+	<systemcolor> &hudmain; </systemcolor>
+	<font> 7 </font>
+	<justify> &right; </justify>
+	<string> <copy src="parent()" trait="_Decimal"/> </string>
+</text>

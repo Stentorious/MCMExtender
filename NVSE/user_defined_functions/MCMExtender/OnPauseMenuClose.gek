@@ -1,0 +1,60 @@
+int iMenuID
+
+int iSize
+ref rList
+ref rMenuItem
+array_var aTemp
+
+Begin Function {iMenuID}
+
+	if eval GetActiveMenuMode == 1013 || GetUIFloatAlt "StartMenu\MCM\_Menu" == 1
+		return
+	endif
+
+	; Alert mods that values have changed
+	if eval Goo1.AuxVarSize "*MCMExt_Updated" > 0
+		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_Updated"
+		DispatchEventAlt "MCMExtUpdate" (Ar_Unique aTemp)
+		Goo1.AuxVarErase "*MCMExt_Updated"
+		;PrintC "MCM Extender: Updated mods -> %z" (Ar_Unique aTemp)
+	endif
+
+	; Saved cached INI's if menu exit skipped
+	if eval Goo1.AuxVarSize "*MCMExt_INICache" > 0
+		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_INICache"
+		aTemp = Ar_Unique aTemp
+		iSize = Ar_Size aTemp
+		while (iSize -= 1) > -1
+			SaveCachedIni (aTemp[iSize])
+			CloseFileSO (aTemp[iSize]) 0
+			;PrintC "MCM Extender: Saved INI -> %z" (aTemp[iSize])
+		loop
+		Goo1.AuxVarErase "*MCMExt_INICache"
+	endif
+
+	; Clear JSON cache
+	if eval Goo1.AuxVarSize "*MCMExt_JSONCache" > 0
+		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_JSONCache"
+		aTemp = Ar_Unique aTemp
+		iSize = Ar_Size aTemp
+		while (iSize -= 1) > -1
+			CloseFileSO (aTemp[iSize]) 1
+			;PrintC "MCM Extender: Clear JSON cache -> %z" (aTemp[iSize])
+		loop
+		Goo1.AuxVarErase "*MCMExt_JSONCache"
+	endif
+
+	; Remove clones from MCM FormList
+	rList = GetFormFromMod "The Mod Configuration Menu.esp" "AE6"
+	iSize = ListGetCount rList
+	while (iSize -= 1) > -1
+		rMenuItem = ListGetNthForm rList iSize
+		if eval (GetSourceModIndex rMenuItem) == 255
+			ListRemoveForm rList rMenuItem
+			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rMenuItem)
+		endif
+	loop
+
+	aTemp = ar_Null
+
+End

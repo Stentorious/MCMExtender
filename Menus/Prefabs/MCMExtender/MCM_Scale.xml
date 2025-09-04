@@ -1,0 +1,50 @@
+<rect name="HSVColorPicker">
+	<include src="MCMExtender\HSVColorPicker.xml"/>
+	<visible>
+		<copy src="parent()" trait="_type"/> <eq> 2 </eq>
+		<and> <not src="globals()" trait="_Has360Controller"/> </and>
+	</visible>
+	<_x>
+		<copy src="parent()" trait="x"/>
+		<add>
+			<copy src="parent()" trait="width"/>
+			<sub src="child(Main_Background)" trait="width"/>
+			<div> 2 </div>
+		</add>
+		<add> 2 </add>
+	</_x>
+	<_y>
+		<copy src="parent()" trait="y"/>
+		<add> 50 </add>
+	</_y>
+	<_window_size> 285 </_window_size>
+	<_background_padding> 0 </_background_padding>
+</rect>
+
+<image name="HSVColorPickerBackground">
+	<visible> <copy src="sibling(HSVColorPicker)" trait="visible"/> </visible>
+	<depth> 50 </depth>
+	<x>
+		<copy src="parent()" trait="x"/>
+		<add src="globals()" trait="_line_thickness"/>
+	</x>
+	<y>
+		<copy src="parent()" trait="y"/>
+		<add src="globals()" trait="_line_thickness"/>
+	</y>
+	<width>
+		<copy src="parent()" trait="width"/>
+		<sub src="globals()" trait="_line_thickness"/>
+		<sub src="globals()" trait="_line_thickness"/>
+	</width>
+	<height>
+		<copy src="parent()" trait="height"/>
+		<sub src="globals()" trait="_line_thickness"/>
+		<sub src="globals()" trait="_line_thickness"/>
+	</height>
+	<systemcolor> 0 </systemcolor>
+	<red> 0 </red>
+	<green> 0 </green>
+	<blue> 0 </blue>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>

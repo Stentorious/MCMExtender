@@ -1,0 +1,81 @@
+float fValue
+int iMenu
+int iSubmenu
+int iOption
+array_var aJSON
+
+int iInit
+int iActiveSubmenu
+int iFallbackSubmenu
+float fTemp
+array_var aForE
+string_var sTemp
+string_var sTranslate
+
+Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
+
+	iActiveSubmenu = -999
+
+	foreach aForE <- aJSON["submenus"]
+
+		; Get first submenu as a fallback
+		if eval iInit == 0
+			iInit = 1
+			iFallbackSubmenu = (#aForE["key"])
+		endif
+
+		; Skip first menu page, as this isn't a submenu
+		if eval aForE["key"] == "0"
+			continue
+		endif
+
+ 		; Validate submenu requirements
+		if eval Ar_HasKey aForE["value"] "requirements"
+			if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") (*aForE)) == 0
+				continue
+			endif
+		endif
+
+		; Validate submenu requirements
+		fTemp = 0
+		if eval Ar_HasKey aForE["value"] "state"
+			if eval (Call (CompileScript "MCMExtender\GetValue.gek") aForE["value"]["state"]) == aForE["value"]["state"]["value"]
+				fTemp = 1
+			endif
+		else
+			fTemp = aForE["value"]["enable"]
+		endif
+
+		; Update UI traits
+		SetUIFloat ("StartMenu/MCM/*:5/SubMenu" + $aForE["key"] + "/_enable") fTemp
+
+		; Translation support
+		sTemp = aForE["value"]["listTitle"]
+		if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
+			sTemp = sTranslate
+		endif
+		SetUIString ("StartMenu/MCM/*:5/SubMenu" + $aForE["key"] + "/text/string") (sTemp)
+		sTemp = aForE["value"]["pageTitle"]
+		if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
+			sTemp = sTranslate
+		endif
+		SetUIString ("StartMenu/MCM/*:8/SubTitle" + $aForE["key"] + "/string") (sTemp)
+
+		; Sets default submenu to display on menu init
+		if eval Ar_HasKey aForE["value"] "active"
+			if eval fValue == 0 && iOption == 0
+				SetUIFloat "StartMenu/MCM/_ActiveSubMenu" (iActiveSubmenu = (#aForE["key"]))
+			endif
+		endif
+
+	loop
+
+	; Set default submenu if none are specified on menu init
+	if eval iActiveSubmenu == -999 && fValue == 0 && iOption == 0
+		SetUIFloat "StartMenu/MCM/_ActiveSubMenu" iFallbackSubmenu
+	endif
+
+	aJSON = aForE = ar_Null
+	sv_Destruct sTemp sTranslate
+
+End

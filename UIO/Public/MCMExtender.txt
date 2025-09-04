@@ -1,0 +1,16 @@
+MCMExtender\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
+true
+MCMExtender\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB
+true
+MCMExtender\MCM_Scale.xml::@Prefabs\MCM\Scale.xml::MCM_Scale
+true
+MCMExtender\Scale_Title.xml::@Prefabs\MCM\Scale.xml::Scale_Title
+true
+
+; VUI+ FIx
+MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\ModList.xml::ModList_Scroll
+true
+MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\Options.xml::Options_Scroll
+true
+MCMExtender\VUI+\systemcolor.xml::@Prefabs\MCM\OptionRect.xml::image
+true

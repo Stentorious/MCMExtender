@@ -1,0 +1,43 @@
+int iSubmenu
+int iOption
+
+int iSize
+array_var aJSON
+array_var aOption
+string_var sText
+string_var sTranslate
+
+Begin Function {}
+
+	SetUIFloat "StartMenu/MCM/_ShowList" 2
+
+	iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
+	iOption = GetUIFloat "StartMenu/MCM/_ActiveOption"
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+	aOption = aJSON["submenus"][$iSubmenu]["options"][$iOption]
+
+	; Translation
+	sText = aOption["title"]
+	if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
+		sText = sTranslate
+	endif
+	SetUIString "StartMenu/MCM/*:3/_title" (sText)
+
+	iSize = Ar_Size aOption["strings"]
+	while (iSize -= 1) > -1
+
+		; Translation
+		sText = aOption["strings"][iSize]
+		if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
+			sText = sTranslate
+		endif
+		SetUIString ("StartMenu/MCM/*:3/*:" + $(iSize + 1) + "/text/string") (sText)
+
+		SetUIFloat ("StartMenu/MCM/*:3/*:" + $(iSize + 1) + "/_enable") 1
+	loop
+	SetUIFloat "StartMenu/MCM/_Value" (Call (CompileScript "MCMExtender\GetValue.gek") aOption["vars"][0])
+
+	aJSON = aOption = Ar_Null
+	sv_Destruct sText sTranslate
+
+End

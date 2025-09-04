@@ -1,0 +1,27 @@
+int iSize
+array_var aJSON
+array_var aForE
+array_var aVariables
+
+Begin Function {}
+
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+
+	SetUIFloat "StartMenu/MCM/_Default" 0
+	SetUIFloat "StartMenu/MCM/_Reset" 1
+	foreach aForE <- aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"]
+		if TestExpr aVariables = aForE["value"]["vars"]
+			iSize = Ar_Size aVariables
+			while (iSize -= 1) > -1
+				Call (CompileScript "MCMExtender\SetValue.gek") aVariables[iSize]["default"] aVariables[iSize]
+				Goo1.AuxVarSetStr "*MCMExt_Updated" (Goo1.AuxVarGetStr "*MCMExt_State" 4) -1
+			loop
+		endif
+	loop
+
+	; Refresh submenu visibility
+	Call (CompileScript "MCMExtender\RefreshSubmenus.gek") 1 1 1 1 aJSON
+
+	aJSON = aForE = aVariables = Ar_Null
+
+End

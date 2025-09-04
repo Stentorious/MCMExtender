@@ -1,0 +1,42 @@
+int iSize
+array_var aJSON
+array_var aVariables
+string_var sTemp
+
+Begin Function {aVariables}
+
+	SetUIFloat "StartMenu/MCM/_DefaultScale" 0
+	SetUIFloat "StartMenu/MCM/_ShowScale" 2
+
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+	aVariables = aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"][$(GetUIFloat "StartMenu/MCM/_ActiveOption")]["vars"]
+	iSize = Ar_Size aVariables
+	while (iSize -= 1) > -1
+		sTemp = "StartMenu/MCM/_Value"
+		if eval (Ar_Size aVariables) != 1
+			sTemp += $(iSize + 1)
+		endif
+		SetUIFloat (sTemp) (aVariables[iSize]["default"])
+	loop
+
+	aJSON = aVariables = Ar_null
+	sv_Destruct sTemp
+
+	; HSV Color Picker
+	if eval (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible") == 0
+		return
+	endif
+	; Set input traits
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputRed" (Clamp (GetUIFloat "StartMenu/MCM/_Value1") 0 255)
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputGreen" (Clamp (GetUIFloat "StartMenu/MCM/_Value2") 0 255)
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputBlue" (Clamp (GetUIFloat "StartMenu/MCM/_Value3") 0 255)
+	; Set picker drag coordinates
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsetx" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsety" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsetx" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsety" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragX")
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragY")
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputHueDragY")
+
+End

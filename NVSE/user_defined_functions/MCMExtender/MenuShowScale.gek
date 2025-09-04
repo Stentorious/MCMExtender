@@ -1,0 +1,79 @@
+int iSubmenu
+int iOption
+
+int iSize
+array_var aJSON
+array_var aOption
+array_var aVariables
+array_var aForE
+string_var sText
+string_var sTranslate
+
+Begin Function {}
+
+	SetUIFloat "StartMenu/MCM/_ShowScale" 2
+
+	iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
+	iOption = GetUIFloat "StartMenu/MCM/_ActiveOption"
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+	aOption = aJSON["submenus"][$iSubmenu]["options"][$iOption]
+	aVariables = aOption["vars"]
+
+	; Translation
+	sText = aOption["title"]
+	if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
+		sText = sTranslate
+	endif
+	SetUIString "StartMenu/MCM/*:2/_title" (sText)
+
+	; Set other scale parameters
+	if eval Ar_HasKey aOption "scale"
+		foreach aForE <- aOption["scale"]
+			if eval (TypeOf aForE["value"]) == "Number"
+				SetUIFloat ("StartMenu/MCM/_" + $aForE["key"]) (aForE["value"])
+			elseif eval (TypeOf aForE["value"]) == "String"
+				; Translation
+				sText = aForE["value"]
+				if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
+					sText = sTranslate
+				endif
+				if eval aForE["key"] == "suffix"
+					SetUIString "StartMenu/MCM/*:2/_suffixText" (sText)
+				else
+					SetUIString ("StartMenu/MCM/*:2/_" + $aForE["key"]) (sText)
+				endif
+			endif
+		loop
+	endif
+
+	; Update starting values
+	SetUIFloat "StartMenu/MCM/*:2/_scales" (iSize = Ar_Size aVariables)
+	while (iSize -= 1) > -1
+		sText = ""
+		if eval (Ar_Size aVariables) != 1
+			sText += $(iSize + 1)
+		endif
+		SetUIFloat ("StartMenu/MCM/_Value" + (sText)) (Clamp (Call (CompileScript "MCMExtender\GetValue.gek") (aVariables[iSize])) (GetUIFloat ("StartMenu/MCM/_value" + (sText) + "Min")) (GetUIFloat ("StartMenu/MCM/_value" + (sText) + "Max")))
+	loop
+
+	aJSON = aOption = aVariables = aForE = Ar_Null
+	sv_Destruct sText sTranslate
+
+	; HSV Color Picker
+	if eval (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible") == 0
+		return
+	endif
+	; Set input traits
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputRed" (Clamp (GetUIFloat "StartMenu/MCM/_Value1") 0 255)
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputGreen" (Clamp (GetUIFloat "StartMenu/MCM/_Value2") 0 255)
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputBlue" (Clamp (GetUIFloat "StartMenu/MCM/_Value3") 0 255)
+	; Set picker drag coordinates
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsetx" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsety" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsetx" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsety" 0
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragX")
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragY")
+	SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputHueDragY")
+
+End

@@ -1,0 +1,80 @@
+; MCM Extender - Stentorious
+
+; Check for requirements
+if eval IsModLoaded "The Mod Configuration Menu.esp" == 0
+	MessageBoxEx "MCM Extender missing requirement!%rInstall The Mod Configuration Menu."
+	return
+endif
+if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
+	MessageBoxEx "MCM Extender missing requirement!%rInstall xNVSE 6.4.0+."
+	return
+endif
+if GetPluginVersion "JohnnyGuitarNVSE" < 360
+	MessageBoxEx "MCM Extender missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
+	return
+endif
+if GetPluginVersion "ShowOffNVSE Plugin" < 165
+	MessageBoxEx "MCM Extender missing requirement!%rInstall latest ShowOff NVSE plugin."
+	return
+endif
+if GetPluginVersion "UI Organizer Plugin" < 230
+	MessageBoxEx "MCM Extender missing requirement!%rInstall latest User Interface Organizer plugin."
+	return
+endif
+
+int MCMExtenderVersion = 1.00
+
+int iSize
+ref rList
+ref rMenuItem
+array_var aFiles
+array_var aJSON
+string_var sFilePath
+
+; Validate menu JSONs
+aFiles = GetFilesInFolder "MCM" "*.json"
+if eval (iSize = Ar_Size aFiles) > 0
+	aFiles = Ar_Sort aFiles 1
+	while (iSize -= 1) > -1
+		sFilePath = "MCM\" + $(aFiles[iSize])
+		if eval FileExists (sFilePath)
+			sFilePath = sv_Construct "Data\%z" sFilePath
+			aJSON = ReadFromJSON (sFilePath)
+			; Check MCM Extender version
+			if eval aJSON["minMCMVersion"] > MCMExtenderVersion
+				continue
+			endif
+			; Check requirements array
+			if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") aJSON) == 1
+				PrintC "MCM Extender: Loaded Config -> %z" sFilePath
+				Goo1.AuxVarSetStr "*MCMExt_JSON" (sFilePath) -1
+				Goo1.AuxVarSetStr "*MCMExt_ModID" (aJSON["modName"]) -1
+				; Translate name
+				sFilePath = aJSON["displayName"]
+				if eval sFilePath[0] == "$"
+					sFilePath = GetINIString_Cached ("Translations:" + (sFilePath)) ("..\MCM\Translations\" + (aJSON["modName"]) + ".ini") (sFilePath)
+					CloseFileSO ("..\MCM\Translations\" + (aJSON["modName"]) + ".ini") 0
+				endif
+				Goo1.AuxVarSetStr "*MCMExt_ModName" (sFilePath) -1
+			endif
+		else
+			PrintC "MCM Extender: Invalid Config -> %z" sFilePath
+		endif
+	loop
+endif
+
+; Init aux
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 0		; Is JSON menu open
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 1		; MenuID
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 2		; Active mouseover
+Goo1.AuxVarSetStr "*MCMExt_State" ("") 3	; JSON path
+Goo1.AuxVarSetStr "*MCMExt_State" ("") 4	; modName
+Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
+
+; Menu events
+SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1013
+SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1013
+SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 2
+
+aFiles = aJSON = Ar_Null
+sv_Destruct sFilePath

@@ -4,22 +4,30 @@
 </p>
 
 ## Overview
-- MCM Extender is an essential add-on for the original Mod Configuration Menu.
-- Introduces a powerful framework that allows mod authors to create feature rich, script-free MCMs with ease.
-- Also includes new MCM quality-of-life features for all players.
+MCM Extender is an essential add-on for [The Mod Configuration Menu](https://www.nexusmods.com/newvegas/mods/42507).
 
-### Menu Creation
-- MCM Extender can generate script free MCM menus directly from JSON files.
-- Generated menus function identically and supports the full MCM feature set.
-- Automatically save settings to INIs, update variables, run scripts, and more.
-- MCM menus are no longer limited to plugin based mods.
+Allows mod authors to create feature rich, script-free MCM menus with ease.
 
-### QoL Features
-- Adds backgrounds to all MCM color displays.
-- Replaces the default MCM color picker with an intuitive HSV color picker.
+Also includes new MCM quality-of-life features for all players.
+
+### QOL FEATURES
+- Color Picker: Default MCM color selection sliders is replaced with an easy-to-use HSV color picker.
+- Improved Visibility: Adds backgrounds to all MCM color swatches, making them easier to see.
 
 ## Mod Authors
-- Check the [documentation](https://github.com/Stentorious/MCMExtender/wiki/JSON-Structure-Guide) for detailed information on creating MCMs using MCM Extender.
+MCM Extender introduces a powerful framework that allows you to create complex, feature-rich MCMs entirely from JSON files, with no scripting required.
+
+### Features
+- Script-Free Menus: Generate full-featured MCMs that function identically to scripted ones, directly from JSON files.
+- Automatic Management: Natively handles saving settings to INIs, updating game variables, running script functions.
+- No Plugin Required: Your mod no longer needs to be an ESM/ESP to have its own dedicated MCM.
+
+### Getting Started
+Check the [Wiki](https://github.com/Stentorious/MCMExtender/wiki) for a comprehensive guide and review the example files in the Miscellaneous download section.
+
+## Compatibility
+MCM Extender doesn't include or modify any of the original MCM files.
+It is backwards compatible with any existing MCM.
 
 ## Requirements
 - [The Mod Configuration Menu](https://www.nexusmods.com/newvegas/mods/42507)

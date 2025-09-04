@@ -1,0 +1,145 @@
+int iSize
+float fTemp
+float fType
+array_var aJSON
+array_var aForE
+array_var aForE2
+array_var aTemp
+array_var aVariables
+string_var sTemp
+string_var sTranslate
+string_var sConfigPath
+string_var sv_text
+
+Begin Function {}
+
+	; ===== RESET =====
+	SetUIFloat "StartMenu/MCM/_Reset" 0
+
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+
+	SetUIFloat "StartMenu/MCM/*:1/_columns" (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["columns"])
+
+	sConfigPath = Goo1.AuxVarGetStr "*MCMExt_State" 5
+
+	; for the current submenu, go through each option
+	foreach aForE <- (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"])
+		aTemp = (aForE["value"]) ; set to local array to keep code cleaner
+
+		; Image display
+		if eval (Ar_HasKey aTemp "filename")
+			sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"])
+			SetUIFloat ((sTemp) + "/_enable") 1
+			SetUIString ((sTemp) + "/_title") " "
+			SetUIFloat ((sTemp) + "/_type") 0
+			SetUIFloat ((sTemp) + "/_highlight") 0
+			SetUIString ((sTemp) + "/image/filename") (aTemp["filename"])
+			SetUIFloat ((sTemp) + "/image/width") (aTemp["width"])
+			SetUIFloat ((sTemp) + "/image/height") (aTemp["height"])
+			SetUIFloat ((sTemp) + "/image/systemcolor") (aTemp["systemcolor"])
+			SetUIFloat ((sTemp) + "/VUI+Clone/systemcolor") (aTemp["systemcolor"])
+			SetUIFloat ((sTemp) + "/image/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
+			SetUIFloat ((sTemp) + "/image/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
+			SetUIFloat ((sTemp) + "/image/visible") 1
+			continue
+		endif
+
+		foreach aForE2 <- aTemp ; setup the basic options for reset
+			if eval (TypeOf aForE2["value"]) == "Number" ; number entries get converted directly to MCM setting
+				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (aForE2["value"])
+				continue
+
+			elseif eval (TypeOf aForE2["value"]) == "String"
+
+				; Translation
+				sTemp = (aForE2["value"])
+				if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
+					aForE2["value"] = sTranslate
+				endif
+
+				if eval (aForE2["key"]) == "mouse"
+					continue
+				elseif eval (aForE2["key"]) == "suffix"
+					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_suffix"
+					SetUIFloat (sTemp) 1
+					sTemp += "Text"
+				elseif eval (aForE2["key"]) == "string" ; type 7
+					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/value/*:1/string"
+				else
+					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_" + (aForE2["key"])
+				endif
+
+				SetUIString (sTemp) (aForE2["value"])
+
+			endif
+		loop
+
+		; Option state switching
+		if eval Ar_HasKey aTemp "state"
+			if eval (Call (CompileScript "MCMExtender\GetValue.gek") aTemp["state"]) == aTemp["state"]["value"]
+				fTemp = 1
+			else
+				fTemp = 0
+				if eval Ar_HasKey aTemp["state"] "disable"
+					fTemp += (aTemp["state"]["disable"] * 2)
+				endif
+			endif
+			SetUIFloat ("StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_enable") fTemp
+		endif
+
+		; Process var object array
+		if TestExpr aVariables = aTemp["vars"]
+			sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/value/*:1/string"
+			iSize = Ar_Size aVariables
+
+			; Multi value string
+			if eval (fType = aTemp["type"]) == 8
+				sv_text = ""
+				while (iSize -= 1) > -1
+					fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize]
+					sv_text = sv_Construct "%g, %z" fTemp sv_text
+				loop
+				SetUIString (sTemp) (sv_text[0:-3])
+				continue
+
+			; Color box
+			elseif eval fType == 9
+				while (iSize -= 1) > -1
+					SetUIFloat ("StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_value" + $(iSize + 1)) (Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize])
+				loop
+
+			; Basic
+			else
+				fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[0]
+
+				; Numeric
+				if eval (ar_Find fType (ar_List 2, 4, 5, 6)) > -1
+					SetMCMFloat 1 (#aForE["key"]) "_value", fTemp
+					continue
+
+				; String
+				elseif eval fType == 1
+					; Translation
+					sv_text = aTemp["strings"][(Clamp fTemp 0 ftemp)]
+					if eval sv_text[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sv_text)) != ""
+						sv_text = sTranslate
+					endif
+					SetUIString (sTemp) (sv_text)
+					continue
+
+				; Float
+				elseif eval fType == 2.5
+					SetUIString (sTemp) (sv_Construct ("%." + $(aTemp["scale"]["valueDecimal"]) + "f") fTemp)
+					continue
+
+				; Scan code
+				elseif eval fType == 3
+					SetUIString (sTemp) (GetKeyName fTemp)
+					continue
+				endif
+			endif
+
+		endif
+	loop
+
+End

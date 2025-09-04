@@ -1,0 +1,38 @@
+int iMenuID
+
+int iIndex
+int iSize
+ref rList
+ref rMenuItem
+
+Begin Function {iMenuID}
+
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" == 1
+		return
+	endif
+
+	; get the menu list from MCM and generate an entry for each mod loaded
+	rList = GetFormFromMod "The Mod Configuration Menu.esp" "AE6"
+
+	; Remove clones from MCM FormList
+	iSize = ListGetCount rList
+	while (iSize -= 1) > -1
+		rMenuItem = ListGetNthForm rList iSize
+		if eval (GetSourceModIndex rMenuItem) == 255
+			ListRemoveForm rList rMenuItem
+			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rMenuItem)
+		endif
+	loop
+
+	; Add temp clone to hold menu
+	if eval (iSize = Goo1.AuxVarSize "*MCMExt_ModName") > 0
+		while (iSize -= 1) > -1
+			rMenuItem = TempCloneForm "a"
+			SetValueAlt rMenuItem iSize
+			SetNameEx (Goo1.AuxVarGetStr "*MCMExt_ModName" iSize) rMenuItem
+			ListAddForm rList rMenuItem
+			;PrintC "MCM Extender: Add clone -> %z" (LNGetName rMenuItem)
+		loop
+	endif
+
+End

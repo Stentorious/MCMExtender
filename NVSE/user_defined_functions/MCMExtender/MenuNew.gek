@@ -1,0 +1,86 @@
+int iMenu
+int iSubmenu
+int iOption
+int iSize
+float fType
+float fValue
+ref rRef
+array_var aJSON
+array_var aOption
+array_var aVariables
+array_var aFunction
+string_var sTemp
+
+Begin Function {}
+
+	SetUIFloat "StartMenu/MCM/_NewValue" 0
+	SetUIFloat "StartMenu/MCM/_Reset" 1
+
+	fValue = GetUIFloat "StartMenu/MCM/_Value"
+
+	iMenu = Goo1.AuxVarGetFlt "*MCMExt_State" 1
+	iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
+	iOption = GetUIFloat "StartMenu/MCM/_ActiveOption"
+
+	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+	aOption = aJSON["submenus"][$iSubmenu]["options"][$iOption]
+
+	; Update variables
+	if TestExpr aVariables = (aOption["vars"])
+		iSize = Ar_Size aVariables
+		if eval (fType = (aOption["type"])) == 8 || fType == 9
+			while (iSize -= 1) > -1
+				Call (CompileScript "MCMExtender\SetValue.gek") (GetUIFloat ("StartMenu/MCM/_Value" + $(iSize + 1))) (aVariables[iSize])
+				Goo1.AuxVarSetStr "*MCMExt_Updated" (Goo1.AuxVarGetStr "*MCMExt_State" 4) -1
+			loop
+		else
+			if eval fType == 1
+				fValue -= 1
+			endif
+			while (iSize -= 1) > -1
+				Call (CompileScript "MCMExtender\SetValue.gek") fValue (aVariables[iSize])
+				Goo1.AuxVarSetStr "*MCMExt_Updated" (Goo1.AuxVarGetStr "*MCMExt_State" 4) -1
+			loop
+		endif
+	endif
+
+	; Run result function
+	if eval Ar_HasKey aOption "call"
+		aFunction = aOption["call"]
+
+		; Call: https://geckwiki.com/index.php?title=Call
+		if eval (aFunction["type"]) == "udf"
+			if TestExpr (rRef = EditorIDToFormID (aFunction["value"]))
+				Call (rRef) fValue iMenu iSubmenu iOption aJSON
+			endif
+
+		; CompileScript: https://geckwiki.com/index.php?title=CompileScript
+		elseif eval (aFunction["type"]) == "file"
+			if TestExpr (rRef = CompileScript (aFunction["value"]))
+				Call (rRef) fValue iMenu iSubmenu iOption aJSON
+			endif
+
+		; DispatchEventAlt: https://geckwiki.com/index.php?title=DispatchEventAlt
+		elseif eval (aFunction["type"]) == "event"
+			DispatchEventAlt (aFunction["value"]) fValue iMenu iSubmenu iOption aJSON
+
+		; RunScriptSnippet: https://geckwiki.com/index.php?title=RunScriptSnippet
+		elseif eval (aFunction["type"]) == "snippet"
+			sTemp = aFunction["value"]
+			RunScriptSnippet 0 (sTemp); fTemp
+
+		; Console: https://geckwiki.com/index.php?title=Console
+		elseif eval (aFunction["type"]) == "console"
+			Console (aFunction["value"])
+		endif
+	endif
+
+	; Refresh submenu visibility
+	if eval Ar_HasKey aOption "refresh"
+		Call (CompileScript "MCMExtender\RefreshSubmenus.gek") fValue 1 1 1 aJSON
+	endif
+
+	aJSON = aOption = aVariables = aFunction = ar_Null
+	sv_Destruct sTemp
+
+End
