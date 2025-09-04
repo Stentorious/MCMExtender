@@ -38,8 +38,8 @@ It is backwards compatible with any existing MCM.
 - [User Interface Organizer](https://www.nexusmods.com/newvegas/mods/57174)
 
 ## Credits
-[Gribbleshnibit8](https://next.nexusmods.com/profile/Gribbleshnibit8) for the idea and initial prototype.
-[DoctaSax](https://next.nexusmods.com/profile/DoctaSax) for their work on Unlocked MCM.
+- [Gribbleshnibit8](https://next.nexusmods.com/profile/Gribbleshnibit8) for the idea and initial prototype.
+- [DoctaSax](https://next.nexusmods.com/profile/DoctaSax) for their work on Unlocked MCM.
 
 ## Installation
 Installs like any other mod, manually or using a mod manager.
