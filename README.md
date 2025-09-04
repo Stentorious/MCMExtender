@@ -10,7 +10,7 @@ Allows mod authors to create feature rich, script-free MCM menus with ease.
 
 Also includes new MCM quality-of-life features for all players.
 
-### QOL FEATURES
+### QoL Features
 - Color Picker: Default MCM color selection sliders is replaced with an easy-to-use HSV color picker.
 - Improved Visibility: Adds backgrounds to all MCM color swatches, making them easier to see.
 
