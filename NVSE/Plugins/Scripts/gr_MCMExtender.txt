@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.00
+int MCMExtenderVersion = 1.01
 
 int iSize
 ref rList
@@ -58,6 +58,7 @@ if eval (iSize = Ar_Size aFiles) > 0
 					CloseFileSO ("..\MCM\Translations\" + (aJSON["modName"]) + ".ini") 0
 				endif
 				Goo1.AuxVarSetStr "*MCMExt_ModName" (sFilePath) -1
+				Goo1.AuxVarSetRef "*MCMExt_Clones" BobbyPin -1
 			endif
 		else
 			PrintC "MCM Extender: Invalid Config -> %z" sFilePath
