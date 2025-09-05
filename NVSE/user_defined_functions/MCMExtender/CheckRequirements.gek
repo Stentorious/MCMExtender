@@ -1,6 +1,7 @@
 array_var aJSON
 
 int iSize
+int iSizeTemp
 int iPassed
 int iRequirementsMet
 int iRequirementsTotal
@@ -17,20 +18,20 @@ Begin Function {aJSON}
 
 			; check each entry in the requirements, if a single one is missing return false
 			if eval (TypeOf aEntry) == "Array" ; handle OR checks
-				if eval (iSize = Ar_Size aEntry) > 0
+				if eval (iSizeTemp = Ar_Size aEntry) > 0
 					iPassed = 0
-					while (iSize -= 1) > -1
+					while (iSizeTemp -= 1) > -1
 						if eval (TypeOf aEntry) != "StringMap"
 							continue
 						endif
-						sType = aEntry[iSize]["type"]
+						sType = aEntry[iSizeTemp]["type"]
 						if eval (sType) == "nvse"
-							if eval GetNVSEVersionFull > (aEntry["version"])
+							if eval GetNVSEVersionFull > (aEntry[iSizeTemp]["version"])
 								iPassed = 1
 							endif
 							continue
 						else
-							sFile = aEntry[iSize]["file"]
+							sFile = aEntry[iSizeTemp]["file"]
 							if eval (sType) == "mod"
 								if eval IsModLoaded (sFile)
 									iPassed = 1
@@ -50,7 +51,7 @@ Begin Function {aJSON}
 								endif
 								continue
 							elseif eval (sType) == "dll"
-								if eval GetPluginVersion (sFile) > (aEntry[iSize]["version"])
+								if eval GetPluginVersion (sFile) > (aEntry[iSizeTemp]["version"])
 									iPassed = 1
 									break
 								endif
