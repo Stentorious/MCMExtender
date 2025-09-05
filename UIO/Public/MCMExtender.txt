@@ -1,3 +1,8 @@
+; StartMenu
+MCMExtender\StartMenu.xml::StartMenu
+true
+
+; MCM Prefabs
 MCMExtender\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
 true
 MCMExtender\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB
