@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.01
+int MCMExtenderVersion = 1.02
 
 int iSize
 ref rList
