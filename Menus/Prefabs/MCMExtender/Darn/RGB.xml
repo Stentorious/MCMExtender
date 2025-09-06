@@ -1,5 +1,6 @@
+<y> -4.5 </y>
 <locus> 1 </locus>
-<depth> 20 </depth>
+<depth> 1 </depth>
 <image name="Background">
 	<visible> 1 </visible>
 	<x> -2 </x>

@@ -1,0 +1,17 @@
+<systemcolor>
+	<copy> 5 </copy>
+	<add>
+		<copy> 5 </copy>
+		<onlyif>
+			<copy src="parent()" trait="_target"/>
+			<or>
+				<copy src="grandparent()" trait="_selected"/>
+				<eq>
+					<copy> -1 </copy>
+					<onlyif src="io()" trait="_MCMExt+Menu"/>
+					<add src="parent()" trait="_listID"/>
+				</eq>
+			</or>
+		</onlyif>
+	</add>
+</systemcolor>

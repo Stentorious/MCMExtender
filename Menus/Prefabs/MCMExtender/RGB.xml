@@ -15,6 +15,6 @@
 	</height>
 	<depth> -1 </depth>
 	<zoom> -1 </zoom>
-	<systemcolor> 5 </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<filename> Interface\Shared\solid.dds </filename>
 </image>

@@ -56,9 +56,7 @@ Begin Function {}
 
 		; CompileScript: https://geckwiki.com/index.php?title=CompileScript
 		elseif eval (aFunction["type"]) == "file"
-			if TestExpr (rRef = CompileScript (aFunction["value"]))
-				Call (rRef) fValue iMenu iSubmenu iOption aJSON
-			endif
+			Call (CompileScript (aFunction["value"])) fValue iMenu iSubmenu iOption aJSON
 
 		; DispatchEventAlt: https://geckwiki.com/index.php?title=DispatchEventAlt
 		elseif eval (aFunction["type"]) == "event"

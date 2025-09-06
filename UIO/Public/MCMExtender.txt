@@ -4,6 +4,10 @@ true
 
 ; MCM Prefabs
 MCMExtender\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
+!darnui
+true
+MCMExtender\Darn\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
+darnui
 true
 MCMExtender\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB
 true
@@ -12,10 +16,18 @@ true
 MCMExtender\Scale_Title.xml::@Prefabs\MCM\Scale.xml::Scale_Title
 true
 
-; VUI+ FIx
+; VUI+ Fix
 MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\ModList.xml::ModList_Scroll
 true
 MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\Options.xml::Options_Scroll
 true
 MCMExtender\VUI+\systemcolor.xml::@Prefabs\MCM\OptionRect.xml::image
+true
+
+; ListRect Fix
+MCMExtender\ListRect.xml::@Prefabs\MCM\ListRect.xml::text
+!#VUI+\hudcenteredtext.xml
+true
+MCMExtender\VUI+\ListRect.xml::@Prefabs\MCM\ListRect.xml::text
+#VUI+\hudcenteredtext.xml
 true

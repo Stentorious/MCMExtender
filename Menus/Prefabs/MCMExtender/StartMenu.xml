@@ -1,2 +1,3 @@
-<_MCMExtender> 1 </_MCMExtender>
-<_MCMExtenderMenu> 0 </_MCMExtenderMenu>
+<_MCMExt+Installed> 1 </_MCMExt+Installed>
+<_MCMExt+Menu> 0 </_MCMExt+Menu>
+<_MCMExt+Systemcolor> <copy src="child(NOGLOW_BRANCH)" trait="systemcolor"/> </_MCMExt+Systemcolor>
