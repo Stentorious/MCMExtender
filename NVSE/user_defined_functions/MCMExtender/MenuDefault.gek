@@ -35,12 +35,12 @@ Begin Function {}
 				aFunction = aForE["value"]["call"]
 				if eval (aFunction["type"]) == "udf"
 					if TestExpr (rRef = EditorIDToFormID (aFunction["value"]))
-						Call (rRef) fValue iMenu iSubmenu 0 aJSON
+						Call (rRef) fValue iMenu iSubmenu (#aForE["key"]) aJSON
 					endif
 				elseif eval (aFunction["type"]) == "file"
-					Call (CompileScript (aFunction["value"])) fValue iMenu iSubmenu 0 aJSON
+					Call (CompileScript (aFunction["value"])) fValue iMenu iSubmenu (#aForE["key"]) aJSON
 				elseif eval (aFunction["type"]) == "event"
-					DispatchEventAlt (aFunction["value"]) fValue iMenu iSubmenu 0 aJSON
+					DispatchEventAlt (aFunction["value"]) fValue iMenu iSubmenu (#aForE["key"]) aJSON
 				elseif eval (aFunction["type"]) == "snippet"
 					RunScriptSnippet 0 (aFunction["value"]); fValue
 				elseif eval (aFunction["type"]) == "console"
