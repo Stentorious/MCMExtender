@@ -29,6 +29,7 @@ ref rList
 ref rMenuItem
 array_var aFiles
 array_var aJSON
+array_var aModID
 string_var sFilePath
 
 ; Validate menu JSONs
@@ -37,6 +38,7 @@ aFiles = GetFilesInFolder "MCM" "*.json"
 if eval (iSize = Ar_Size aFiles) > 0
 	PrintC "MCM Extender: Loading JSON files:"
 	aFiles = Ar_Sort aFiles 1
+	aModID = ar_Construct "array"
 	while (iSize -= 1) > -1
 		sFilePath = sv_Construct "Data\MCM\%z" (aFiles[iSize])
 		; Check valid JSON
@@ -55,9 +57,15 @@ if eval (iSize = Ar_Size aFiles) > 0
 			PrintC "MCM Extender: Missing requirements -> %z" sFilePath
 			continue
 		endif
+		; Check duplicate IDs
+		if eval (Ar_Find (aJSON["modName"]) aModID) != Ar_BadNumericIndex
+			PrintC "MCM Extender: Duplicate modName -> %z" sFilePath
+			continue
+		endif
 		PrintC "MCM Extender: Loading... -> %z" sFilePath
+		ar_Append aModID (aJSON["modName"])
+		Goo1.AuxVarSetRef "*MCMExt_Clones" BobbyPin -1
 		Goo1.AuxVarSetStr "*MCMExt_JSON" (sFilePath) -1
-		Goo1.AuxVarSetStr "*MCMExt_ModID" (aJSON["modName"]) -1
 		; Translate name
 		sFilePath = aJSON["displayName"]
 		if eval sFilePath[0] == "$"
@@ -65,12 +73,14 @@ if eval (iSize = Ar_Size aFiles) > 0
 			CloseFileSO ("..\MCM\Translations\" + (aJSON["modName"]) + ".ini") 0
 		endif
 		Goo1.AuxVarSetStr "*MCMExt_ModName" (sFilePath) -1
-		Goo1.AuxVarSetRef "*MCMExt_Clones" BobbyPin -1
 	loop
+	if eval (Ar_Size aModID) > 0
+		Goo1.AuxVarSetFromArr "*MCMExt_ModID" aModID
+	endif
 	PrintC "MCM Extender: Loading finished."
 endif
 
-aFiles = aJSON = Ar_Null
+aFiles = aJSON = aModID = Ar_Null
 sv_Destruct sFilePath
 
 ; Init aux
