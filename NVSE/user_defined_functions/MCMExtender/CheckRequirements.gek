@@ -26,7 +26,7 @@ Begin Function {aJSON}
 						endif
 						sType = aEntry[iSizeTemp]["type"]
 						if eval (sType) == "nvse"
-							if eval GetNVSEVersionFull > (aEntry[iSizeTemp]["version"])
+							if eval GetNVSEVersionFull >= (aEntry[iSizeTemp]["version"])
 								iPassed = 1
 							endif
 							continue
@@ -51,7 +51,7 @@ Begin Function {aJSON}
 								endif
 								continue
 							elseif eval (sType) == "dll"
-								if eval GetPluginVersion (sFile) > (aEntry[iSizeTemp]["version"])
+								if eval GetPluginVersion (sFile) >= (aEntry[iSizeTemp]["version"])
 									iPassed = 1
 									break
 								endif
@@ -70,7 +70,7 @@ Begin Function {aJSON}
 				endif
 				sType = aEntry["type"]
 				if eval (sType) == "nvse"
-					if eval GetNVSEVersionFull > (aEntry["version"])
+					if eval GetNVSEVersionFull >= (aEntry["version"])
 						iRequirementsMet += 1
 					endif
 					continue
@@ -92,7 +92,7 @@ Begin Function {aJSON}
 						endif
 						continue
 					elseif eval (sType) == "dll"
-						if eval GetPluginVersion (aEntry["file"]) > (aEntry["version"])
+						if eval GetPluginVersion (sFile) >= (aEntry["version"])
 							iRequirementsMet += 1
 						endif
 						continue
