@@ -36,6 +36,7 @@ Begin Function {iMenuID}
 				Goo1.AuxVarSetRef "*MCMExt_Clones" rClone iSize
 				;PrintC "MCM Extender: Create clone -> %z" (sName)
 			endif
+			;PrintC "MCM Extender: Loaded menu -> %n" rClone
 			ListAddForm rList rClone
 		loop
 	endif
