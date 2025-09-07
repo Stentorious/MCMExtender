@@ -14,8 +14,8 @@ Begin Function {}
 
 	; Is JSON menu selected
 	if eval GetUIFloatAlt "StartMenu/MCM/_ActiveMod" != 255
-		SetUIFloat "StartMenu/MCM/*:1/*:1/image/systemcolor" 5
-		SetUIFloat "StartMenu/MCM/*:1/*:1/VUI+Clone/systemcolor" 5
+		SetUIFloat "StartMenu/MCM/*:1/*:1/image/systemcolor" (GetUIFloat "StartMenu\_MCMExt+Systemcolor")
+		SetUIFloat "StartMenu/MCM/*:1/*:1/VUI+Clone/systemcolor" (GetUIFloat "StartMenu\_MCMExt+Systemcolor")
 		Goo1.AuxVarSetFlt "*MCMExt_State" 0 0
 		SetUIFloat "StartMenu/_MCMExt+Menu" 0
 		return
