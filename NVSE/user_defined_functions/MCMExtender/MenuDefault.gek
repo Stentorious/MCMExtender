@@ -2,19 +2,51 @@ int iSize
 array_var aJSON
 array_var aForE
 array_var aVariables
+array_var aFunction
+
+ref rRef
+int iMenu
+int iSubmenu
+float fValue
 
 Begin Function {}
 
 	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
+	iMenu = Goo1.AuxVarGetFlt "*MCMExt_State" 1
+	iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
 
 	SetUIFloat "StartMenu/MCM/_Default" 0
 	SetUIFloat "StartMenu/MCM/_Reset" 1
+
 	foreach aForE <- aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"]
 		if TestExpr aVariables = aForE["value"]["vars"]
 			iSize = Ar_Size aVariables
 			while (iSize -= 1) > -1
-				Call (CompileScript "MCMExtender\SetValue.gek") aVariables[iSize]["default"] aVariables[iSize]
+
+				; Update value
+				fValue = aVariables[iSize]["default"]
+				Call (CompileScript "MCMExtender\SetValue.gek") fValue aVariables[iSize]
 				Goo1.AuxVarSetStr "*MCMExt_Updated" (Goo1.AuxVarGetStr "*MCMExt_State" 4) -1
+
+				; Run result function
+				if eval Ar_HasKey aForE["value"] "call" == 0
+					continue
+				endif
+				aFunction = aForE["value"]["call"]
+				if eval (aFunction["type"]) == "udf"
+					if TestExpr (rRef = EditorIDToFormID (aFunction["value"]))
+						Call (rRef) fValue iMenu iSubmenu 0 aJSON
+					endif
+				elseif eval (aFunction["type"]) == "file"
+					Call (CompileScript (aFunction["value"])) fValue iMenu iSubmenu 0 aJSON
+				elseif eval (aFunction["type"]) == "event"
+					DispatchEventAlt (aFunction["value"]) fValue iMenu iSubmenu 0 aJSON
+				elseif eval (aFunction["type"]) == "snippet"
+					RunScriptSnippet 0 (aFunction["value"]); fValue
+				elseif eval (aFunction["type"]) == "console"
+					Console (aFunction["value"])
+				endif
+
 			loop
 		endif
 	loop
@@ -22,6 +54,6 @@ Begin Function {}
 	; Refresh submenu visibility
 	Call (CompileScript "MCMExtender\RefreshSubmenus.gek") 1 1 1 1 aJSON
 
-	aJSON = aForE = aVariables = Ar_Null
+	aJSON = aForE = aVariables = aFunction = Ar_Null
 
 End
