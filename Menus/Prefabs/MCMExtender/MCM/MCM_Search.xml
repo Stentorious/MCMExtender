@@ -131,7 +131,7 @@
 					<copy src="io()" trait="_MCMExt+Search" />
 					<copy src="grandparent()" trait="_search_brightness_" />
 				</brightness>
-				<font> <copy src="io()" trait="_DH+Font" /> </font>
+				<font> <copy src="io()" trait="_MCMExt+Font" /> </font>
 				<string> <copy src="grandparent()" trait="_search" /> </string>
 			</text>
 
@@ -146,7 +146,7 @@
 				<clips> 1 </clips>
 				<systemcolor> <copy src="sibling(Text)" trait="systemcolor" /> </systemcolor>
 				<brightness> <copy src="grandparent()" trait="_search_brightness_1" /> </brightness>
-				<font> <copy src="io()" trait="_DH+Font" /> </font>
+				<font> <copy src="io()" trait="_MCMExt+Font" /> </font>
 				<_string>
 					<copy src="io()" trait="_MCMExt+Pulse" />
 					<copy src="grandparent()" trait="_search_cursor_" />
