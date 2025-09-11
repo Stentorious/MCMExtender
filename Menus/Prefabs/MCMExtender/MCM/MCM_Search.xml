@@ -1,0 +1,189 @@
+	<!-- Search bar -->
+	<rect name="MCM_Search">
+		<_search>
+			<copy src="io()" trait="_MCMExt+Search" />
+			<copy src="me()" trait="_search_text_" />
+		</_search>
+		<_search_count> 1 </_search_count>
+		<_search_fail>
+			<not src="me()" trait="_search_count" />
+			<and>
+				<copy src="io()" trait="_MCMExt+Search" />
+				<gt> 0 </gt>
+			</and>
+		</_search_fail>
+		<_search_term> Search Term </_search_term>
+		<_search_cursor> | </_search_cursor>
+		<_search_cursor_1> | </_search_cursor_1>
+		<_search_cursor_2> | </_search_cursor_2>
+		<_search_text_0> Search (CTRL-F) </_search_text_0>
+		<_search_text_1> Search Term </_search_text_1>
+		<_search_text_2> <copy src="me()" trait="_search_text_1" /> </_search_text_2>
+		<_search_brightness_0> 75 </_search_brightness_0>
+		<_search_brightness_1> 204 </_search_brightness_1>
+		<_search_brightness_2> 204 </_search_brightness_2>
+		<_icon_search_0> Interface\Stentorious\MCMExtender\SearchInit.dds </_icon_search_0>
+		<_icon_search_1> Interface\Stentorious\MCMExtender\SearchStop.dds </_icon_search_1>
+		<_icon_search_2> Interface\Stentorious\MCMExtender\SearchStop.dds </_icon_search_2>
+
+		<visible> <copy src="sibling(MCM_ModList)" trait="visible" /> </visible>
+		<locus> 1 </locus>
+		<x>
+			<copy src="sibling(MCM_ModList)" trait="x" />
+			<add src="globals()" trait="_line_thickness"/>
+			<add> 10 </add>
+		</x>
+		<y>
+			<copy src="parent()" trait="y" />
+			<!-- <add src="sibling(MCM_ModList)" trait="height" /> -->
+			<add src="globals()" trait="_line_thickness"/>
+			<add> 10 </add>
+		</y>
+		<depth> 50 </depth>
+		<_width>
+			<copy src="sibling(MCM_ModList)" trait="width" />
+			<sub> 20 </sub>
+			<sub src="globals()" trait="_line_thickness"/>
+		</_width>
+		<_height> 36 </_height>
+
+		<hotrect name="SearchBar">
+			<id> 606 </id>
+			<visible> 1 </visible>
+			<x> 4 </x>
+			<target>
+				<copy src="io()" trait="_MCMExt+Search" />
+				<neq> 1 </neq>
+			</target>
+			<alpha> 0 </alpha>
+			<locus> 1 </locus>
+			<width> <copy src="parent()" trait="_width" /> </width>
+			<height> <copy src="parent()" trait="_height" /> </height>
+			<mouseoversound> UIMenuFocus </mouseoversound>
+			<clicksound> UIMenuMode </clicksound>
+			<clipwindow> 1 </clipwindow>
+
+			<image name="Background">
+				<visible> 1 </visible>
+				<x> -4 </x>
+				<y> 0 </y>
+				<depth> 0 </depth>
+				<width> <copy src="parent()" trait="width" /> </width>
+				<height> <copy src="parent()" trait="height" /> </height>
+				<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+				<brightness> 204 </brightness>
+				<zoom> -1 </zoom>
+				<filename> Interface\Shared\solid.dds </filename>
+			</image>
+
+			<image name="Window">
+				<visible> 1 </visible>
+				<x>
+					<copy src="globals()" trait="_line_thickness"/>
+					<sub> 4 </sub>
+				</x>
+				<y> <copy src="globals()" trait="_line_thickness"/> </y>
+				<depth> 1 </depth>
+				<width>
+					<copy src="sibling(Background)" trait="width" />
+					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness"/>
+				</width>
+				<height>
+					<copy src="sibling(Background)" trait="height" />
+					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness"/>
+				</height>
+				<systemcolor> 0 </systemcolor>
+				<red> 0 </red>
+				<green> 0 </green>
+				<blue> 0 </blue>
+				<zoom> -1 </zoom>
+				<filename> Interface\Shared\solid.dds </filename>
+			</image>
+
+			<text name="Text">
+				<visible> <not src="sibling(TextCursor)" trait="visible" /> </visible>
+				<x>
+					<copy> 4 </copy>
+					<add>
+						<copy src="sibling(Icon)" trait="x" />
+						<sub src="me()" trait="width" />
+						<sub> 16 </sub>
+						<min> 0 </min>
+					</add>
+				</x>
+				<y> 10 </y>
+				<depth> 2 </depth>
+				<clips> 1 </clips>
+				<systemcolor>
+					<copy> 0 </copy>
+					<add>
+						<copy> 2 </copy>
+						<onlyif src="grandparent()" trait="_search_fail" />
+					</add>
+					<add>
+						<copy src="io()" trait="_MCMExt+Systemcolor" />
+						<onlyifnot src="grandparent()" trait="_search_fail" />
+					</add>
+				</systemcolor>
+				<brightness>
+					<copy src="io()" trait="_MCMExt+Search" />
+					<copy src="grandparent()" trait="_search_brightness_" />
+				</brightness>
+				<font> <copy src="io()" trait="_DH+Font" /> </font>
+				<string> <copy src="grandparent()" trait="_search" /> </string>
+			</text>
+
+			<text name="TextCursor">
+				<visible>
+					<copy src="io()" trait="_MCMExt+Search" />
+					<eq> 1 </eq>
+				</visible>
+				<x> <copy src="sibling(Text)" trait="x" /> </x>
+				<y> 10 </y>
+				<depth> 2 </depth>
+				<clips> 1 </clips>
+				<systemcolor> <copy src="sibling(Text)" trait="systemcolor" /> </systemcolor>
+				<brightness> <copy src="grandparent()" trait="_search_brightness_1" /> </brightness>
+				<font> <copy src="io()" trait="_DH+Font" /> </font>
+				<_string>
+					<copy src="io()" trait="_MCMExt+Pulse" />
+					<copy src="grandparent()" trait="_search_cursor_" />
+				</_string>
+				<string> <copy src="me()" trait="_string" /> </string>
+			</text>
+
+			<image name="Icon">
+				<id> 607 </id>
+				<visible> 1 </visible>
+				<target> 1 </target>
+				<x>
+					<copy src="sibling(Window)" trait="x" />
+					<add src="sibling(Window)" trait="width" />
+					<sub src="me()" trait="width" />
+					<sub> 3 </sub>
+				</x>
+				<y>
+					<copy src="sibling(Window)" trait="y" />
+					<add> 3 </add>
+				</y>
+				<depth> 2 </depth>
+				<width> <copy src="me()" trait="height" /> </width>
+				<height>
+					<copy src="sibling(Window)" trait="height" />
+					<sub> 6 </sub>
+				</height>
+				<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+				<zoom> -1 </zoom>
+				<filename>
+					<copy src="io()" trait="_MCMExt+Search" />
+					<copy src="grandparent()" trait="_icon_search_" />
+				</filename>
+				<mouseoversound> UIMenuFocus </mouseoversound>
+				<clicksound> UIMenuMode </clicksound>
+			</image>
+
+		</hotrect>
+
+	</rect>

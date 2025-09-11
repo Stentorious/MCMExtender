@@ -1,17 +1,24 @@
 <y> -4.5 </y>
 <locus> 1 </locus>
 <depth> 1 </depth>
+<alpha> 255 </alpha>
 <image name="Background">
 	<visible> 1 </visible>
-	<x> -2 </x>
-	<y> -2 </y>
+	<alpha> <copy src="grandparent()" trait="_alpha"/> </alpha>
+	<x>
+		<copy> 0 </copy>
+		<sub src="globals()" trait="_line_thickness"/>
+	</x>
+	<y> <copy src="me()" trait="x" /> </y>
 	<width>
 		<copy src="parent()" trait="width" />
-		<add> 4 </add>
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height>
 		<copy src="parent()" trait="height" />
-		<add> 4 </add>
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</height>
 	<depth> -1 </depth>
 	<zoom> -1 </zoom>

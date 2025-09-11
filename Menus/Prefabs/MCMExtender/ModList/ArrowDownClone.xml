@@ -1,0 +1,52 @@
+<hotrect name="ArrowDownClone">
+	<visible> 1 </visible>
+	<depth> 14 </depth>
+	<width>
+		<copy src="parent()" trait="width"/>
+		<add> 10 </add>
+		<div> 2 </div>
+	</width>
+	<height> 20 </height>
+	<x> <copy src="parent()" trait="width"/> <mul> 0.25 </mul> </x>
+	<y> <copy src="parent()" trait="height"/> <sub> 53 </sub> </y>
+	<locus> 1 </locus>
+	<_target>
+		<copy> 1 </copy>
+		<onlyif>
+			<copy src="parent()" trait="_visible"/>
+			<add src="parent()" trait="_SubVisible"/>
+			<add src="parent()" trait="_offset"/>
+			<lt>
+				<copy src="parent()" trait="_count"/>
+				<add src="parent()" trait="_subCount"/>
+			</lt>
+		</onlyif>
+	</_target>
+	<_brightness>
+		<copy> 100 </copy>
+		<add>
+			<copy> 200 </copy>
+			<onlyif src="me()" trait="_target"/>
+		</add>
+	</_brightness>
+
+	<image name="Arrow">
+		<visible> 1 </visible>
+		<x>
+			<copy> 0 </copy>
+			<sub src="me()" trait="width"/>
+			<div> 2 </div>
+		</x>
+		<y>
+			<copy src="parent()" trait="height"/>
+			<sub src="me()" trait="height"/>
+			<div> 2 </div>
+		</y>
+		<width> 32 </width>
+		<height> 32 </height>
+		<zoom> -1 </zoom>
+		<brightness> <copy src="parent()" trait="_brightness"/> </brightness>
+		<filename> <copy src="MCM_Images" trait="_repair_arrow_down"/> </filename>
+	</image>
+
+</hotrect>

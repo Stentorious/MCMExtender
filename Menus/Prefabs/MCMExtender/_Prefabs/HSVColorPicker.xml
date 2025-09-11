@@ -36,7 +36,6 @@ See HSVColorPickerHUD.xml for example.
 <_depth> 100 </_depth>
 <_x> 100 </_x>
 <_y> 100 </_y>
-<_line_thickness> 2 </_line_thickness>
 <_window_size> 256 </_window_size>
 <_background_alpha> 255 </_background_alpha>
 <_background_padding> 8 </_background_padding>
@@ -371,7 +370,7 @@ Automatically resizes.
 		<add src="sibling(Result_Window_Background)" trait="width" />
 		<add src="parent()" trait="_background_padding" />
 		<add src="parent()" trait="_background_padding" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height>
 		<copy src="sibling(SV_Window_Background)" trait="height" />
@@ -409,16 +408,16 @@ Displays color gradient and updates automatically based on current selection.
 	<depth> 1 </depth>
 	<x>
 		<copy src="sibling(SV_Window)" trait="x" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</x>
 	<y>
 		<copy src="sibling(SV_Window)" trait="y" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</y>
 	<width>
 		<copy src="sibling(SV_Window)" trait="width" />
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height> <copy src="me()" trait="width" /> </height>
 	<zoom> -1 </zoom>
@@ -523,10 +522,14 @@ Displays color gradient and updates automatically based on current selection.
 		<visible> 1 </visible>
 		<alpha> 255 </alpha>
 		<depth> -1 </depth>
-		<x> 2 </x>
-		<y> 2 </y>
-		<width> 8 </width>
-		<height> 8 </height>
+		<x> <copy src="globals()" trait="_line_thickness"/> </x>
+		<y> <copy src="me()" trait="x" /> </y>
+		<width>
+			<copy src="parent()" trait="width"/>
+			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness"/>
+		</width>
+		<height> <copy src="me()" trait="width"/> </height>
 		<zoom> -1 </zoom>
 		<systemcolor> 0 </systemcolor>
 		<red> <copy src="grandparent()" trait="_Red"/> </red>
@@ -580,21 +583,21 @@ Accepts Hue input in the form of a slider.
 	<depth> 1 </depth>
 	<x>
 		<copy src="sibling(Hue_Window)" trait="x" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</x>
 	<y>
 		<copy src="sibling(Hue_Window)" trait="y" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</y>
 	<width>
 		<copy src="sibling(Hue_Window)" trait="width" />
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height>
 		<copy src="sibling(Hue_Window)" trait="height" />
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</height>
 	<zoom> -1 </zoom>
 	<systemcolor> &hudmain; </systemcolor>
@@ -607,7 +610,7 @@ Accepts Hue input in the form of a slider.
 	<depth> 10 </depth>
 	<x>
 		<copy src="sibling(Hue_Window_Background)" trait="x"/>
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</x>
 	<y>
 		<copy src="sibling(Hue_Window)" trait="y" />
@@ -632,8 +635,8 @@ Accepts Hue input in the form of a slider.
 	</y>
 	<width>
 		<copy src="sibling(Hue_Window_Background)" trait="width"/>
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height> 12 </height>
 	<draggable> 1 </draggable>
@@ -645,14 +648,18 @@ Accepts Hue input in the form of a slider.
 		<visible> 1 </visible>
 		<alpha> 255 </alpha>
 		<depth> -1 </depth>
-		<x> 2 </x>
-		<y> 2 </y>
+		<x> <copy src="globals()" trait="_line_thickness"/> </x>
+		<y> <copy src="me()" trait="x" /> </y>
 		<width>
 			<copy src="parent()" trait="width"/>
-			<sub src="grandparent()" trait="_line_thickness" />
-			<sub src="grandparent()" trait="_line_thickness" />
+			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness"/>
 		</width>
-		<height> 8 </height>
+		<height>
+			<copy src="parent()" trait="height"/>
+			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness"/>
+		</height>
 		<zoom> -1 </zoom>
 		<systemcolor> 0 </systemcolor>
 		<red> <copy src="grandparent()" trait="_FinalHueRed"/> </red>
@@ -709,21 +716,21 @@ Displays the result color.
 	<depth> 1 </depth>
 	<x>
 		<copy src="sibling(Result_Window)" trait="x" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</x>
 	<y>
 		<copy src="sibling(Result_Window)" trait="y" />
-		<sub src="parent()" trait="_line_thickness" />
+		<sub src="globals()" trait="_line_thickness"/>
 	</y>
 	<width>
 		<copy src="sibling(Result_Window)" trait="width" />
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height>
 		<copy src="sibling(Result_Window)" trait="height" />
-		<add src="parent()" trait="_line_thickness" />
-		<add src="parent()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</height>
 	<zoom> -1 </zoom>
 	<systemcolor> 0 </systemcolor>

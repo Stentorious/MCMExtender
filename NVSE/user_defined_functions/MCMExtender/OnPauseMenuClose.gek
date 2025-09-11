@@ -1,7 +1,6 @@
 int iMenuID
 
 int iSize
-ref rList
 ref rMenuItem
 array_var aTemp
 
@@ -45,15 +44,22 @@ Begin Function {iMenuID}
 	endif
 
 	; Remove clones from MCM FormList
-	rList = GetFormFromMod "The Mod Configuration Menu.esp" "AE6"
-	iSize = ListGetCount rList
+	iSize = ListGetCount MCMMods
 	while (iSize -= 1) > -1
-		rMenuItem = ListGetNthForm rList iSize
+		rMenuItem = ListGetNthForm MCMMods iSize
 		if eval (GetSourceModIndex rMenuItem) == 255
-			ListRemoveForm rList rMenuItem
+			ListRemoveForm MCMMods rMenuItem
 			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rMenuItem)
 		endif
 	loop
+
+	; Reset MCM FormList from search
+	if eval Goo1.AuxVarGetFlt "*MCMExt_Search"
+		Goo1.AuxVarSetFlt "*MCMExt_Search" 0
+		aTemp = Goo1.AuxVarGetAsArr "*MCMListCache"
+		ListAddArray MCMMods aTemp
+		EK 18
+	endif
 
 	aTemp = ar_Null
 

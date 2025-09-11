@@ -2,18 +2,48 @@
 MCMExtender\StartMenu.xml::StartMenu
 true
 
-; MCM Prefabs
-MCMExtender\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
+; ListRect.xml
+MCMExtender\ListRect\text.xml::@Prefabs\MCM\ListRect.xml::text
+!#VUI+\hudcenteredtext.xml
+true
+MCMExtender\ListRect\textVUI+.xml::@Prefabs\MCM\ListRect.xml::text
+#VUI+\hudcenteredtext.xml
+true
+
+; MCM.xml
+MCMExtender\MCM\MCM_Search.xml::@Prefabs\MCM\MCM.xml::MCM
+true
+MCMExtender\MCM\MCM_Back.xml::@Prefabs\MCM\MCM.xml::MCM_Back
+true
+
+; ModList.xml
+MCMExtender\ModList\MCM_ModList.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
+true
+MCMExtender\ModList\ArrowDown.xml::@Prefabs\MCM\ModList.xml::ArrowDown
+true
+MCMExtender\ModList\ArrowUp.xml::@Prefabs\MCM\ModList.xml::ArrowUp
+true
+MCMExtender\ModList\ArrowDownClone.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
+true
+MCMExtender\ModList\ArrowUpClone.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
+true
+
+; OptionRect.xml
+MCMExtender\OptionRect\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
 !darnui
 true
-MCMExtender\Darn\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
+MCMExtender\OptionRect\RGBDarn.xml::@Prefabs\MCM\OptionRect.xml::RGB
 darnui
 true
-MCMExtender\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB
+MCMExtender\OptionRect\CustomImage.xml::@Prefabs\MCM\OptionRect.xml
 true
-MCMExtender\MCM_Scale.xml::@Prefabs\MCM\Scale.xml::MCM_Scale
+
+; Scale.xml
+MCMExtender\Scale\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB
 true
-MCMExtender\Scale_Title.xml::@Prefabs\MCM\Scale.xml::Scale_Title
+MCMExtender\Scale\MCM_Scale.xml::@Prefabs\MCM\Scale.xml::MCM_Scale
+true
+MCMExtender\Scale\Scale_Title.xml::@Prefabs\MCM\Scale.xml::Scale_Title
 true
 
 ; VUI+ Fix
@@ -22,12 +52,4 @@ true
 MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\Options.xml::Options_Scroll
 true
 MCMExtender\VUI+\systemcolor.xml::@Prefabs\MCM\OptionRect.xml::image
-true
-
-; ListRect Fix
-MCMExtender\ListRect.xml::@Prefabs\MCM\ListRect.xml::text
-!#VUI+\hudcenteredtext.xml
-true
-MCMExtender\VUI+\ListRect.xml::@Prefabs\MCM\ListRect.xml::text
-#VUI+\hudcenteredtext.xml
 true

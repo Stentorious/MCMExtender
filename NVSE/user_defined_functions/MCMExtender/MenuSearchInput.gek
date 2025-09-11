@@ -1,0 +1,92 @@
+int iKeyID
+
+int iCursorPos
+int iLength
+int iSearch
+string_var sSearch
+string_var sCursor
+
+begin Function {iKeyID}
+
+	if eval MenuMode 3 || GetActiveMenuMode != 1013 || GetUIFloatAlt "StartMenu\_MCMExt+Search" != 1
+		return
+	endif
+
+	sSearch = GetUIString "StartMenu\MCM\MCM_Search\_search_text_1"
+	iCursorPos = Goo1.AuxVarGetFlt "*MCMExt_Cursor"
+
+	; Update cursor position
+	if eval iKeyID == 203 || iKeyID == 205 || iKeyID == 199 || iKeyID == 207
+		iLength = sv_Length sSearch
+
+		; Left arrow
+		if eval iKeyID == 203
+			iCursorPos -= 1
+		; Right arrow
+		elseif eval iKeyID == 205
+			iCursorPos += 1
+		; Home
+		elseif eval iKeyID == 199
+			iCursorPos = 0
+		; End
+		elseif eval iKeyID == 207
+			iCursorPos = iLength
+		endif
+		iCursorPos = Clamp iCursorPos 0 iLength
+
+	; Enter
+	elseif eval iKeyID == 28
+		SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+		return
+
+	; Ctrl-F
+	elseif eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+		return
+
+	; Backspace
+	elseif eval iKeyID == 14
+		if eval iCursorPos > 0
+			iCursorPos -= 1
+			sSearch[iCursorPos] = ""
+			iSearch = 1
+		endif
+
+	; Space
+	elseif eval iKeyID == 57
+		sv_Insert " " sSearch iCursorPos
+		iCursorPos += 1
+		iSearch = 2
+	; Characters
+	else
+		if eval IsKeyPressed 42 2 == 0 && IsKeyPressed 54 2 == 0
+			sv_Insert (sv_ToLower (sv_Construct "%k" iKeyID)) sSearch iCursorPos
+		else
+			sv_Insert (sv_Construct "%k" iKeyID) sSearch iCursorPos
+		endif
+		iCursorPos += 1
+		iSearch = 2
+	endif
+
+	; Update string
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" "%z" sSearch
+	SetUIFloatAlt "StartMenu\_MCMExt+Search" 0
+	SetUIFloatAlt "StartMenu\_MCMExt+Search" 1
+
+	; Update cursor
+	Goo1.AuxVarSetFlt "*MCMExt_Cursor" iCursorPos
+	sCursor = sSearch
+	sv_Insert "|" sCursor iCursorPos
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" (sCursor)
+	sCursor[iCursorPos] = " "
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" (sCursor)
+	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1
+	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1 2.5 1 2
+
+	; Search
+	if eval iSearch == 1 || (iSearch == 2 && GetUIFloatAlt "StartMenu\MCM\MCM_Search\_search_count" > 0)
+		Call (CompileScript "MCMExtender\MenuSearch.gek") (sSearch)
+	endif
+
+	sv_Destruct sSearch sCursor
+
+end

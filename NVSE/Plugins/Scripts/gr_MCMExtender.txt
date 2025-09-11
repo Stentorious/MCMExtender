@@ -22,11 +22,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.02
+int MCMExtenderVersion = 1.1
 
 int iSize
-ref rList
-ref rMenuItem
 array_var aFiles
 array_var aJSON
 array_var aModID
@@ -95,3 +93,26 @@ Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
 SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1013
 SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1013
 SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 2
+
+; Search bar events
+SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#606"
+SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#607"
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 33			; F
+array_var aKeys = Ar_List 2 3 4 5 6 7 8 9 10 11 16 17 18 19 20 21 22 23 24 25
+array_var aTemp = Ar_List 30 31 32 33 34 35 36 37 38 44 45 46 47 48 49 50 14 28 57
+ar_Cat aKeys aTemp
+aTemp = Ar_List 199 207 203 205
+ar_Cat aKeys aTemp
+if eval (int iSize = ar_Size aKeys) > 0
+	while (iSize -= 1) > -1
+		SetOnKeyDownEventHandler (CompileScript "MCMExtender\MenuSearchInput.gek") 1 (aKeys[iSize])
+	loop
+endif
+aKeys = aTemp = ar_Null
+
+; Decrease MCM quest delay (High refresh rate fix)
+SetQuestDelay MCM 0.001
+SetQuestDelay MCMList 0.001
+SetQuestDelay MCMModList 0.001
+SetQuestDelay MCMNavigate 0.001
+SetQuestDelay MCMScale 0.001

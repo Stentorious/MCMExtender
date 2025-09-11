@@ -1,0 +1,4 @@
+<y>
+	<copy src="parent()" trait="y"/>
+	<add> 25 </add>
+</y>

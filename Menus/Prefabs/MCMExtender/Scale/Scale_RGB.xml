@@ -2,15 +2,20 @@
 <depth> 20 </depth>
 <image name="Background">
 	<visible> 1 </visible>
-	<x> -2 </x>
-	<y> -2 </y>
+	<x>
+		<copy> 0 </copy>
+		<sub src="globals()" trait="_line_thickness"/>
+	</x>
+	<y> <copy src="me()" trait="x" /> </y>
 	<width>
 		<copy src="parent()" trait="width" />
-		<add> 4 </add>
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</width>
 	<height>
 		<copy src="parent()" trait="height" />
-		<add> 4 </add>
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
 	</height>
 	<depth> -1 </depth>
 	<zoom> -1 </zoom>

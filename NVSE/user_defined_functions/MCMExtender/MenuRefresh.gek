@@ -1,0 +1,67 @@
+int iSize
+ref rEntry
+array_var aCache
+string_var sName
+
+begin Function {}
+
+	Goo1.AuxVarSetFlt "*MCMExt_Search" 0
+	Goo1.AuxVarSetFlt "*MCMExt_Cursor" 0
+	SetUIFloatAlt "StartMenu\_MCMExt+Search" 0
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" "%e"
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" "|"
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" " "
+	if eval GetUIString "StartMenu\MCM\MCM_Search\_search_term" == ""
+		return
+	endif
+
+	; Update search term
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" "%e"
+
+	ListClear MCMMods
+
+	; Add matching forms to list
+	aCache = Goo1.AuxVarGetAsArr "*MCMListCache"
+	ListAddArray MCMMods aCache
+
+	; Validate and add temp clone to MCM FormList
+	if eval (iSize = Goo1.AuxVarSize "*MCMExt_ModName") > 0
+		while (iSize -= 1) > -1
+			sName = Goo1.AuxVarGetStr "*MCMExt_ModName" iSize
+			if eval IsFormValid (rEntry = Goo1.AuxVarGetRef "*MCMExt_Clones" iSize) == 0 || GetType rEntry != 31 || GetValueAlt rEntry != iSize || GetName rEntry != (sName)
+				rEntry = TempCloneForm "a"
+				SetValueAlt rEntry iSize
+				SetNameEx (sName) rEntry
+				Goo1.AuxVarSetRef "*MCMExt_Clones" rEntry iSize
+			endif
+			ListAddForm MCMMods rEntry
+		loop
+	endif
+
+	SetUIFloatAlt "StartMenu\MCM\MCM_Search\_search_count" (ListGetCount MCMMods)
+
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
+		return
+	endif
+
+	; Reset MCM
+	SetMCMFloat 5 0 "_count" 0
+	SetMCMFloat 5 0 "_offset" 0
+	SetMCMFloat 0 0 "_ActiveOption" 0
+	SetMCMFloat 5 0 "_selected" -1
+	SetMCMFloat 0 0 "_ActiveMod" 0
+	MCMModSkip = 0
+	MCMSubShift = 0
+	MCMModList.iModIndex = 0
+	MCMModList.iWidthCount2 = 0
+	MCMModList.fSubWidth = 0
+	MCMModList.iSubCount = 0
+	MCMModList.rRef3 = Player
+	MCMModsListed.RemoveAllItems
+	SetMCMFloat 0 0 "_ActiveSubMenu" 0
+	SetMCMFloatMass 5 24 33 "_enable" 0
+	SetStage MCM 1
+
+	sv_Destruct sName
+
+end

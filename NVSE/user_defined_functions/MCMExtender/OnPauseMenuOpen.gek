@@ -2,8 +2,8 @@ int iMenuID
 
 int iIndex
 int iSize
-ref rList
 ref rClone
+array_var aCache
 string_var sName
 
 Begin Function {iMenuID}
@@ -12,18 +12,30 @@ Begin Function {iMenuID}
 		return
 	endif
 
-	; Get the MCM menu FormList and generate an entry for each mod loaded
-	rList = GetFormFromMod "The Mod Configuration Menu.esp" "AE6"
+	; Reset search terms
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" "%e"
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" "%e"
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" "|"
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" " "
 
+	MCMModList.fWidth = 300
+
+	; Get the MCM menu FormList and generate an entry for each mod loaded
 	; Remove clones from FormList
-	iSize = ListGetCount rList
+	iSize = ListGetCount MCMMods
 	while (iSize -= 1) > -1
-		rClone = ListGetNthForm rList iSize
+		rClone = ListGetNthForm MCMMods iSize
 		if eval (GetSourceModIndex rClone) == 255
-			ListRemoveForm rList rClone
+			ListRemoveForm MCMMods rClone
 			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rClone)
 		endif
 	loop
+
+	; Build search cache, remove extra
+	if eval Goo1.AuxVarSize "*MCMListCache" == 0
+		aCache = Ar_Unique (GetListForms MCMMods)
+		Goo1.AuxVarSetFromArr "*MCMListCache" aCache
+	endif
 
 	; Validate and add temp clone to MCM FormList
 	if eval (iSize = Goo1.AuxVarSize "*MCMExt_ModName") > 0
@@ -37,10 +49,11 @@ Begin Function {iMenuID}
 				;PrintC "MCM Extender: Create clone -> %z" (sName)
 			endif
 			;PrintC "MCM Extender: Loaded menu -> %n" rClone
-			ListAddForm rList rClone
+			ListAddForm MCMMods rClone
 		loop
 	endif
 
+	aCache = Ar_Null
 	sv_Destruct sName
 
 End

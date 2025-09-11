@@ -1,0 +1,28 @@
+<y> -10.5 </y>
+<locus> 1 </locus>
+<depth> 1 </depth>
+<alpha> 255 </alpha>
+<image name="Background">
+	<visible> 1 </visible>
+	<alpha> <copy src="grandparent()" trait="_alpha"/> </alpha>
+	<x>
+		<copy> 0 </copy>
+		<sub src="globals()" trait="_line_thickness"/>
+	</x>
+	<y> <copy src="me()" trait="x" /> </y>
+	<width>
+		<copy src="parent()" trait="width" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
+	</width>
+	<height>
+		<copy src="parent()" trait="height" />
+		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness"/>
+	</height>
+	<depth> -1 </depth>
+	<zoom> -1 </zoom>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<brightness> <copy src="parent()" trait="brightness" /> </brightness>
+	<filename> Interface\Shared\solid.dds </filename>
+</image>

@@ -1,0 +1,25 @@
+int	iKeyID
+
+begin Function {iKeyID}
+
+	; Ignore inputs
+	if eval GetActiveMenuMode != 1013 || MenuMode 4 || MenuMode 3
+		return
+	endif
+
+	; Ctrl + F (Search Bar)
+	if eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+		if eval GetUIFloatAlt "StartMenu\_MCMExt+Search" != 1
+			ClickMenuButton "StartMenu#606"
+		else
+			if eval GetUIString "StartMenu\MCM\MCM_Search\_search_term" != ""
+				SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" (GetUIString "StartMenu\MCM\MCM_Search\_search_term")
+				SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+			else
+				ClickMenuButton "StartMenu#607"
+			endif
+		endif
+		return
+	endif
+
+end

@@ -22,6 +22,9 @@ Begin Function {}
 
 	sConfigPath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 
+	; Hide image
+	SetUIFloat "StartMenu/MCM/*:1/*:1/MCMExtImage/visible" 0
+
 	; for the current submenu, go through each option
 	foreach aForE <- (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"])
 		aTemp = (aForE["value"]) ; set to local array to keep code cleaner
@@ -33,14 +36,13 @@ Begin Function {}
 			SetUIString ((sTemp) + "/_title") " "
 			SetUIFloat ((sTemp) + "/_type") 0
 			SetUIFloat ((sTemp) + "/_highlight") 0
-			SetUIString ((sTemp) + "/image/filename") (aTemp["filename"])
-			SetUIFloat ((sTemp) + "/image/width") (aTemp["width"])
-			SetUIFloat ((sTemp) + "/image/height") (aTemp["height"])
-			SetUIFloat ((sTemp) + "/image/systemcolor") (aTemp["systemcolor"])
-			SetUIFloat ((sTemp) + "/VUI+Clone/systemcolor") (aTemp["systemcolor"])
-			SetUIFloat ((sTemp) + "/image/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
-			SetUIFloat ((sTemp) + "/image/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
-			SetUIFloat ((sTemp) + "/image/visible") 1
+			SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["filename"])
+			SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["width"])
+			SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["height"])
+			SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["systemcolor"])
+			SetUIFloat ((sTemp) + "/MCMExtImage/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
+			SetUIFloat ((sTemp) + "/MCMExtImage/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
+			SetUIFloat ((sTemp) + "/MCMExtImage/visible") 1
 			continue
 		endif
 
