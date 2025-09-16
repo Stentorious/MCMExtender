@@ -144,6 +144,6 @@ Begin Function {}
 	endif
 
 	aJSON = aTemp = Ar_Null
-	sv_Destruct sTemp sTranslate
+	sv_Destruct sTemp sTranslate sJSONPath
 
 End

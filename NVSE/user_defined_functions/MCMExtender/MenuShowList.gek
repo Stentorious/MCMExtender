@@ -17,7 +17,11 @@ Begin Function {}
 	aOption = aJSON["submenus"][$iSubmenu]["options"][$iOption]
 
 	; Translation
-	sText = aOption["title"]
+	if eval (TypeOf aOption["title"]) == "StringMap"
+		sText = Call (CompileScript "MCMExtender\GetString.gek") (aOption["title"])
+	else
+		sText = aOption["title"]
+	endif
 	if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
 		sText = sTranslate
 	endif
@@ -27,7 +31,11 @@ Begin Function {}
 	while (iSize -= 1) > -1
 
 		; Translation
-		sText = aOption["strings"][iSize]
+		if eval (TypeOf aOption["strings"][iSize]) == "StringMap"
+			sText = Call (CompileScript "MCMExtender\GetString.gek") (aOption["strings"][iSize])
+		else
+			sText = aOption["strings"][iSize]
+		endif
 		if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
 			sText = sTranslate
 		endif

@@ -23,6 +23,7 @@ begin Function {}
 	; Add matching forms to list
 	aCache = Goo1.AuxVarGetAsArr "*MCMListCache"
 	ListAddArray MCMMods aCache
+	aCache = ar_Null
 
 	; Validate and add temp clone to MCM FormList
 	if eval (iSize = Goo1.AuxVarSize "*MCMExt_ModName") > 0

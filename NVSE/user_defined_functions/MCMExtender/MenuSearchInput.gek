@@ -37,10 +37,12 @@ begin Function {iKeyID}
 	; Enter
 	elseif eval iKeyID == 28
 		SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+		sv_Destruct sSearch
 		return
 
 	; Ctrl-F
 	elseif eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+		sv_Destruct sSearch
 		return
 
 	; Backspace

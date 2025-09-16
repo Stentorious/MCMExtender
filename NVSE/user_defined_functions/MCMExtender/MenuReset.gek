@@ -6,10 +6,11 @@ array_var aForE
 array_var aForE2
 array_var aTemp
 array_var aVariables
+string_var sType
+string_var sText
 string_var sTemp
 string_var sTranslate
 string_var sConfigPath
-string_var sv_text
 
 Begin Function {}
 
@@ -47,14 +48,20 @@ Begin Function {}
 		endif
 
 		foreach aForE2 <- aTemp ; setup the basic options for reset
-			if eval (TypeOf aForE2["value"]) == "Number" ; number entries get converted directly to MCM setting
+			sType = (TypeOf aForE2["value"])
+			if eval sType == "Number" ; number entries get converted directly to MCM setting
 				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (aForE2["value"])
 				continue
 
-			elseif eval (TypeOf aForE2["value"]) == "String"
+			elseif eval sType == "String" || (sType == "StringMap" && aForE2["key"] != "scale" && aForE2["key"] != "state" && aForE2["key"] != "call")
 
 				; Translation
-				sTemp = (aForE2["value"])
+				if eval sType == "StringMap"
+					sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aForE2["value"])
+					aForE2["value"] = sTemp
+				else
+					sTemp = aForE2["value"]
+				endif
 				if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
 					aForE2["value"] = sTranslate
 				endif
@@ -65,7 +72,7 @@ Begin Function {}
 					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_suffix"
 					SetUIFloat (sTemp) 1
 					sTemp += "Text"
-				elseif eval (aForE2["key"]) == "string" ; type 7
+				elseif eval (aForE2["key"]) == "string"
 					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/value/*:1/string"
 				else
 					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_" + (aForE2["key"])
@@ -96,12 +103,12 @@ Begin Function {}
 
 			; Multi value string
 			if eval (fType = aTemp["type"]) == 8
-				sv_text = ""
+				sText = ""
 				while (iSize -= 1) > -1
 					fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize]
-					sv_text = sv_Construct "%g, %z" fTemp sv_text
+					sText = sv_Construct "%g, %z" fTemp sText
 				loop
-				SetUIString (sTemp) (sv_text[0:-3])
+				SetUIString (sTemp) (sText[0:-3])
 				continue
 
 			; Color box
@@ -122,11 +129,16 @@ Begin Function {}
 				; String
 				elseif eval fType == 1
 					; Translation
-					sv_text = aTemp["strings"][(Clamp fTemp 0 ftemp)]
-					if eval sv_text[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sv_text)) != ""
-						sv_text = sTranslate
+					fTemp = Clamp fTemp 0 ftemp
+					if eval (TypeOf aTemp["strings"][fTemp]) == "StringMap"
+						sText = Call (CompileScript "MCMExtender\GetString.gek") (aTemp["strings"][fTemp])
+					else
+						sText = aTemp["strings"][fTemp]
 					endif
-					SetUIString (sTemp) (sv_text)
+					if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
+						sText = sTranslate
+					endif
+					SetUIString (sTemp) (sText)
 					continue
 
 				; Float
@@ -143,5 +155,8 @@ Begin Function {}
 
 		endif
 	loop
+
+	aJSON = aForE = aForE2 = aTemp = aVariables = Ar_Null
+	sv_Destruct sType sText sTemp sTranslate sConfigPath
 
 End

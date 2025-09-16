@@ -2,7 +2,6 @@ string_var sSearch
 
 int iSize
 ref rEntry
-array_var aCache
 string_var sName
 
 begin Function {sSearch}
@@ -12,6 +11,7 @@ begin Function {sSearch}
 
 	; Don't update search if entering previous term
 	if eval GetUIString "StartMenu\MCM\MCM_Search\_search_term" == (sSearch)
+		sv_Destruct sSearch
 		return
 	endif
 
@@ -20,10 +20,9 @@ begin Function {sSearch}
 	ListClear MCMMods
 
 	; Add matching forms to list
-	aCache = Goo1.AuxVarGetAsArr "*MCMListCache"
-	iSize = ar_Size aCache
+	iSize = Goo1.AuxVarSize "*MCMListCache"
 	while (iSize -= 1) > -1
-		rEntry = aCache[iSize]
+		rEntry = Goo1.AuxVarGetRef "*MCMListCache" iSize
 		if eval (Sv_Find (sSearch) (LNGetName rEntry)) > -1
 			ListAddForm MCMMods rEntry
 		endif

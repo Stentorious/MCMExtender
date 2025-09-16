@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.1
+int MCMExtenderVersion = 1.2
 
 int iSize
 array_var aFiles
@@ -34,7 +34,7 @@ string_var sFilePath
 
 aFiles = GetFilesInFolder "MCM" "*.json"
 if eval (iSize = Ar_Size aFiles) > 0
-	PrintC "MCM Extender: Loading JSON files:"
+	PrintC "MCM Extender: Loading JSON files..."
 	aFiles = Ar_Sort aFiles 1
 	aModID = ar_Construct "array"
 	while (iSize -= 1) > -1
@@ -46,7 +46,7 @@ if eval (iSize = Ar_Size aFiles) > 0
 			continue
 		endif
 		; Check MCM Extender version
-		if eval ar_HasKey aJSON "minMCMVersion" == 0 || aJSON["minMCMVersion"] > MCMExtenderVersion
+		if eval ar_HasKey aJSON "minMCMVersion" == 0 || (Flr (aJSON["minMCMVersion"])) > MCMExtenderVersion
 			PrintC "MCM Extender: Invalid -> %z" sFilePath
 			continue
 		endif
@@ -60,7 +60,7 @@ if eval (iSize = Ar_Size aFiles) > 0
 			PrintC "MCM Extender: Duplicate modName -> %z" sFilePath
 			continue
 		endif
-		PrintC "MCM Extender: Loading... -> %z" sFilePath
+		;PrintC "MCM Extender: Loading... -> %z" sFilePath
 		ar_Append aModID (aJSON["modName"])
 		Goo1.AuxVarSetRef "*MCMExt_Clones" BobbyPin -1
 		Goo1.AuxVarSetStr "*MCMExt_JSON" (sFilePath) -1

@@ -8,6 +8,7 @@ array_var aVariables
 array_var aForE
 string_var sText
 string_var sTranslate
+string_var sType
 
 Begin Function {}
 
@@ -20,7 +21,11 @@ Begin Function {}
 	aVariables = aOption["vars"]
 
 	; Translation
-	sText = aOption["title"]
+	if eval (TypeOf aOption["title"]) == "StringMap"
+		sText = Call (CompileScript "MCMExtender\GetString.gek") (aOption["title"])
+	else
+		sText = aOption["title"]
+	endif
 	if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
 		sText = sTranslate
 	endif
@@ -29,11 +34,16 @@ Begin Function {}
 	; Set other scale parameters
 	if eval Ar_HasKey aOption "scale"
 		foreach aForE <- aOption["scale"]
-			if eval (TypeOf aForE["value"]) == "Number"
+			sType = (TypeOf aForE["value"])
+			if eval sType == "Number"
 				SetUIFloat ("StartMenu/MCM/_" + $aForE["key"]) (aForE["value"])
-			elseif eval (TypeOf aForE["value"]) == "String"
+			elseif eval sType == "String" || sType == "StringMap"
 				; Translation
-				sText = aForE["value"]
+				if eval sType == "StringMap"
+					sText = Call (CompileScript "MCMExtender\GetString.gek") (aForE["value"])
+				else
+					sText = aForE["value"]
+				endif
 				if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
 					sText = sTranslate
 				endif
@@ -57,7 +67,7 @@ Begin Function {}
 	loop
 
 	aJSON = aOption = aVariables = aForE = Ar_Null
-	sv_Destruct sText sTranslate
+	sv_Destruct sText sTranslate sType
 
 	; HSV Color Picker
 	if eval (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible") == 0

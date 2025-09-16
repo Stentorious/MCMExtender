@@ -1,0 +1,100 @@
+array_var aVarMap
+string_var sFilePath
+
+ref rForm
+array_var aTemp
+string_var sTemp
+string_var sEdID
+
+Begin Function {aVarMap}
+
+	; Get default value
+	if eval Ar_HasKey aVarMap "default"
+		sTemp = aVarMap["default"]
+	endif
+
+	if eval Ar_HasKey aVarMap "form"
+
+		; Validate form
+		if eval (TypeOf aVarMap["form"]) == "StringMap"
+			sEdID = Call (CompileScript "MCMExtender\GetString.gek") (aVarMap["form"])
+		else
+			sEdID = (aVarMap["form"])
+		endif
+		rForm = EditorIDToFormID (sEdID)
+		if eval (IsFormValid rForm) == 0
+			PrintC "MCM Extender: Invalid Form in Variable Object -> (%z)" (aVarMap["form"])
+			SetFunctionValue (sTemp)
+			return
+		endif
+
+		; Handle BaseForms
+		if eval IsBaseForm rForm
+
+			if eval Ar_HasKey aVarMap "numVar"			; String Variable
+				;sTemp = GetVariable (aVarMap["numVar"]) rForm
+
+			elseif eval Ar_HasKey aVarMap "arrVar"		; Array Variable
+			aTemp = GetArrayVariable (aVarMap["arrVar"]) rForm
+			sTemp = aTemp[aVarMap["key"]]
+
+			elseif eval Ar_HasKey aVarMap "auxVar"		; Auxiliary-Variable
+				sTemp = AuxVarGetStr (aVarMap["auxVar"]) (aVarMap["key"]) rForm
+
+			elseif eval Ar_HasKey aVarMap "refMap"		; Reference-Map
+				sTemp = RefMapGetStr (aVarMap["refMap"]) rForm
+			endif
+
+		; Handle References
+		else
+
+			if eval Ar_HasKey aVarMap "numVar"			; Numeric Variable
+				;sTemp = rForm.GetVariable (aVarMap["numVar"])
+
+			elseif eval Ar_HasKey aVarMap "arrVar"		; Array Variable
+				aTemp = rForm.GetArrayVariable (aVarMap["arrVar"])
+				sTemp = aTemp[aVarMap["key"]]
+
+			elseif eval Ar_HasKey aVarMap "auxVar"		; Auxiliary-Variable
+				sTemp = rForm.AuxVarGetStr (aVarMap["auxVar"]) (aVarMap["key"])
+
+			elseif eval Ar_HasKey aVarMap "refMap"		; Reference-Map
+				sTemp = rForm.RefMapGetStr (aVarMap["refMap"])
+
+			;elseif eval Ar_HasKey aVarMap "token"		; xNVSE Tokens
+			;	sTemp = rForm.GetTokenValue (EditorIDToFormID (aVarMap["token"]))
+			endif
+		endif
+
+	elseif eval Ar_HasKey aVarMap "auxStringMap"		; Auxiliary-StringMap
+		sTemp = AuxStringMapGetStr (aVarMap["auxStringMap"]) (aVarMap["key"])
+
+	elseif eval Ar_HasKey aVarMap "uiTrait"				; UI Float
+		sTemp = GetUIString (aVarMap["uiTrait"])
+
+	;elseif eval Ar_HasKey aVarMap "global"				; Global Variable
+	;	sTemp = GetGlobalVariable (EditorIDToFormID (aVarMap["global"]))
+
+	elseif eval Ar_HasKey aVarMap "gameINI" 			; Game INI
+		sTemp = GetStringINISetting (aVarMap["gameINI"])
+
+	elseif eval Ar_HasKey aVarMap "gameSetting" 		; GameSetting
+		sTemp = GetStringSetting (aVarMap["gameSetting"])
+
+	;elseif eval Ar_HasKey aVarMap "configINI"			; Config INI
+	;	if eval Ar_HasKey aVarMap "iniPath"
+	;		sTemp = GetINIString_Cached (aVarMap["configINI"]) (aVarMap["iniPath"]) (sTemp)
+	;		Goo1.AuxVarSetStr "*MCMExt_INICache" (aVarMap["iniPath"]) -1
+	;	else
+	;		sFilePath = Goo1.AuxVarGetStr "*MCMExt_State" 5
+	;		sTemp = GetINIString_Cached (aVarMap["configINI"]) (sFilePath) (sTemp)
+	;		Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
+	;	endif
+	endif
+
+	SetFunctionValue (sTemp)
+
+	aVarMap = aTemp = Ar_Null
+	sv_Destruct sFilePath sTemp sEdID
+
+End

@@ -4,13 +4,19 @@ string_var sFilePath
 
 ref rForm
 array_var aTemp
+string_var sEdID
 
 Begin Function {fValue, aVarMap}
 
 	if eval Ar_HasKey aVarMap "form"
 
 		; Validate form
-		rForm = EditorIDToFormID (aVarMap["form"])
+		if eval (TypeOf aVarMap["form"]) == "StringMap"
+			sEdID = Call (CompileScript "MCMExtender\GetString.gek") (aVarMap["form"])
+		else
+			sEdID = (aVarMap["form"])
+		endif
+		rForm = EditorIDToFormID (sEdID)
 		if eval (IsFormValid rForm) == 0
 			PrintC "MCM Extender: Invalid Form in Variable Object -> %z" (aVarMap["form"])
 			return
@@ -72,16 +78,19 @@ Begin Function {fValue, aVarMap}
 
 	if eval Ar_HasKey aVarMap "configINI"				; Config INI
 		if eval Ar_HasKey aVarMap "iniPath"
-			SetINIValC (aVarMap["configINI"]) fValue (aVarMap["iniPath"])
-			Goo1.AuxVarSetStr "*MCMExt_INICache" (aVarMap["iniPath"]) -1
+			if eval (TypeOf aVarMap["iniPath"]) == "StringMap"
+				sFilePath = Call (CompileScript "MCMExtender\GetString.gek") (aVarMap["iniPath"])
+			else
+				sFilePath = aVarMap["iniPath"]
+			endif
 		else
 			sFilePath = Goo1.AuxVarGetStr "*MCMExt_State" 5
-			SetINIValC (aVarMap["configINI"]) fValue (sFilePath)
-			Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
 		endif
+		SetINIValC (aVarMap["configINI"]) fValue (sFilePath)
+		Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
 	endif
 
 	aVarMap = Ar_Null
-	sv_Destruct sFilePath
+	sv_Destruct sFilePath sEdID
 
 End

@@ -50,12 +50,20 @@ Begin Function {fValue, iMenu, iSubmenu, iOption, aJSON}
 		SetUIFloat ("StartMenu/MCM/*:5/SubMenu" + $aForE["key"] + "/_enable") fTemp
 
 		; Translation support
-		sTemp = aForE["value"]["listTitle"]
+		if eval (TypeOf aForE["value"]["listTitle"]) == "StringMap"
+			sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aForE["value"]["listTitle"])
+		else
+			sTemp = aForE["value"]["listTitle"]
+		endif
 		if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
 			sTemp = sTranslate
 		endif
 		SetUIString ("StartMenu/MCM/*:5/SubMenu" + $aForE["key"] + "/text/string") (sTemp)
-		sTemp = aForE["value"]["pageTitle"]
+		if eval (TypeOf aForE["value"]["pageTitle"]) == "StringMap"
+			sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aForE["value"]["pageTitle"])
+		else
+			sTemp = aForE["value"]["pageTitle"]
+		endif
 		if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
 			sTemp = sTranslate
 		endif
