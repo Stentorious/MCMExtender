@@ -10,6 +10,9 @@ Begin Function {iMenuID}
 		return
 	endif
 
+	; Erase translation map
+	AuxStringMapDestroy "*MCMExt_Translations"
+
 	; Alert mods that values have changed
 	if eval Goo1.AuxVarSize "*MCMExt_Updated" > 0
 		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_Updated"
