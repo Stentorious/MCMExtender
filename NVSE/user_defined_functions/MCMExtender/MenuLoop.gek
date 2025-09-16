@@ -137,10 +137,9 @@ Begin Function {}
 
 	; HSV Color Picker Support
 	if eval (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible") == 1 && (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_UserInput") == 1
-		ref rQuest = EditorIDToFormID "MCMScale"
-		SetVariable "fVTemp1" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Red") rQuest
-		SetVariable "fVTemp2" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Green") rQuest
-		SetVariable "fVTemp3" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Blue") rQuest
+		SetVariable "fVTemp1" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Red") MCMScale
+		SetVariable "fVTemp2" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Green") MCMScale
+		SetVariable "fVTemp3" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Blue") MCMScale
 	endif
 
 	aJSON = aTemp = Ar_Null

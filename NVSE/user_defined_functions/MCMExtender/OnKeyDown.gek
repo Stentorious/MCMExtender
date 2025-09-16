@@ -7,8 +7,13 @@ begin Function {iKeyID}
 		return
 	endif
 
+	; Ctrl held
+	if eval IsKeyPressed 29 2 == 0 && IsKeyPressed 157 2 == 0
+		return
+	endif
+
 	; Ctrl + F (Search Bar)
-	if eval iKeyID == 33 && (IsKeyPressed 29 2 || IsKeyPressed 157 2)
+	if eval iKeyID == 33
 		if eval GetUIFloatAlt "StartMenu\_MCMExt+Search" != 1
 			ClickMenuButton "StartMenu#606"
 		else
@@ -20,6 +25,41 @@ begin Function {iKeyID}
 			endif
 		endif
 		return
+
+	elseif GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 1
+
+		; Ctrl + C (Copy)
+		if eval iKeyID == 46
+			Goo1.AuxVarErase "*MCMExt_Copy"
+			Goo1.AuxVarSetFlt "*MCMExt_Copy" 1 0
+			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Red") 1
+			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Green") 2
+			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Blue") 3
+			return
+
+		; Ctrl + V (Paste)
+		elseif eval iKeyID == 47
+			if eval Goo1.AuxVarGetFlt "*MCMExt_Copy" 0 != 1
+				return
+			endif
+
+			; Set input traits
+			SetVariable "fVTemp1" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 1) MCMScale
+			SetVariable "fVTemp2" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 2) MCMScale
+			SetVariable "fVTemp3" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 3) MCMScale
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputRed" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 1)
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputGreen" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 2)
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputBlue" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 3)
+			; Set picker drag coordinates
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsetx" 0
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsety" 0
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsetx" 0
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsety" 0
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragX")
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragY")
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputHueDragY")
+		endif
+
 	endif
 
 end
