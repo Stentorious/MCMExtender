@@ -14,6 +14,11 @@ Begin Function {}
 
 	SetUIFloat "StartMenu/MCM/_ShowScale" 2
 
+	; Exit search on select key option
+	if eval GetUIFloatAlt "StartMenu\_MCMExt+Search" == 1
+		SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+	endif
+
 	iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
 	iOption = GetUIFloat "StartMenu/MCM/_ActiveOption"
 	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
