@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.21
+int MCMExtenderVersion = 1.22
 
 int iSize
 array_var aFiles
@@ -118,3 +118,19 @@ SetQuestDelay MCMList 0.001
 SetQuestDelay MCMModList 0.001
 SetQuestDelay MCMNavigate 0.001
 SetQuestDelay MCMScale 0.001
+
+; Controller scroll events
+SetEventHandler "OnButtonDown:3" (begin function {int iKeyCode}
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
+		return
+	endif
+	AuxTimerStart "*MCMExt_Input" 0.5 13
+	Goo1.AuxVarSetFlt "*MCMExt_Input" iKeyCode
+end)
+SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
+	if eval Goo1.AuxVarType "*MCMExt_Input" == 0
+		return
+	endif
+	AuxTimerStop "*MCMExt_Input"
+	Goo1.AuxVarErase "*MCMExt_Input"
+end)

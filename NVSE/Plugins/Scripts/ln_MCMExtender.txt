@@ -1,0 +1,2 @@
+; Input events
+SetOnAuxTimerStopHandler 1 (CompileScript "MCMExtender\InputHandler.gek") "*MCMExt_Input"

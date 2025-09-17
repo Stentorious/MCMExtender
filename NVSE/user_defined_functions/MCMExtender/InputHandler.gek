@@ -1,0 +1,34 @@
+ref rOwner
+string_var sTimerName
+
+int iInput
+
+begin Function {sTimerName, rOwner}
+
+	sv_Destruct sTimerName
+
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
+		return
+	endif
+
+	if eval (iInput = Goo1.AuxVarGetFlt "*MCMExt_Input") == 1
+		if eval MCM.iTargetOption
+			MCMNavigate.iTask = 3
+		else
+			MCMNavigate.iTask = 1
+		endif
+		if eval IsButtonPressed 1
+			AuxTimerStart "*MCMExt_Input" 0.075 13
+		endif
+	elseif eval iInput == 2
+		if eval MCM.iTargetOption
+			MCMNavigate.iTask = 4
+		else
+			MCMNavigate.iTask = 2
+		endif
+		if eval IsButtonPressed 2
+			AuxTimerStart "*MCMExt_Input" 0.075 13
+		endif
+	endif
+
+End
