@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.2
+int MCMExtenderVersion = 1.21
 
 int iSize
 array_var aFiles
@@ -90,8 +90,8 @@ Goo1.AuxVarSetStr "*MCMExt_State" ("") 4	; modName
 Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
 
 ; Menu events
-SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1013
-SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1013
+SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013
+SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 1013
 SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 2
 
 ; Search bar events
