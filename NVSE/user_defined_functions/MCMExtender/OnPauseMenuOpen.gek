@@ -42,7 +42,7 @@ Begin Function {iMenuID}
 		while (iSize -= 1) > -1
 			sName = Goo1.AuxVarGetStr "*MCMExt_ModName" iSize
 			if eval IsFormValid (rClone = Goo1.AuxVarGetRef "*MCMExt_Clones" iSize) == 0 || GetType rClone != 31 || GetValueAlt rClone != iSize || GetName rClone != (sName)
-				rClone = TempCloneForm "a"
+				rClone = TempCloneForm Caps001
 				SetValueAlt rClone iSize
 				SetNameEx (sName) rClone
 				Goo1.AuxVarSetRef "*MCMExt_Clones" rClone iSize

@@ -33,7 +33,7 @@ begin Function {sSearch}
 		while (iSize -= 1) > -1
 			sName = Goo1.AuxVarGetStr "*MCMExt_ModName" iSize
 			if eval IsFormValid (rEntry = Goo1.AuxVarGetRef "*MCMExt_Clones" iSize) == 0 || GetType rEntry != 31 || GetValueAlt rEntry != iSize || GetName rEntry != (sName)
-				rEntry = TempCloneForm "a"
+				rEntry = TempCloneForm Caps001
 				SetValueAlt rEntry iSize
 				SetNameEx (sName) rEntry
 				Goo1.AuxVarSetRef "*MCMExt_Clones" rEntry iSize
