@@ -6,6 +6,7 @@ array_var aForE
 array_var aForE2
 array_var aTemp
 array_var aVariables
+string_var sSubmenu
 string_var sType
 string_var sText
 string_var sTemp
@@ -19,7 +20,16 @@ Begin Function {}
 
 	aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
 
-	SetUIFloat "StartMenu/MCM/*:1/_columns" (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["columns"])
+	; Prevent script error when scrolling past final submenu at the bottom of the list
+	sSubmenu = $(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")
+	if eval ar_HasKey aJSON["submenus"] (sSubmenu) == 0
+		MCMNavigate.iTask = 2
+		aJSON = Ar_Null
+		sv_Destruct sSubmenu
+		return
+	endif
+
+	SetUIFloat "StartMenu/MCM/*:1/_columns" (aJSON["submenus"][(sSubmenu)]["columns"])
 
 	sConfigPath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 
@@ -27,7 +37,7 @@ Begin Function {}
 	SetUIFloat "StartMenu/MCM/*:1/*:1/MCMExtImage/visible" 0
 
 	; for the current submenu, go through each option
-	foreach aForE <- (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"])
+	foreach aForE <- (aJSON["submenus"][(sSubmenu)]["options"])
 		aTemp = (aForE["value"]) ; set to local array to keep code cleaner
 
 		; Image display
@@ -157,6 +167,6 @@ Begin Function {}
 	loop
 
 	aJSON = aForE = aForE2 = aTemp = aVariables = Ar_Null
-	sv_Destruct sType sText sTemp sTranslate sConfigPath
+	sv_Destruct sType sText sTemp sTranslate sConfigPath sSubmenu
 
 End
