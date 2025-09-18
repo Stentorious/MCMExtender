@@ -7,6 +7,16 @@ begin Function {iKeyID}
 		return
 	endif
 
+	; Scale menu scroll
+	if GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible" == 1 && GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 0
+		if eval iKeyID == 264
+			MCMScale.iTask = 6
+		elseif eval iKeyID == 265
+			MCMScale.iTask = 5
+		endif
+		return
+	endif
+
 	; Ctrl held
 	if eval IsKeyPressed 29 2 == 0 && IsKeyPressed 157 2 == 0
 		return
@@ -59,7 +69,6 @@ begin Function {iKeyID}
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragY")
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputHueDragY")
 		endif
-
 	endif
 
 end

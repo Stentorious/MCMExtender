@@ -2,17 +2,44 @@ ref rOwner
 string_var sTimerName
 
 int iInput
+int iScale
+int iList
+int iKey
+ref rMCMQuest
 
 begin Function {sTimerName, rOwner}
 
 	sv_Destruct sTimerName
 
-	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
+	iScale = GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible"
+	iList = GetUIFloatAlt "StartMenu/MCM/MCM_List/visible"
+	iKey = GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible"
+
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1 || iList || iKey || GetActiveMenuMode != 1013 || MenuMode 3
 		return
 	endif
 
-	if eval (iInput = Goo1.AuxVarGetFlt "*MCMExt_Input") == 1
-		if eval MCM.iTargetOption
+	iInput = Goo1.AuxVarGetFlt "*MCMExt_Input"
+	rMCMQuest = Goo1.AuxVarGetRef "*MCMExt_Refs" 0
+
+	if eval iScale == 1
+		if eval iInput == 4
+			MCMScale.iTask = 5
+			if eval IsButtonPressed 4
+				AuxTimerStart "*MCMExt_Input" 0.05 13
+			endif
+
+		elseif eval iInput == 8
+			MCMScale.iTask = 6
+			if eval IsButtonPressed 8
+				AuxTimerStart "*MCMExt_Input" 0.05 13
+			endif
+		endif
+		return
+	endif
+
+	if eval iInput == 1
+		if eval GetVariable "iTargetOption" rMCMQuest
 			MCMNavigate.iTask = 3
 		else
 			MCMNavigate.iTask = 1
@@ -20,8 +47,10 @@ begin Function {sTimerName, rOwner}
 		if eval IsButtonPressed 1
 			AuxTimerStart "*MCMExt_Input" 0.075 13
 		endif
+		return
+
 	elseif eval iInput == 2
-		if eval MCM.iTargetOption
+		if eval GetVariable "iTargetOption" rMCMQuest
 			MCMNavigate.iTask = 4
 		else
 			MCMNavigate.iTask = 2
@@ -29,6 +58,7 @@ begin Function {sTimerName, rOwner}
 		if eval IsButtonPressed 2
 			AuxTimerStart "*MCMExt_Input" 0.075 13
 		endif
+		return
 	endif
 
 End

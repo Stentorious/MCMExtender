@@ -22,7 +22,15 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.22
+int MCMExtenderVersion = 1.23
+
+; Cache MCM forms
+Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
+;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "AEA") 1 ; MCMModList
+;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B13") 2 ; MCMNavigate
+;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B15") 3 ; MCMScale
+;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B18") 4 ; MCMList
+;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "AE6") 5 ; MCMMods
 
 int iSize
 array_var aFiles
@@ -113,21 +121,25 @@ endif
 aKeys = aTemp = ar_Null
 
 ; Decrease MCM quest delay (High refresh rate fix)
-SetQuestDelay MCM 0.001
+SetQuestDelay (Goo1.AuxVarGetRef "*MCMExt_Refs" 0) 0.001
 SetQuestDelay MCMList 0.001
 SetQuestDelay MCMModList 0.001
 SetQuestDelay MCMNavigate 0.001
 SetQuestDelay MCMScale 0.001
 
+; Keyboard scroll events
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 264			; Wheel Up
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 265			; Wheel Down
+
 ; Controller scroll events
-SetEventHandler "OnButtonDown:3" (begin function {int iKeyCode}
+SetEventHandler "OnButtonDown:15" (begin function {int iKeyCode}
 	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
 		return
 	endif
 	AuxTimerStart "*MCMExt_Input" 0.5 13
 	Goo1.AuxVarSetFlt "*MCMExt_Input" iKeyCode
 end)
-SetEventHandler "OnButtonUp:3" (begin function {int iKeyCode}
+SetEventHandler "OnButtonUp:15" (begin function {int iKeyCode}
 	if eval Goo1.AuxVarType "*MCMExt_Input" == 0
 		return
 	endif

@@ -62,7 +62,7 @@ begin Function {sSearch}
 	MCMModsListed.RemoveAllItems
 	SetMCMFloat 0 0 "_ActiveSubMenu" 0
 	SetMCMFloatMass 5 24 33 "_enable" 0
-	SetStage MCM 1
+	SetStage (Goo1.AuxVarGetRef "*MCMExt_Refs" 0) 1
 
 	sv_Destruct sSearch sName
 
