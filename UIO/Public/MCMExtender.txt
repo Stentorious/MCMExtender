@@ -45,6 +45,12 @@ MCMExtender\Scale\MCM_Scale.xml::@Prefabs\MCM\Scale.xml::MCM_Scale
 true
 MCMExtender\Scale\Scale_Title.xml::@Prefabs\MCM\Scale.xml::Scale_Title
 true
+MCMExtender\Scale\Meter1_Bar.xml::@Prefabs\MCM\Scale.xml::Meter1_Bar
+true
+MCMExtender\Scale\Meter2_Bar.xml::@Prefabs\MCM\Scale.xml::Meter2_Bar
+true
+MCMExtender\Scale\Meter3_Bar.xml::@Prefabs\MCM\Scale.xml::Meter3_Bar
+true
 
 ; VUI+ Fix
 MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\ModList.xml::ModList_Scroll
