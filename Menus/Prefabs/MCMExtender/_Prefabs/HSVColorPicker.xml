@@ -421,7 +421,7 @@ Displays color gradient and updates automatically based on current selection.
 	</width>
 	<height> <copy src="me()" trait="width" /> </height>
 	<zoom> -1 </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<filename> Interface\Shared\solid.dds </filename>
 </image>
 <image name="Saturation">
@@ -600,7 +600,7 @@ Accepts Hue input in the form of a slider.
 		<add src="globals()" trait="_line_thickness"/>
 	</height>
 	<zoom> -1 </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<filename> Interface\Shared\solid.dds </filename>
 </image>
 <hotrect name="Hue_Picker">
@@ -785,7 +785,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="sibling(Result_Window_Background)" trait="height" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> R: </string>
 </text>
@@ -799,7 +799,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(RedLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string> <copy src="parent()" trait="_Red"/> <max> 0.00001 </max> </string>
@@ -814,7 +814,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> G: </string>
 </text>
@@ -828,7 +828,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(GreenLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string> <copy src="parent()" trait="_Green"/> <max> 0.00001 </max> </string>
@@ -843,7 +843,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> B: </string>
 </text>
@@ -857,7 +857,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(BlueLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string> <copy src="parent()" trait="_Blue"/> <max> 0.00001 </max> </string>
@@ -872,7 +872,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> H: </string>
 </text>
@@ -886,7 +886,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(HueLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string> <copy src="parent()" trait="_Hue"/> </string>
@@ -901,7 +901,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> S: </string>
 </text>
@@ -915,7 +915,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(SaturationLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string>
@@ -933,7 +933,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> V: </string>
 </text>
@@ -947,7 +947,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(ValueLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string>
@@ -965,7 +965,7 @@ Decimal color has been included for debugging but is disabled by default.
 		<add src="parent()" trait="_LabelSpace" />
 	</y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<string> D: </string>
 </text>
@@ -979,7 +979,7 @@ Decimal color has been included for debugging but is disabled by default.
 	</x>
 	<y> <copy src="sibling(DecimalLabel)" trait="y" /> </y>
 	<zoom> <copy src="parent()" trait="_TextZoom" /> </zoom>
-	<systemcolor> &hudmain; </systemcolor>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	<font> 7 </font>
 	<justify> &right; </justify>
 	<string> <copy src="parent()" trait="_Decimal"/> </string>
