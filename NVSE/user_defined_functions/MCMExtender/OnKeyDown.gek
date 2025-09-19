@@ -28,7 +28,6 @@ begin Function {iKeyID}
 			ClickMenuButton "StartMenu#606"
 		else
 			if eval GetUIString "StartMenu\MCM\MCM_Search\_search_term" != ""
-				SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" (GetUIString "StartMenu\MCM\MCM_Search\_search_term")
 				SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
 			else
 				ClickMenuButton "StartMenu#607"

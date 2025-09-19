@@ -13,6 +13,8 @@ Begin Function {iMenuID}
 	endif
 
 	; Reset search terms
+	Goo1.AuxVarSetFlt "*MCMExt_Search" 0
+	Goo1.AuxVarSetFlt "*MCMExt_Cursor" 0
 	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" "%e"
 	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_text_1" "%e"
 	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" "|"

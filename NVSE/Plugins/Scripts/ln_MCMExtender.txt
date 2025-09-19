@@ -1,2 +1,3 @@
 ; Input events
-SetOnAuxTimerStopHandler 1 (CompileScript "MCMExtender\InputHandler.gek") "*MCMExt_Input"
+SetOnAuxTimerStopHandler 1 (CompileScript "MCMExtender\InputHandler.gek") "*MCMExt_QKey"
+SetOnAuxTimerStopHandler 1 (CompileScript "MCMExtender\InputHandler.gek") "*MCMExt_QBut"

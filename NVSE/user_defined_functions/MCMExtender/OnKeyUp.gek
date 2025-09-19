@@ -1,0 +1,9 @@
+int iKeyID
+
+begin function {iKeyID}
+	if eval Goo1.AuxVarType "*MCMExt_QKey" == 0
+		return
+	endif
+	AuxTimerStop "*MCMExt_QKey"
+	Goo1.AuxVarErase "*MCMExt_QKey"
+end

@@ -84,6 +84,14 @@ begin Function {iKeyID}
 	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1
 	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1 2.5 1 2
 
+	; Queue input
+	if eval Goo1.AuxVarType "*MCMExt_QKey" == 0
+		AuxTimerStart "*MCMExt_QKey" 0.5 13
+	else
+		AuxTimerStart "*MCMExt_QKey" 0.05 13
+	endif
+	Goo1.AuxVarSetFlt "*MCMExt_QKey" iKeyID
+
 	; Search
 	if eval iSearch == 1 || (iSearch == 2 && GetUIFloatAlt "StartMenu\MCM\MCM_Search\_search_count" > 0)
 		Call (CompileScript "MCMExtender\MenuSearch.gek") (sSearch)
