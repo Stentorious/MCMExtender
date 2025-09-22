@@ -22,7 +22,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 	return
 endif
 
-int MCMExtenderVersion = 1.23
+int MCMExtenderVersion = 1.24
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
