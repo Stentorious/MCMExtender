@@ -38,6 +38,7 @@ begin Function {iKeyID}
 	elseif eval iKeyID == 28
 		SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
 		sv_Destruct sSearch
+		PlaySound UIHackingCharEnter 1
 		return
 
 	; Ctrl-F
@@ -52,12 +53,15 @@ begin Function {iKeyID}
 			sSearch[iCursorPos] = ""
 			iSearch = 1
 		endif
+		PlaySound UIHackingCharSingle 1
 
 	; Space
 	elseif eval iKeyID == 57
 		sv_Insert " " sSearch iCursorPos
 		iCursorPos += 1
 		iSearch = 2
+		PlaySound UIHackingCharSingle 1
+
 	; Characters
 	else
 		if eval IsKeyPressed 42 2 == 0 && IsKeyPressed 54 2 == 0
@@ -67,6 +71,7 @@ begin Function {iKeyID}
 		endif
 		iCursorPos += 1
 		iSearch = 2
+		PlaySound UIHackingCharSingle 1
 	endif
 
 	; Update string
