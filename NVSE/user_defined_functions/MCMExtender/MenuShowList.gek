@@ -2,6 +2,7 @@ int iSubmenu
 int iOption
 
 int iSize
+int iValue
 array_var aJSON
 array_var aOption
 string_var sText
@@ -48,7 +49,14 @@ Begin Function {}
 
 		SetUIFloat ("StartMenu/MCM/*:3/*:" + $(iSize + 1) + "/_enable") 1
 	loop
-	SetUIFloat "StartMenu/MCM/_Value" (Call (CompileScript "MCMExtender\GetValue.gek") aOption["vars"][0])
+
+	; Update value
+	iValue = Call (CompileScript "MCMExtender\GetValue.gek") (aOption["vars"][0])
+	if eval GetUIFloatAlt "StartMenu/MCM/_AltInput"
+		iValue += 1
+		CallAfterFrames 2 ({int iTemp} => SetMCMFloat 3 0 "_selected" (iTemp - 1)) 1 iValue
+	endif
+	SetUIFloat "StartMenu/MCM/_Value" iValue
 
 	aJSON = aOption = Ar_Null
 	sv_Destruct sText sTranslate

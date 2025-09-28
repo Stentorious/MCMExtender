@@ -4,14 +4,12 @@ true
 
 ; ListRect.xml
 MCMExtender\ListRect\text.xml::@Prefabs\MCM\ListRect.xml::text
-!#VUI+\hudcenteredtext.xml
 true
-MCMExtender\ListRect\textVUI+.xml::@Prefabs\MCM\ListRect.xml::text
-#VUI+\hudcenteredtext.xml
+MCMExtender\ListRect\highlight.xml::@Prefabs\MCM\ListRect.xml::highlight
 true
 
 ; MCM.xml
-MCMExtender\MCM\MCM_Search.xml::@Prefabs\MCM\MCM.xml::MCM
+MCMExtender\MCM\MCM.xml::@Prefabs\MCM\MCM.xml::MCM
 true
 MCMExtender\MCM\MCM_Back.xml::@Prefabs\MCM\MCM.xml::MCM_Back
 true

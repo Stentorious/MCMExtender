@@ -8,7 +8,7 @@ string_var sTranslate
 
 Begin Function {}
 
-	if eval GetActiveMenuMode != 1013 || GetUIFloatAlt "StartMenu/MCM/_Menu" == 0
+	if eval GetUIFloatAlt "StartMenu/MCM/_Menu" != 1
 		return
 	endif
 
@@ -21,6 +21,17 @@ Begin Function {}
 		MCMModList.iModCount = ListGetCount MCMMods
 		SetMCMFloat 5 0 "_count" (MCMModList.iModCount)
 		aTemp = Ar_Null
+	endif
+
+	; String list controller selection fix
+	if eval GetUIFloatAlt "StartMenu/MCM/_ShowList" == 3 && GetUIFloatAlt "StartMenu/MCM/_AltInput" == 1 && MCMList.iTarget < 1
+		MCMList.iTarget = 1
+		SetMCMFloat 0 0 "_TargetList" 1
+	endif
+
+	; Controller swap fix
+	if eval GetUIFloatAlt "StartMenu/MCM/_AltInput" != MCM.iAltInput
+		MCM.iAltInput = GetUIFloatAlt "StartMenu/MCM/_AltInput"
 	endif
 
 	; Exit search on select key option

@@ -1,0 +1,2 @@
+<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+<alpha> <copy src="MCM_RGB" trait="_HighlightAlpha"/> <mul> 2 </mul> </alpha>
