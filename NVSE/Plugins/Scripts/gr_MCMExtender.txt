@@ -100,7 +100,6 @@ Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
 ; Menu events
 SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013
 SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 1013
-SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 2
 
 ; Search bar events
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#606"

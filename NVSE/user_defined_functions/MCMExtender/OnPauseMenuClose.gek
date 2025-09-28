@@ -10,6 +10,9 @@ Begin Function {iMenuID}
 		return
 	endif
 
+	; Stop menu loop
+	SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 0
+
 	; Erase translation map
 	AuxStringMapDestroy "*MCMExt_Translations"
 
