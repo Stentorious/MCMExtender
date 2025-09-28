@@ -59,7 +59,7 @@ if eval (iSize = Ar_Size aFiles) > 0
 			continue
 		endif
 		; Check requirements array
-		if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") aJSON) == 0
+		if eval ar_HasKey aJSON "requirements" && (Call (CompileScript "MCMExtender\CheckRequirements.gek") aJSON) == 0
 			PrintC "MCM Extender: Missing requirements -> %z" sFilePath
 			continue
 		endif
