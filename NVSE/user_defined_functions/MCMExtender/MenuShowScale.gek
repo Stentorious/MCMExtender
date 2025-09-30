@@ -1,11 +1,12 @@
 int iSubmenu
 int iOption
-
 int iSize
+ref rTemp
 array_var aJSON
 array_var aOption
 array_var aVariables
 array_var aForE
+array_var aFunction
 string_var sText
 string_var sTranslate
 string_var sType
@@ -71,7 +72,78 @@ Begin Function {}
 		SetUIFloat ("StartMenu/MCM/_Value" + (sText)) (Clamp (Call (CompileScript "MCMExtender\GetValue.gek") (aVariables[iSize])) (GetUIFloat ("StartMenu/MCM/_value" + (sText) + "Min")) (GetUIFloat ("StartMenu/MCM/_value" + (sText) + "Max")))
 	loop
 
-	aJSON = aOption = aVariables = aForE = Ar_Null
+	; Run callOpen script
+	if eval Ar_HasKey aOption "callOpen"
+
+		iSize = GetUIFloat "StartMenu/MCM/*:2/_scales"
+		aVariables = ar_Construct "array"
+		if eval iSize == 1
+			ar_Append aVariables (GetUIFloat "StartMenu/MCM/_Value")
+		else
+			ar_Append aVariables (GetUIFloat "StartMenu/MCM/_Value1")
+			if eval iSize > 1
+				ar_Append aVariables (GetUIFloat "StartMenu/MCM/_Value2")
+			endif
+			if eval iSize > 2
+				ar_Append aVariables (GetUIFloat "StartMenu/MCM/_Value3")
+			endif
+		endif
+
+		aFunction = aOption["callOpen"]
+		sText = aFunction["value"]
+		if eval (aFunction["type"]) == "udf"
+			if TestExpr (rTemp = EditorIDToFormID (sText))
+				Call (rTemp) iSubmenu iOption aVariables
+			endif
+		elseif eval (aFunction["type"]) == "file"
+			Call (CompileScript (sText)) iSubmenu iOption aVariables
+		elseif eval (aFunction["type"]) == "event"
+			DispatchEventAlt (sText) iSubmenu iOption aVariables
+		elseif eval (aFunction["type"]) == "snippet"
+			RunScriptSnippet 0 (sText)
+		elseif eval (aFunction["type"]) == "console"
+			Console (sText)
+		endif
+
+	endif
+
+	; Update callLoop script
+	if eval Ar_HasKey aOption "callLoop"
+		aFunction = aOption["callLoop"]
+		if eval (aFunction["type"]) == "udf"
+			iOption = 0
+		elseif eval (aFunction["type"]) == "file"
+			iOption = 1
+		elseif eval (aFunction["type"]) == "event"
+			iOption = 2
+		elseif eval (aFunction["type"]) == "snippet"
+			iOption = 3
+		elseif eval (aFunction["type"]) == "console"
+			iOption = 4
+		endif
+		Goo1.AuxVarSetFlt "*MCMExt_callLoop" iOption 0
+		Goo1.AuxVarSetStr "*MCMExt_callLoop" (aFunction["value"]) 1
+	endif
+
+	; Update callClose script
+	if eval Ar_HasKey aOption "callClose"
+		aFunction = aOption["callClose"]
+		if eval (aFunction["type"]) == "udf"
+			iOption = 0
+		elseif eval (aFunction["type"]) == "file"
+			iOption = 1
+		elseif eval (aFunction["type"]) == "event"
+			iOption = 2
+		elseif eval (aFunction["type"]) == "snippet"
+			iOption = 3
+		elseif eval (aFunction["type"]) == "console"
+			iOption = 4
+		endif
+		Goo1.AuxVarSetFlt "*MCMExt_callClose" iOption 0
+		Goo1.AuxVarSetStr "*MCMExt_callClose" (aFunction["value"]) 1
+	endif
+
+	aJSON = aOption = aVariables = aForE = aFunction = Ar_Null
 	sv_Destruct sText sTranslate sType
 
 	; HSV Color Picker

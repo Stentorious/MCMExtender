@@ -1,4 +1,5 @@
 <_MCMExt+Menu> 0 </_MCMExt+Menu>
+<_MCMExt+Open> 0 </_MCMExt+Open>
 <_MCMExt+Search> 0 </_MCMExt+Search>
 <_MCMExt+Version> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+Version"/></_MCMExt+Version>
 <_MCMExt+VersionStr> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+VersionStr"/> </_MCMExt+VersionStr>
