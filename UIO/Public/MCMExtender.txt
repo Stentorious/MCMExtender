@@ -1,3 +1,7 @@
+; HUDMainMenu
+MCMExtender\HUDMainMenu.xml::HUDMainMenu
+true
+
 ; StartMenu
 MCMExtender\StartMenu.xml::StartMenu
 true

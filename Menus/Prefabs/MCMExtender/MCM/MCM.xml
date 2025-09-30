@@ -195,7 +195,7 @@
 		<depth> <copy src="sibling(MCM_Version)" trait="depth"/> </depth>
 		<font> <copy src="sibling(MCM_Version)" trait="font"/> </font>
 		<justify> &left; </justify>
-		<string> MCM Extender v1.2.5 </string>
+		<string> <copy src="io()" trait="_MCMExt+VersionStr"/> </string>
 		<visible>
 			<copy src="parent()" trait="_ShowVer"/>
 			<and src="parent" trait="_Menu" />
