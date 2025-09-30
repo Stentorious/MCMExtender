@@ -13,6 +13,8 @@ MCMExtender\MCM\MCM.xml::@Prefabs\MCM\MCM.xml::MCM
 true
 MCMExtender\MCM\MCM_Back.xml::@Prefabs\MCM\MCM.xml::MCM_Back
 true
+MCMExtender\MCM\MCM_Version.xml::@Prefabs\MCM\MCM.xml::MCM_Version
+true
 
 ; ModList.xml
 MCMExtender\ModList\MCM_ModList.xml::@Prefabs\MCM\ModList.xml::MCM_ModList

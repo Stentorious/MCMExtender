@@ -189,3 +189,17 @@
 		</hotrect>
 
 	</rect>
+
+	<text name="MCMExt_Version">
+		<brightness> <copy src="sibling(MCM_Version)" trait="brightness"/> </brightness>
+		<depth> <copy src="sibling(MCM_Version)" trait="depth"/> </depth>
+		<font> <copy src="sibling(MCM_Version)" trait="font"/> </font>
+		<justify> &left; </justify>
+		<string> MCM Extender v1.2.5 </string>
+		<visible>
+			<copy src="parent()" trait="_ShowVer"/>
+			<and src="parent" trait="_Menu" />
+		</visible>
+		<x> <copy src="MCM" trait="x"/> <add src="MCM" trait="width"/> <sub src="me()" trait="width"/> <sub> 10 </sub> </x>
+		<y> <copy src="sibling(MCM_Version)" trait="y"/> </y>
+	</text>
