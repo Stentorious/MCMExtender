@@ -44,6 +44,7 @@ begin Function {iKeyID}
 			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Red") 1
 			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Green") 2
 			Goo1.AuxVarSetFlt "*MCMExt_Copy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_Blue") 3
+			MessageExAlt 3 "#3|MCM Extender: Copy color"
 			return
 
 		; Ctrl + V (Paste)
@@ -67,6 +68,7 @@ begin Function {iKeyID}
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragX")
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputSVDragY")
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_OutputHueDragY")
+			MessageExAlt 3 "#3|MCM Extender: Paste color"
 		endif
 	endif
 
