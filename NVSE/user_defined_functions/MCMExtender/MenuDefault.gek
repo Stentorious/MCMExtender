@@ -18,7 +18,7 @@ Begin Function {}
 	SetUIFloat "StartMenu/MCM/_Default" 0
 	SetUIFloat "StartMenu/MCM/_Reset" 1
 
-	foreach aForE <- aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"]
+	foreach aForE <- aJSON["submenus"][$iSubmenu]["options"]
 		if TestExpr aVariables = aForE["value"]["vars"]
 			iSize = Ar_Size aVariables
 			while (iSize -= 1) > -1

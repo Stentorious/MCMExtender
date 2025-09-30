@@ -53,9 +53,9 @@ begin Function {iKeyID}
 			endif
 
 			; Set input traits
-			SetVariable "fVTemp1" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 1) MCMScale
-			SetVariable "fVTemp2" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 2) MCMScale
-			SetVariable "fVTemp3" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 3) MCMScale
+			MCMScale.fVTemp1 = Goo1.AuxVarGetFlt "*MCMExt_Copy" 1
+			MCMScale.fVTemp2 = Goo1.AuxVarGetFlt "*MCMExt_Copy" 2
+			MCMScale.fVTemp3 = Goo1.AuxVarGetFlt "*MCMExt_Copy" 3
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputRed" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 1)
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputGreen" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 2)
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/_InputBlue" (Goo1.AuxVarGetFlt "*MCMExt_Copy" 3)
