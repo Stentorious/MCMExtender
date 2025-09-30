@@ -33,33 +33,54 @@ Begin Function {}
 
 	sConfigPath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 
-	; Hide image
-	SetUIFloat "StartMenu/MCM/*:1/*:1/MCMExtImage/visible" 0
+	; Hide images
+	SetMCMFloatMass 1 1 30 "MCMExtImage/visible" 0
 
-	; for the current submenu, go through each option
+	; Reset options
 	foreach aForE <- (aJSON["submenus"][(sSubmenu)]["options"])
 		aTemp = (aForE["value"]) ; set to local array to keep code cleaner
 
 		; Image display
-		if eval (Ar_HasKey aTemp "filename")
+		if eval Ar_HasKey aTemp "filename" || Ar_HasKey aTemp "image"
 			sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"])
-			SetUIFloat ((sTemp) + "/_enable") 1
+
+			; Legacy
+			if eval Ar_HasKey aTemp "filename"
+				SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["filename"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["width"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["height"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["systemcolor"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
+				SetUIFloat ((sTemp) + "/MCMExtImage/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
+			; 1.3.0+
+			else
+				SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["image"]["filename"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["image"]["width"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["image"]["height"])
+				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["image"]["systemcolor"])
+				fTemp = (GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["image"]["width"]) / 2)
+				if eval Ar_HasKey aTemp["image"] "offsetX"
+					fTemp += aTemp["image"]["offsetX"]
+				endif
+				SetUIFloat ((sTemp) + "/MCMExtImage/x") fTemp
+				fTemp = (GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["image"]["height"]) / 2)
+				if eval Ar_HasKey aTemp["image"] "offsetY"
+					fTemp += aTemp["image"]["offsetY"]
+				endif
+				SetUIFloat ((sTemp) + "/MCMExtImage/y") fTemp
+			endif
+
 			SetUIString ((sTemp) + "/_title") " "
+			SetUIFloat ((sTemp) + "/_enable") 1
 			SetUIFloat ((sTemp) + "/_type") 0
 			SetUIFloat ((sTemp) + "/_highlight") 0
-			SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["filename"])
-			SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["width"])
-			SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["height"])
-			SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["systemcolor"])
-			SetUIFloat ((sTemp) + "/MCMExtImage/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
-			SetUIFloat ((sTemp) + "/MCMExtImage/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
 			SetUIFloat ((sTemp) + "/MCMExtImage/visible") 1
 			continue
 		endif
 
-		foreach aForE2 <- aTemp ; setup the basic options for reset
+		foreach aForE2 <- aTemp
 			sType = (TypeOf aForE2["value"])
-			if eval sType == "Number" ; number entries get converted directly to MCM setting
+			if eval sType == "Number"
 				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (aForE2["value"])
 				continue
 
