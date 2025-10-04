@@ -3,12 +3,51 @@ int	iKeyID
 begin Function {iKeyID}
 
 	; Ignore inputs
-	if eval GetActiveMenuMode != 1013 || MenuMode 4 || MenuMode 3
+	if eval GetUIFloatAlt "StartMenu/_MCMExt+Open" != 1 || MenuMode 3
 		return
 	endif
 
+	; Exit MCM
+	if eval iKeyID == 1
+		if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1
+			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
+			SetMCMFloat 1 0 "_selected" 0
+			SetMCMFloat 0 0 "_NewValue" 1
+			SetMCMFloat 0 0 "_Value" 0
+		else
+			EK 1
+			TK 1
+		endif
+	endif
+
+	; Exit MCM submenu (Tab)
+	if eval iKeyID == 15
+		;SetUIFloatAlt "StartMenu\NOGLOW_BRANCH\main_container\_enabled" 0
+		if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1
+			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
+			SetMCMFloat 1 0 "_selected" 0
+			SetMCMFloat 0 0 "_NewValue" 1
+			SetMCMFloat 0 0 "_Value" 15
+		elseif eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible" == 1
+			ClickMenuTile "StartMenu\MCM\MCM_Scale\Scale_Cancel"
+		elseif eval GetUIFloatAlt "StartMenu/MCM/_ShowList" == 3
+			SetMCMFloat 0 0 "_ShowList" 0
+			SetMCMFloatMass 3 1 10 "_enable" 0
+			SetMCMFloat 1 0 "_selected" 0
+			SetMCMFloat 3 0 "visible" 0
+			MCMList.iTask = 0
+			MCMList.iTarget = 0
+			SetMCMFloat 0 0 "_TargetList" 0
+			StopQuest MCMList
+		else
+			ClickMenuTile "StartMenu\MCM\MCM_Back"
+		endif
+	endif
+
 	; Scale menu scroll
-	if GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible" == 1 && GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 0
+	if eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible" == 1 && GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 0
 		if eval iKeyID == 264
 			MCMScale.iTask = 6
 		elseif eval iKeyID == 265
@@ -35,7 +74,7 @@ begin Function {iKeyID}
 		endif
 		return
 
-	elseif GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 1
+	elseif eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 1
 
 		; Ctrl + C (Copy)
 		if eval iKeyID == 46

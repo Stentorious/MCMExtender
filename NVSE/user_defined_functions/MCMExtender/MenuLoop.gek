@@ -17,10 +17,18 @@ Begin Function {}
 		if eval GetUIFloatAlt "StartMenu/_MCMExt+Open" == 1
 			SetUIFloatAlt "StartMenu/_MCMExt+Open" 0
 			DispatchEventAlt "MCMExtMenuState" "" (-1)
+			EK 1
+			EK 15
+			EK (Goo1.AuxVarGetFlt "*MCMExt_Keys" 0)
 		endif
 		return
 	elseif eval GetUIFloatAlt "StartMenu/_MCMExt+Open" == 0
 		SetUIFloatAlt "StartMenu/_MCMExt+Open" 1
+		DK 1
+		DK 15
+		iTemp = GetControl 26
+		Goo1.AuxVarSetFlt "*MCMExt_Keys" iTemp 0
+		DK iTemp
 	endif
 
 	; Duplicate MCMList fix
@@ -46,9 +54,20 @@ Begin Function {}
 		SetVariable "iAltInput" (GetUIFloatAlt "StartMenu/MCM/_AltInput") rTemp
 	endif
 
-	; Exit search on select key option
-	if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1 && GetUIFloatAlt "StartMenu\_MCMExt+Search" == 1
-		SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+	; Keybind selection
+	if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1
+		; Exit search
+		if eval GetUIFloatAlt "StartMenu\_MCMExt+Search" == 1
+			SetUIFloatAlt "StartMenu\_MCMExt+Search" 2
+		endif
+		; Select quick load
+		if eval IsKeyPressed (Goo1.AuxVarGetFlt "*MCMExt_Keys") 2
+			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
+			SetMCMFloat 1 0 "_selected" 0
+			SetMCMFloat 0 0 "_NewValue" 1
+			SetMCMFloat 0 0 "_Value" (Goo1.AuxVarGetFlt "*MCMExt_Keys")
+		endif
 	endif
 
 	; Is JSON menu selected

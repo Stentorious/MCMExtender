@@ -23,9 +23,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.3
+float MCMExtenderVersion = 1.31
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.3.0"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.3.1"
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
@@ -86,7 +86,8 @@ if eval (iSize = Ar_Size aFiles) > 0
 	if eval (Ar_Size aModID) > 0
 		Goo1.AuxVarSetFromArr "*MCMExt_ModID" aModID
 	endif
-	PrintC "MCM Extender: Loading finished."
+
+	PrintC "MCM Extender: Loaded %g mod menus." (Ar_Size aModID)
 endif
 
 aFiles = aJSON = aModID = Ar_Null
@@ -107,6 +108,8 @@ SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 
 ; Search bar events
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#606"
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#607"
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 1			; Esc
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 15			; Tab
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 33			; F
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 46			; C
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 47			; V

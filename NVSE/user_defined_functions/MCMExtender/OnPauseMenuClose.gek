@@ -68,6 +68,11 @@ Begin Function {iMenuID}
 		EK 18
 	endif
 
+	; Reset disabled keys
+	EK 1
+	EK 15
+	EK (Goo1.AuxVarGetFlt "*MCMExt_Keys" 0)
+
 	; MCM Bug Fix 2
 	StopQuest MCMScale
 	StopQuest MCMList
