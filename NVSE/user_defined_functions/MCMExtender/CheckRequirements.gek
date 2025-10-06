@@ -103,8 +103,6 @@ Begin Function {aJSON}
 		loop
 	endif
 
-	printv iRequirementsMet iRequirementsTotal
-
 	; Requirements met
 	SetFunctionValue (eval iRequirementsMet == iRequirementsTotal)
 
