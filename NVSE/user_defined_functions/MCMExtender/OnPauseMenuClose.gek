@@ -1,7 +1,7 @@
 int iMenuID
 
 int iSize
-ref rMenuItem
+ref rTemp
 array_var aTemp
 
 Begin Function {iMenuID}
@@ -52,10 +52,10 @@ Begin Function {iMenuID}
 	; Remove clones from MCM FormList
 	iSize = ListGetCount MCMMods
 	while (iSize -= 1) > -1
-		rMenuItem = ListGetNthForm MCMMods iSize
-		if eval (GetSourceModIndex rMenuItem) == 255
-			ListRemoveForm MCMMods rMenuItem
-			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rMenuItem)
+		rTemp = ListGetNthForm MCMMods iSize
+		if eval (GetSourceModIndex rTemp) == 255
+			ListRemoveForm MCMMods rTemp
+			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rTemp)
 		endif
 	loop
 
@@ -76,6 +76,16 @@ Begin Function {iMenuID}
 	; MCM Bug Fix 2
 	StopQuest MCMScale
 	StopQuest MCMList
+
+	; MCM MenuMode exit bug fix
+	rTemp = Goo1.AuxVarGetRef "*MCMExt_Refs" 0
+	if eval GetVariable "iMenu" rTemp
+		SetVariable "MCMSubShift" 0 rTemp
+		SetVariable "MCMModSkip" 0 rTemp
+		MCMModsListed.RemoveAllItems
+		ResetQuest MCMModList
+		ResetQuest rTemp
+	endif
 
 	aTemp = ar_Null
 
