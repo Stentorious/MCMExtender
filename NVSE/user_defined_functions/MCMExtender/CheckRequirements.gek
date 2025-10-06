@@ -16,12 +16,12 @@ Begin Function {aJSON}
 		while (iSize -= 1) > -1
 			aEntry = aJSON["requirements"][iSize]
 
-			; check each entry in the requirements, if a single one is missing return false
-			if eval (TypeOf aEntry) == "Array" ; handle OR checks
+			; "Or" checks
+			if eval (TypeOf aEntry) == "Array"
 				if eval (iSizeTemp = Ar_Size aEntry) > 0
 					iPassed = 0
 					while (iSizeTemp -= 1) > -1
-						if eval (TypeOf aEntry) != "StringMap"
+						if eval (TypeOf aEntry[iSizeTemp]) != "StringMap"
 							continue
 						endif
 						sType = aEntry[iSizeTemp]["type"]
@@ -102,6 +102,8 @@ Begin Function {aJSON}
 
 		loop
 	endif
+
+	printv iRequirementsMet iRequirementsTotal
 
 	; Requirements met
 	SetFunctionValue (eval iRequirementsMet == iRequirementsTotal)
