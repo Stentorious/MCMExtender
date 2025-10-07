@@ -13,7 +13,7 @@ Begin Function {iMenuID}
 	endif
 
 	; Init menu loop
-	SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 2
+	SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 10
 
 	; Reset search terms
 	Goo1.AuxVarSetFlt "*MCMExt_Search" 0
