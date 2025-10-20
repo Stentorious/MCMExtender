@@ -25,7 +25,7 @@ endif
 ; MCM Extender version
 float MCMExtenderVersion = 1.33
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.3.2"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.3.3"
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
