@@ -392,6 +392,7 @@ Displays color gradient and updates automatically based on current selection.
 -->
 <image name="SV_Window">
 	<visible> 1 </visible>
+	<draggable> 1 </draggable>
 	<target> 1 </target>
 	<alpha> 255 </alpha>
 	<depth> 2 </depth>
@@ -562,6 +563,7 @@ Accepts Hue input in the form of a slider.
 -->
 <image name="Hue_Window">
 	<visible> 1 </visible>
+	<draggable> 1 </draggable>
 	<target> 1 </target>
 	<alpha> 255 </alpha>
 	<depth> 2 </depth>

@@ -12,5 +12,3 @@
 
 <!-- Game -->
 <_controller> <copy src="globals()" trait="_Has360Controller"/> </_controller>
-<_screen_width> <copy src="screen()" trait="width" /> </_screen_width>
-<_screen_height> <copy src="screen()" trait="height" /> </_screen_height>

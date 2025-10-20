@@ -1,8 +1,5 @@
 int	iKeyID
 
-float xmlCursorPosX
-float xmlCursorPosY
-
 begin Function {iKeyID}
 
 	; Ignore inputs
@@ -79,21 +76,17 @@ begin Function {iKeyID}
 
 	; HSV color picker window mouse click
 	if eval iKeyID == 256 && GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 1
-
-		xmlCursorPosX = ((GetUIFloatAlt "StartMenu\_screen_width") / (Goo1.AuxVarGetFlt "*_ScreenWidth")) * (GetCursorPos X)
-		xmlCursorPosY = ((GetUIFloatAlt "StartMenu\_screen_height") / (Goo1.AuxVarGetFlt "*_ScreenHeight")) * (GetCursorPos Y)
-
 		if eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Window/mouseover" == 1
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsetx" 0
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragoffsety" 0
-			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" (xmlCursorPosX - (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/x") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/width") / 2))
-			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" (xmlCursorPosY - (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/y") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/height") / 2))
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragx" ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Window/dragoffsetx") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/width") / 2))
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/dragy" ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Window/dragoffsety") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/SV_Picker/height") / 2))
 			DK 256
 			CallAfterFrames 3 ({} => EK 256) 1
 		elseif eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Window/mouseover" == 1
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsetx" 0
 			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragoffsety" 0
-			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" (xmlCursorPosY - (GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/y") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/height") / 2))
+			SetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/dragy" ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Window/dragoffsety") - ((GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/Hue_Picker/height") / 2))
 			DK 256
 			CallAfterFrames 3 ({} => EK 256) 1
 		endif
