@@ -7,6 +7,24 @@ begin Function {iKeyID}
 		return
 	endif
 
+	; Default settings confirmation
+	if eval iKeyID == 32768
+		if eval GetUIFloatAlt "StartMenu/MCM/MCM_Defaults/target" == 1
+			if eval Goo1.AuxVarGetFlt "*MCMExt_Dev" 0
+				MessageBoxExAlt (begin function {int iButton}
+					if iButton == 1
+						SetUIFloatAlt "StartMenu/MCM/_Default" 1
+					endif
+				end) "^Mod Configuration Menu^Reset settings for this page?|No|Yes"
+			else
+				SetUIFloatAlt "StartMenu/MCM/_Default" 1
+			endif
+		elseif eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible" == 1
+			SetMCMFloat 0 0 "_DefaultScale" 1
+		endif
+		return
+	endif
+
 	; Exit MCM
 	if eval iKeyID == 1
 		if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1
