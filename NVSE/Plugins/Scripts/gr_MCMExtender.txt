@@ -23,7 +23,7 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.33
+float MCMExtenderVersion = 1.34
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
 SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.3.3"
 
@@ -34,6 +34,10 @@ Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0
 ;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B15") 3 ; MCMScale
 ;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B18") 4 ; MCMList
 ;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "AE6") 5 ; MCMMods
+
+; Get screen dimensions
+Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
+Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")
 
 int iSize
 array_var aFiles
@@ -111,6 +115,11 @@ SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "Star
 SetEventHandler "OnButtonDown:32768" (CompileScript "MCMExtender\OnKeyDown.gek")
 CloseFileSO "Stentorious\MCMExtender.ini" 0
 
+; Keyboard events
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 264			; Wheel Up
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 265			; Wheel Down
+SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 256			; Left Click
+
 ; Search bar events
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#606"
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#607"
@@ -138,10 +147,6 @@ SetQuestDelay MCMList 0.001
 SetQuestDelay MCMModList 0.001
 SetQuestDelay MCMNavigate 0.001
 SetQuestDelay MCMScale 0.001
-
-; Keyboard scroll events
-SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 264			; Wheel Up
-SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 265			; Wheel Down
 
 ; Controller scroll events
 SetEventHandler "OnButtonDown:15" (begin function {int iKeyCode}

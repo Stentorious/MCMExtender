@@ -4,6 +4,8 @@ string_var sTileName
 
 begin Function {iMenuID, iTileID, sTileName}
 
+	sv_Destruct sTileName
+
 	; Search init
 	if eval iTileID == 606 || (iTileID == 607 && GetUIFloatAlt "StartMenu\_MCMExt+Search" == 0)
 		DK 18
@@ -11,11 +13,13 @@ begin Function {iMenuID, iTileID, sTileName}
 		SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1 2.5 1 2
 		SetUIFloatAlt "StartMenu\MCM\MCM_Search\_search_count" (ListGetCount MCMMods)
 		CallAfterFrames 0 ({} => SetUIFloatAlt "StartMenu\_MCMExt+Search" 1) 1
+		return
 
 	; Search reset
 	elseif eval iTileID == 607
 		EK 18
 		Call (CompileScript "MCMExtender\MenuRefresh.gek")
+		return
 
 	; Default settings confirmation
 	elseif eval iTileID == 609
@@ -28,8 +32,7 @@ begin Function {iMenuID, iTileID, sTileName}
 		else
 			SetUIFloatAlt "StartMenu/MCM/_Default" 1
 		endif
+		return
 	endif
-
-	sv_Destruct sTileName
 
 end

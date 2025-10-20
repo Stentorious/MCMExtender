@@ -1,5 +1,5 @@
 	<!-- Support controller hot swapping -->
-	<_AltInput> <copy src="globals" trait="_Has360Controller" /> </_AltInput>
+	<_AltInput> <copy src="io()" trait="_controller" /> </_AltInput>
 
 	<!-- Search bar -->
 	<rect name="MCM_Search">

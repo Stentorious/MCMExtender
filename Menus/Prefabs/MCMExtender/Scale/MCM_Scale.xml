@@ -2,7 +2,7 @@
 	<include src="MCMExtender\_Prefabs\HSVColorPicker.xml"/>
 	<visible>
 		<copy src="parent()" trait="_type"/> <eq> 2 </eq>
-		<and> <not src="globals()" trait="_Has360Controller"/> </and>
+		<and> <not src="io()" trait="_controller"/> </and>
 	</visible>
 	<_x>
 		<copy src="parent()" trait="x"/>
