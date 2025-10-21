@@ -13,7 +13,7 @@ if GetPluginVersion "JohnnyGuitarNVSE" < 360
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 	return
 endif
-if GetPluginVersion "ShowOffNVSE Plugin" < 165
+if GetPluginVersion "ShowOffNVSE Plugin" < 181
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest ShowOff NVSE plugin."
 	return
 endif
