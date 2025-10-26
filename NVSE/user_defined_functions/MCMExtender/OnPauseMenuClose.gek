@@ -16,14 +16,6 @@ Begin Function {iMenuID}
 	; Erase translation map
 	AuxStringMapDestroy "*MCMExt_Translations"
 
-	; Alert mods that values have changed
-	if eval Goo1.AuxVarSize "*MCMExt_Updated" > 0
-		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_Updated"
-		DispatchEventAlt "MCMExtUpdate" (Ar_Unique aTemp)
-		Goo1.AuxVarErase "*MCMExt_Updated"
-		;PrintC "MCM Extender: Updated mods -> %z" (Ar_Unique aTemp)
-	endif
-
 	; Saved cached INI's if menu exit skipped
 	if eval Goo1.AuxVarSize "*MCMExt_INICache" > 0
 		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_INICache"
@@ -35,6 +27,14 @@ Begin Function {iMenuID}
 			;PrintC "MCM Extender: Saved INI -> %z" (aTemp[iSize])
 		loop
 		Goo1.AuxVarErase "*MCMExt_INICache"
+	endif
+
+	; Alert mods that values have changed
+	if eval Goo1.AuxVarSize "*MCMExt_Updated" > 0
+		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_Updated"
+		DispatchEventAlt "MCMExtUpdate" (Ar_Unique aTemp)
+		Goo1.AuxVarErase "*MCMExt_Updated"
+		;PrintC "MCM Extender: Updated mods -> %z" (Ar_Unique aTemp)
 	endif
 
 	; Clear JSON cache
