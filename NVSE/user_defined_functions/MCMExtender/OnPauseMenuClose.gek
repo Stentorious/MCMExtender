@@ -16,7 +16,7 @@ Begin Function {iMenuID}
 	; Erase translation map
 	AuxStringMapDestroy "*MCMExt_Translations"
 
-	; Saved cached INI's if menu exit skipped
+	; Saved cached INIs
 	if eval Goo1.AuxVarSize "*MCMExt_INICache" > 0
 		aTemp = Goo1.AuxVarGetAsArr "*MCMExt_INICache"
 		aTemp = Ar_Unique aTemp
