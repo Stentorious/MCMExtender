@@ -86,7 +86,11 @@ Begin Function {fValue, aVarMap}
 		else
 			sFilePath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 		endif
-		SetINIValC (aVarMap["configINI"]) fValue (sFilePath)
+		if eval fValue == Flr fValue
+			SetINIIntC (aVarMap["configINI"]) fValue (sFilePath)
+		else
+			SetINIValC (aVarMap["configINI"]) fValue (sFilePath)
+		endif
 		Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
 	endif
 
