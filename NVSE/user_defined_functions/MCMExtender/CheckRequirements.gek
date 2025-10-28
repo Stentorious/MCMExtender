@@ -32,7 +32,7 @@ Begin Function {aJSON}
 							continue
 						else
 							sFile = aEntry[iSizeTemp]["file"]
-							if eval (sType) == "mod"
+							if eval (sType) == "plugin"
 								if eval IsModLoaded (sFile)
 									iPassed = 1
 									break
