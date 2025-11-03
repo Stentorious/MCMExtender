@@ -214,6 +214,7 @@ Begin Function {}
 	if eval (iMouseOver = GetUIFloat "StartMenu/MCM/*:1/_optionID")
 		if eval Goo1.AuxVarGetFlt "*MCMExt_State" 2 != iMouseOver
 			Goo1.AuxVarSetFlt "*MCMExt_State" iMouseOver 2
+			SetUIFloat "StartMenu/MCM/MCM_Info/visible" 0
 			aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) ("/submenus/" + $(GetUIFloat "StartMenu/MCM/_ActiveSubMenu") + "/options/" + $iMouseOver) 0 1
 			if eval Ar_HasKey aJSON "mouse"
 				if eval (TypeOf aJSON["mouse"]) == "StringMap"
