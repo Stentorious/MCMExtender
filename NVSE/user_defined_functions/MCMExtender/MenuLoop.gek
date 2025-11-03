@@ -231,7 +231,7 @@ Begin Function {}
 				endif
 			endif
 		endif
-	else
+	elseif eval Goo1.AuxVarGetFlt "*MCMExt_State" 2 > -1
 		Goo1.AuxVarSetFlt "*MCMExt_State" -1 2
 		SetUIFloat "StartMenu/MCM/MCM_Info/visible" 0
 	endif
