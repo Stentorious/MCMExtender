@@ -1,0 +1,26 @@
+<hotrect name="Scrollbar">
+	<include src="scrollbar_vert.xml"/>
+	<depth> 13 </depth>
+	<target> 0 </target>
+	<_x>
+		<copy src="parent()" trait="width"/>
+		<sub> 15 </sub>
+	</_x>
+	<y> 160 </y>
+	<_height>
+		<copy src="parent()" trait="height"/>
+		<sub> 170 </sub>
+		<sub> 170 </sub>
+	</_height>
+	<_scrolldelta> 37 </_scrolldelta>
+	<_number_of_items>
+		<copy src="parent()" trait="_count"/>
+		<add src="parent()" trait="_subVisible"/>
+	</_number_of_items>
+	<_number_of_visible_items>
+		<copy src="parent" trait="_visible"/>
+		<add src="parent()" trait="_subVisible" />
+	</_number_of_visible_items>
+	<_current_value> <copy src="parent()" trait="_offset"/> </_current_value>
+	<_SetInCode> 1 </_SetInCode>
+</hotrect>

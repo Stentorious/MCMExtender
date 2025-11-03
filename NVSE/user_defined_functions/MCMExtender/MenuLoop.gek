@@ -22,6 +22,8 @@ Begin Function {}
 			DispatchEventAlt "MCMExtMenuState" "" (-1)
 			EK 1
 			EK 15
+			EK 264
+			EK 265
 			EK (Goo1.AuxVarGetFlt "*MCMExt_Keys" 0)
 		endif
 		return
@@ -29,6 +31,8 @@ Begin Function {}
 		SetUIFloatAlt "StartMenu/_MCMExt+Open" 1
 		DK 1
 		DK 15
+		DK 264
+		DK 265
 		iTemp = GetControl 26
 		Goo1.AuxVarSetFlt "*MCMExt_Keys" iTemp 0
 		DK iTemp
@@ -86,6 +90,10 @@ Begin Function {}
 		iScrollUpdate = 1
 	endif
 
+	; Update options scrollbar
+	SetUIFloatAlt "StartMenu/MCM/MCM_Options/_lines_visible" (GetVariable "iMaxLines" rTemp)
+	SetUIFloatAlt "StartMenu/MCM/MCM_Options/_lines_total" (GetVariable "iLines" rTemp)
+
 	; MCMSubShift fix
 	if eval iScrollUpdate == 1 && MCMSubShift > 0
 		iTemp = GetMaxOf 0 (GetMCMFloat 5 0 "_offset")
@@ -116,6 +124,7 @@ Begin Function {}
 		; Reset JSON menu
 		if eval Goo1.AuxVarGetFlt "*MCMExt_State" 0 == 1
 			SetMCMFloatMass 1 1 30 "MCMExtImage/visible" 0
+			SetMCMFloatMass 1 1 30 "_brightnessMul" 1
 			Goo1.AuxVarSetFlt "*MCMExt_State" 0 0
 			SetUIFloat "StartMenu/_MCMExt+Menu" 0
 			DispatchEventAlt "MCMExtMenuState" "" 0

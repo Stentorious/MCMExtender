@@ -23,6 +23,8 @@ MCMExtender\MCM\MCM_Defaults.xml::@Prefabs\MCM\MCM.xml::MCM_Defaults
 true
 MCMExtender\MCM\InputY.xml::@Prefabs\MCM\MCM.xml::InputY
 true
+MCMExtender\MCM\MCM_Highlight.xml::@Prefabs\MCM\MCM.xml::MCM_Highlight
+true
 
 ; ModList.xml
 MCMExtender\ModList\MCM_ModList.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
@@ -31,9 +33,19 @@ MCMExtender\ModList\ArrowDown.xml::@Prefabs\MCM\ModList.xml::ArrowDown
 true
 MCMExtender\ModList\ArrowUp.xml::@Prefabs\MCM\ModList.xml::ArrowUp
 true
-MCMExtender\ModList\ArrowDownClone.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
+MCMExtender\ModList\Scrollbar.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
 true
-MCMExtender\ModList\ArrowUpClone.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
+
+; ModListRect.xml
+MCMExtender\ModListRect\highlight.xml::@Prefabs\MCM\ModListRect.xml::highlight
+true
+
+; Options.xml
+MCMExtender\Options\ArrowDown.xml::@Prefabs\MCM\Options.xml::ArrowDown
+true
+MCMExtender\Options\ArrowUp.xml::@Prefabs\MCM\Options.xml::ArrowUp
+true
+MCMExtender\Options\Scrollbar.xml::@Prefabs\MCM\Options.xml::MCM_Options
 true
 
 ; OptionRect.xml
@@ -43,7 +55,7 @@ true
 MCMExtender\OptionRect\RGBDarn.xml::@Prefabs\MCM\OptionRect.xml::RGB
 darnui
 true
-MCMExtender\OptionRect\CustomImage.xml::@Prefabs\MCM\OptionRect.xml
+MCMExtender\OptionRect\OptionRect.xml::@Prefabs\MCM\OptionRect.xml
 true
 
 ; Scale.xml

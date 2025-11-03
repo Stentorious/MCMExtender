@@ -1,0 +1,31 @@
+<_brightnessMul> 1 </_brightnessMul>
+<_brightness>
+	<copy> 255 </copy>
+	<mul src="me" trait="_brightnessMul"/>
+</_brightness>
+<_VUI+brightness>
+	<copy> 190 </copy>
+	<add>
+		<copy> 65 </copy>
+		<onlyifnot src="me" trait="_type"/>
+	</add>
+	<max>
+		<copy> 320 </copy>
+		<onlyif src="me" trait="_target"/>
+	</max>
+	<div src="me" trait="_alpha" />
+	<mul src="me" trait="_brightnessMul"/>
+</_VUI+brightness>
+
+<image name="MCMExtImage">
+	<visible> 0 </visible>
+	<alpha> 255 </alpha>
+	<depth> 12 </depth>
+	<height> 0 </height>
+	<width> 0 </width>
+	<x> 0 </x>
+	<y> 0 </y>
+	<zoom> -1 </zoom>
+	<systemcolor> 0 </systemcolor>
+	<filename> Interface\Shared\empty.dds </filename>
+</image>

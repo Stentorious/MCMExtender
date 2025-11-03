@@ -6,6 +6,8 @@ array_var aForE
 array_var aForE2
 array_var aTemp
 array_var aVariables
+array_var aElementNumeric
+array_var aElementString
 string_var sSubmenu
 string_var sType
 string_var sText
@@ -36,9 +38,16 @@ Begin Function {}
 	; Hide images
 	SetMCMFloatMass 1 1 30 "MCMExtImage/visible" 0
 
+	; Reset brightness
+	SetMCMFloatMass 1 1 30 "_brightnessMul" 1
+
+	; Element types
+	aElementNumeric = Ar_List "type", "enable", "refresh", "indent", "brightnessMul"
+	aElementString = Ar_List "title", "prefix", "suffix", "string", "textOff", "textOn"
+
 	; Reset options
 	foreach aForE <- (aJSON["submenus"][(sSubmenu)]["options"])
-		aTemp = (aForE["value"]) ; set to local array to keep code cleaner
+		aTemp = (aForE["value"])
 
 		; Image display
 		if eval Ar_HasKey aTemp "filename" || Ar_HasKey aTemp "image"
@@ -80,38 +89,47 @@ Begin Function {}
 
 		foreach aForE2 <- aTemp
 			sType = (TypeOf aForE2["value"])
-			if eval sType == "Number"
-				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (aForE2["value"])
+
+			; Numeric
+			if eval (Ar_Find aForE2["key"] aElementNumeric) != Ar_BadNumericIndex
+				if eval sType == "StringMap"
+					fTemp = Call (CompileScript "MCMExtender\GetValue.gek") (aForE2["value"])
+				else
+					fTemp = aForE2["value"]
+				endif
+				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (fTemp)
 				continue
 
-			elseif eval sType == "String" || (sType == "StringMap" && aForE2["key"] != "scale" && aForE2["key"] != "state" && aForE2["key"] != "call")
-
-				; Translation
-				if eval sType == "StringMap"
-					sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aForE2["value"])
-					aForE2["value"] = sTemp
-				else
-					sTemp = aForE2["value"]
-				endif
-				if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
-					aForE2["value"] = sTranslate
-				endif
-
-				if eval (aForE2["key"]) == "mouse"
-					continue
-				elseif eval (aForE2["key"]) == "suffix"
-					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_suffix"
-					SetUIFloat (sTemp) 1
-					sTemp += "Text"
-				elseif eval (aForE2["key"]) == "string"
-					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/value/*:1/string"
-				else
-					sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_" + (aForE2["key"])
-				endif
-
-				SetUIString (sTemp) (aForE2["value"])
-
+			; String
+			elseif eval (Ar_Find aForE2["key"] aElementString) == Ar_BadNumericIndex
+				continue
 			endif
+
+			; Translation
+			if eval sType == "StringMap"
+				sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aForE2["value"])
+				aForE2["value"] = sTemp
+			else
+				sTemp = aForE2["value"]
+			endif
+			if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
+				aForE2["value"] = sTranslate
+			endif
+
+			if eval (aForE2["key"]) == "mouse"
+				continue
+			elseif eval (aForE2["key"]) == "suffix"
+				sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_suffix"
+				SetUIFloat (sTemp) 1
+				sTemp += "Text"
+			elseif eval (aForE2["key"]) == "string"
+				sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/value/*:1/string"
+			else
+				sTemp = "StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_" + (aForE2["key"])
+			endif
+
+			SetUIString (sTemp) (aForE2["value"])
+
 		loop
 
 		; Option state switching
@@ -161,10 +179,15 @@ Begin Function {}
 				elseif eval fType == 1
 					; Translation
 					fTemp = Clamp fTemp 0 ftemp
-					if eval (TypeOf aTemp["strings"][fTemp]) == "StringMap"
-						sText = Call (CompileScript "MCMExtender\GetString.gek") (aTemp["strings"][fTemp])
+					if eval ar_HasKey aTemp "stringsAlt"
+						sType = "stringsAlt"
 					else
-						sText = aTemp["strings"][fTemp]
+						sType = "strings"
+					endif
+					if eval (TypeOf aTemp[(sType)][fTemp]) == "StringMap"
+						sText = Call (CompileScript "MCMExtender\GetString.gek") (aTemp[(sType)][fTemp])
+					else
+						sText = aTemp[(sType)][fTemp]
 					endif
 					if eval sText[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sText)) != ""
 						sText = sTranslate
@@ -187,7 +210,7 @@ Begin Function {}
 		endif
 	loop
 
-	aJSON = aForE = aForE2 = aTemp = aVariables = Ar_Null
+	aJSON = aForE = aForE2 = aTemp = aVariables = aElementNumeric = aElementString = Ar_Null
 	sv_Destruct sType sText sTemp sTranslate sConfigPath sSubmenu
 
 End

@@ -71,6 +71,8 @@ Begin Function {iMenuID}
 	; Reset disabled keys
 	EK 1
 	EK 15
+	EK 264
+	EK 265
 	EK (Goo1.AuxVarGetFlt "*MCMExt_Keys" 0)
 
 	; MCM Bug Fix 2
