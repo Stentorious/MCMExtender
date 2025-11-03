@@ -212,16 +212,22 @@ Begin Function {}
 
 	; Sets option mouseover text
 	if eval (iMouseOver = GetUIFloat "StartMenu/MCM/*:1/_optionID")
-		SetUIFloat "StartMenu/MCM/MCM_Info/visible" 1
 		if eval Goo1.AuxVarGetFlt "*MCMExt_State" 2 != iMouseOver
 			Goo1.AuxVarSetFlt "*MCMExt_State" iMouseOver 2
-			aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) "" 0 1
-			if eval Ar_HasKey (aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"][$iMouseOver]) "mouse"
-				sTemp = aJSON["submenus"][$(GetUIFloat "StartMenu/MCM/_ActiveSubMenu")]["options"][$iMouseOver]["mouse"]
+			aJSON = ReadFromJSON (Goo1.AuxVarGetStr "*MCMExt_State" 3) ("/submenus/" + $(GetUIFloat "StartMenu/MCM/_ActiveSubMenu") + "/options/" + $iMouseOver) 0 1
+			if eval Ar_HasKey aJSON "mouse"
+				if eval (TypeOf aJSON["mouse"]) == "StringMap"
+					sTemp = Call (CompileScript "MCMExtender\GetString.gek") (aJSON["mouse"])
+				else
+					sTemp = aJSON["mouse"]
+				endif
 				if eval sTemp[0] == "$" && (sTranslate = AuxStringMapGetStr "*MCMExt_Translations" (sTemp)) != ""
 					sTemp = sTranslate
 				endif
-				SetUIStringEx "StartMenu/MCM/*:9/string" (sTemp)
+				if eval (sTemp) != ""
+					SetUIStringEx "StartMenu/MCM/*:9/string" (sTemp)
+					SetUIFloat "StartMenu/MCM/MCM_Info/visible" 1
+				endif
 			endif
 		endif
 	else
