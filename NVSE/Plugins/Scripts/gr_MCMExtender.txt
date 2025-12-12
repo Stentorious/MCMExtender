@@ -23,9 +23,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.4
+float MCMExtenderVersion = 1.41
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.4.0"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.4.1"
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
