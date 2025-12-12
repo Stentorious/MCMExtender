@@ -81,6 +81,36 @@ MCMExtender\Scale\Scale_Cancel.xml::@Prefabs\MCM\Scale.xml::Scale_Cancel
 true
 MCMExtender\Scale\Scale_Default.xml::@Prefabs\MCM\Scale.xml::Scale_Default
 true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter1_ArrowL
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter1_ArrowL2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter1_ArrowR
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter1_ArrowR2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter2_ArrowL
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter2_ArrowL2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter2_ArrowR
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter2_ArrowR2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter3_ArrowL
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter3_ArrowL2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter3_ArrowR
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter3_ArrowR2
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter1_Drag
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter2_Drag
+true
+MCMExtender\Scale\Meter_Arrow.xml::@Prefabs\MCM\Scale.xml::Meter3_Drag
+true
 
 ; VUI+ Fix
 MCMExtender\VUI+\mouseover.xml::@Prefabs\MCM\ModList.xml::ModList_Scroll
