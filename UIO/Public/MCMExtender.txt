@@ -7,6 +7,8 @@ MCMExtender\StartMenu.xml::StartMenu
 true
 
 ; ListRect.xml
+MCMExtender\ListRect\ListRect.xml::@Prefabs\MCM\ListRect.xml
+true
 MCMExtender\ListRect\text.xml::@Prefabs\MCM\ListRect.xml::text
 true
 MCMExtender\ListRect\highlight.xml::@Prefabs\MCM\ListRect.xml::highlight
@@ -37,6 +39,8 @@ MCMExtender\ModList\Scrollbar.xml::@Prefabs\MCM\ModList.xml::MCM_ModList
 true
 
 ; ModListRect.xml
+MCMExtender\ModListRect\ModListRect.xml::@Prefabs\MCM\ModListRect.xml
+true
 MCMExtender\ModListRect\highlight.xml::@Prefabs\MCM\ModListRect.xml::highlight
 true
 
@@ -70,6 +74,12 @@ true
 MCMExtender\Scale\Meter2_Bar.xml::@Prefabs\MCM\Scale.xml::Meter2_Bar
 true
 MCMExtender\Scale\Meter3_Bar.xml::@Prefabs\MCM\Scale.xml::Meter3_Bar
+true
+MCMExtender\Scale\Scale_Accept.xml::@Prefabs\MCM\Scale.xml::Scale_Accept
+true
+MCMExtender\Scale\Scale_Cancel.xml::@Prefabs\MCM\Scale.xml::Scale_Cancel
+true
+MCMExtender\Scale\Scale_Default.xml::@Prefabs\MCM\Scale.xml::Scale_Default
 true
 
 ; VUI+ Fix

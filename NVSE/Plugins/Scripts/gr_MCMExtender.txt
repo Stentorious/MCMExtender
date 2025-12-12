@@ -158,13 +158,7 @@ SetQuestDelay MCMNavigate 0.001
 SetQuestDelay MCMScale 0.001
 
 ; Controller scroll events
-SetEventHandler "OnButtonDown:15" (begin function {int iKeyCode}
-	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1
-		return
-	endif
-	AuxTimerStart "*MCMExt_QBut" 0.5 13
-	Goo1.AuxVarSetFlt "*MCMExt_QBut" iKeyCode
-end)
+SetEventHandler "OnButtonDown:15" (CompileScript "MCMExtender\OnButtonDown.gek")
 SetEventHandler "OnButtonUp:15" (begin function {int iKeyCode}
 	if eval Goo1.AuxVarType "*MCMExt_QBut" == 0
 		return

@@ -1,2 +1,4 @@
 <id> 609 </id>
+<mouseoversound> UIMenuFocus </mouseoversound>
+<clicksound> UIMenuOK </clicksound>
 <_clicked> 0 </_clicked>

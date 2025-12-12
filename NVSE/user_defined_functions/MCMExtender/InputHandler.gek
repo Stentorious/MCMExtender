@@ -22,6 +22,7 @@ begin Function {sTimerName, rOwner}
 		rMCMQuest = Goo1.AuxVarGetRef "*MCMExt_Refs" 0
 		iInput = Goo1.AuxVarGetFlt "*MCMExt_QBut"
 		if eval iScale == 1
+			PlaySound UIMenuPrevNext 1
 			if eval iInput == 4
 				MCMScale.iTask = 5
 				if eval IsButtonPressed 4
@@ -36,6 +37,7 @@ begin Function {sTimerName, rOwner}
 
 		endif
 		if eval iInput == 1
+			PlaySound UIMenuFocus 1
 			if eval GetVariable "iTargetOption" rMCMQuest
 				MCMNavigate.iTask = 3
 			else
@@ -46,6 +48,7 @@ begin Function {sTimerName, rOwner}
 			endif
 
 		elseif eval iInput == 2
+			PlaySound UIMenuFocus 1
 			if eval GetVariable "iTargetOption" rMCMQuest
 				MCMNavigate.iTask = 4
 			else

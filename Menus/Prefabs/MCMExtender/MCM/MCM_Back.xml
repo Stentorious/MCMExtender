@@ -2,3 +2,5 @@
 	<not src="io()" trait="_MCMExt+Search"/>
 	<and src="parent()" trait="_TargetMain"/>
 </target>
+<mouseoversound> UIMenuFocus </mouseoversound>
+<clicksound> UIMenuOK </clicksound>
