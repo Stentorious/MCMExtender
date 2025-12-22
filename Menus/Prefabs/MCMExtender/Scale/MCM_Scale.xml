@@ -5,12 +5,10 @@
 		<and> <not src="io()" trait="_controller"/> </and>
 	</visible>
 	<_x>
-		<copy src="parent()" trait="x"/>
-		<add>
-			<copy src="parent()" trait="width"/>
-			<sub src="child(Main_Background)" trait="width"/>
-			<div> 2 </div>
-		</add>
+		<copy src="parent()" trait="width"/>
+		<sub src="child(Main_Background)" trait="width"/>
+		<div> 2 </div>
+		<add src="parent()" trait="x"/>
 		<add> 2 </add>
 	</_x>
 	<_y>

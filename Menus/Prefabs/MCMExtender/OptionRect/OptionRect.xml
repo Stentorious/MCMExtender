@@ -5,11 +5,9 @@
 	<mul src="me" trait="_brightnessMul"/>
 </_brightness>
 <_VUI+brightness>
-	<copy> 190 </copy>
-	<add>
-		<copy> 65 </copy>
-		<onlyifnot src="me" trait="_type"/>
-	</add>
+	<copy> 65 </copy>
+	<onlyifnot src="me" trait="_type"/>
+	<add> 190 </add>
 	<max>
 		<copy> 320 </copy>
 		<onlyif src="me" trait="_target"/>

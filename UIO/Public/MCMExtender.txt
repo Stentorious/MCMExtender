@@ -55,10 +55,8 @@ true
 ; OptionRect.xml
 MCMExtender\OptionRect\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
 !darnui
-true
 MCMExtender\OptionRect\RGBDarn.xml::@Prefabs\MCM\OptionRect.xml::RGB
 darnui
-true
 MCMExtender\OptionRect\OptionRect.xml::@Prefabs\MCM\OptionRect.xml
 true
 

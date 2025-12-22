@@ -107,23 +107,22 @@
 			<text name="Text">
 				<visible> <not src="sibling(TextCursor)" trait="visible" /> </visible>
 				<x>
-					<copy> 4 </copy>
-					<add>
-						<copy src="sibling(Icon)" trait="x" />
-						<sub src="me()" trait="width" />
-						<sub> 16 </sub>
-						<min> 0 </min>
-					</add>
+					<copy src="sibling(Icon)" trait="x" />
+					<sub src="me()" trait="width" />
+					<sub> 16 </sub>
+					<min> 0 </min>
+					<add> 4 </add>
 				</x>
-				<y> 10 </y>
+				<y>
+					<copy> -2.5 </copy>
+					<onlyif src="globals()" trait="_duiHUDOffset" />
+					<add> 10 </add>
+				</y>
 				<depth> 2 </depth>
 				<clips> 1 </clips>
 				<systemcolor>
-					<copy> 0 </copy>
-					<add>
-						<copy> 2 </copy>
-						<onlyif src="grandparent()" trait="_search_fail" />
-					</add>
+					<copy> 2 </copy>
+					<onlyif src="grandparent()" trait="_search_fail" />
 					<add>
 						<copy src="io()" trait="_MCMExt+Systemcolor" />
 						<onlyifnot src="grandparent()" trait="_search_fail" />
@@ -143,7 +142,7 @@
 					<eq> 1 </eq>
 				</visible>
 				<x> <copy src="sibling(Text)" trait="x" /> </x>
-				<y> 10 </y>
+				<y> <copy src="sibling(Text)" trait="y" /> </y>
 				<depth> 2 </depth>
 				<clips> 1 </clips>
 				<systemcolor> <copy src="sibling(Text)" trait="systemcolor" /> </systemcolor>

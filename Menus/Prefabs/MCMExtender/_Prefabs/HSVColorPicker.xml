@@ -63,21 +63,17 @@ Check this trait to determine if the player is actively making a color selection
 Calculates the output RGB values resulting from the current color selection
 -->
 <_Saturation>
-	<copy src="child(SV_Picker)" trait="x"/>
-	<add>
-		<copy src="child(SV_Picker)" trait="width"/>
-		<div> 2 </div>
-	</add>
+	<copy src="child(SV_Picker)" trait="width"/>
+	<div> 2 </div>
+	<add src="child(SV_Picker)" trait="x"/>
 	<div src="child(SV_Window)" trait="width"/>
 </_Saturation>
 <_Value>
 	<copy src="child(SV_Window)" trait="height"/>
 	<sub>
-		<copy src="child(SV_Picker)" trait="y"/>
-		<add>
-			<copy src="child(SV_Picker)" trait="height"/>
-			<div> 2 </div>
-		</add>
+		<copy src="child(SV_Picker)" trait="height"/>
+		<div> 2 </div>
+		<add src="child(SV_Picker)" trait="y"/>
 	</sub>
 	<div src="child(SV_Window)" trait="height"/>
 </_Value>
@@ -92,11 +88,9 @@ Calculates the output RGB values resulting from the current color selection
 <_Hue>
 	<copy src="child(Hue_Window)" trait="height"/>
 	<sub>
-		<copy src="child(Hue_Picker)" trait="y"/>
-		<add>
-			<copy src="child(Hue_Picker)" trait="height"/>
-			<div> 2 </div>
-		</add>
+		<copy src="child(Hue_Picker)" trait="height"/>
+		<div> 2 </div>
+		<add src="child(Hue_Picker)" trait="y"/>
 	</sub>
 	<div src="child(Hue_Window)" trait="height"/>
 	<mul> 360 </mul>
@@ -241,73 +235,54 @@ See the SelectColor.gek CompileScript function for use case.
 	<max src="me()" trait="_InputBlueNorm"/>
 </_OutputVal>
 <_OutputSat>
-	<copy> 0 </copy>
-	<add>
-		<copy>
-			<copy src="me()" trait="_OutputChr"/>
-			<div src="me()" trait="_OutputVal"/>
-		</copy>
-		<onlyif>
-			<copy src="me()" trait="_OutputVal"/>
-			<gt> 0 </gt>
-		</onlyif>
-	</add>
+	<copy src="me()" trait="_OutputChr"/>
+	<div src="me()" trait="_OutputVal"/>
+	<onlyif>
+		<copy src="me()" trait="_OutputVal"/>
+		<gt> 0 </gt>
+	</onlyif>
 </_OutputSat>
 <_OutputHue>
-	<copy> 0 </copy>
+	<copy src="me()" trait="_InputGreenNorm"/>
+	<sub src="me()" trait="_InputBlueNorm"/>
+	<div src="me()" trait="_OutputChr"/>
+	<onlyif>
+		<copy src="me()" trait="_OutputVal"/>
+		<eq src="me()" trait="_InputRedNorm"/>
+	</onlyif>
 	<add>
-		<copy> 60 </copy>
-		<mul>
-			<copy> 0 </copy>
-			<add>
-				<copy>
-					<copy src="me()" trait="_InputGreenNorm"/>
-					<sub src="me()" trait="_InputBlueNorm"/>
-					<div src="me()" trait="_OutputChr"/>
-				</copy>
-				<onlyif>
-					<copy src="me()" trait="_OutputVal"/>
-					<eq src="me()" trait="_InputRedNorm"/>
-				</onlyif>
-			</add>
-			<add>
-				<copy>
-					<copy src="me()" trait="_InputBlueNorm"/>
-					<sub src="me()" trait="_InputRedNorm"/>
-					<div src="me()" trait="_OutputChr"/>
-					<add> 2 </add>
-				</copy>
-				<onlyif>
-					<copy src="me()" trait="_OutputVal"/>
-					<eq src="me()" trait="_InputGreenNorm"/>
-					<and>
-						<copy src="me()" trait="_OutputVal"/>
-						<neq src="me()" trait="_InputRedNorm"/>
-					</and>
-				</onlyif>
-			</add>
-			<add>
-				<copy>
-					<copy src="me()" trait="_InputRedNorm"/>
-					<sub src="me()" trait="_InputGreenNorm"/>
-					<div src="me()" trait="_OutputChr"/>
-					<add> 4 </add>
-				</copy>
-				<onlyif>
-					<copy src="me()" trait="_OutputVal"/>
-					<eq src="me()" trait="_InputBlueNorm"/>
-					<and>
-						<copy src="me()" trait="_OutputVal"/>
-						<neq src="me()" trait="_InputRedNorm"/>
-					</and>
-					<and>
-						<copy src="me()" trait="_OutputVal"/>
-						<neq src="me()" trait="_InputGreenNorm"/>
-					</and>
-				</onlyif>
-			</add>
-		</mul>
+		<copy src="me()" trait="_InputBlueNorm"/>
+		<sub src="me()" trait="_InputRedNorm"/>
+		<div src="me()" trait="_OutputChr"/>
+		<add> 2 </add>
+		<onlyif>
+			<copy src="me()" trait="_OutputVal"/>
+			<eq src="me()" trait="_InputGreenNorm"/>
+			<and>
+				<copy src="me()" trait="_OutputVal"/>
+				<neq src="me()" trait="_InputRedNorm"/>
+			</and>
+		</onlyif>
 	</add>
+	<add>
+		<copy src="me()" trait="_InputRedNorm"/>
+		<sub src="me()" trait="_InputGreenNorm"/>
+		<div src="me()" trait="_OutputChr"/>
+		<add> 4 </add>
+		<onlyif>
+			<copy src="me()" trait="_OutputVal"/>
+			<eq src="me()" trait="_InputBlueNorm"/>
+			<and>
+				<copy src="me()" trait="_OutputVal"/>
+				<neq src="me()" trait="_InputRedNorm"/>
+			</and>
+			<and>
+				<copy src="me()" trait="_OutputVal"/>
+				<neq src="me()" trait="_InputGreenNorm"/>
+			</and>
+		</onlyif>
+	</add>
+	<mul> 60 </mul>
 </_OutputHue>
 <_OutputSVDragX>
 	<copy src="me()" trait="_OutputSat"/>
@@ -472,10 +447,8 @@ Displays color gradient and updates automatically based on current selection.
 	<depth> 10 </depth>
 	<x>
 		<copy src="sibling(SV_Window)" trait="x" />
-		<add>
-			<copy src="me()" trait="dragx"/>
-			<sub src="me()" trait="dragoffsetx"/>
-		</add>
+		<add src="me()" trait="dragx"/>
+		<sub src="me()" trait="dragoffsetx"/>
 		<max>
 			<copy src="sibling(SV_Window)" trait="x" />
 			<sub>
@@ -493,10 +466,8 @@ Displays color gradient and updates automatically based on current selection.
 	</x>
 	<y>
 		<copy src="sibling(SV_Window)" trait="y" />
-		<add>
-			<copy src="me()" trait="dragy"/>
-			<sub src="me()" trait="dragoffsety"/>
-		</add>
+		<add src="me()" trait="dragy"/>
+		<sub src="me()" trait="dragoffsety"/>
 		<max>
 			<copy src="sibling(SV_Window)" trait="y" />
 			<sub>
@@ -618,10 +589,8 @@ Accepts Hue input in the form of a slider.
 	</x>
 	<y>
 		<copy src="sibling(Hue_Window)" trait="y" />
-		<add>
-			<copy src="me()" trait="dragy"/>
-			<sub src="me()" trait="dragoffsety"/>
-		</add>
+		<add src="me()" trait="dragy"/>
+		<sub src="me()" trait="dragoffsety"/>
 		<max>
 			<copy src="sibling(Hue_Window)" trait="y" />
 			<sub>
