@@ -8,9 +8,10 @@ string_var sName
 
 Begin Function {iMenuID}
 
-	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" == 1
+	if eval GetUIFloatAlt "StartMenu\_MCMExt+Init"
 		return
 	endif
+	SetUIFloatAlt "StartMenu\_MCMExt+Init" 1
 
 	; Init menu loop
 	SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 10

@@ -6,7 +6,7 @@ array_var aTemp
 
 Begin Function {iMenuID}
 
-	if eval GetActiveMenuMode == 1013 || GetUIFloatAlt "StartMenu\MCM\_Menu" == 1
+	if eval GetUIFloatAlt "StartMenu\visible" != -999
 		return
 	endif
 
