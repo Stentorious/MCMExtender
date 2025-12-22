@@ -2,16 +2,16 @@
 <brightness>
 	<copy> 120 </copy>
 	<onlyif>
-		<copy src="grandparent()" trait="_selected"/>
+		<copy src="grandparent()" trait="_selected" />
 		<eq>
 			<copy> -1 </copy>
-			<onlyif src="io()" trait="_MCMExt+Menu"/>
-			<add src="parent()" trait="_listID"/>
+			<onlyif src="io()" trait="_MCMExt+Menu" />
+			<add src="parent()" trait="_listID" />
 		</eq>
 	</onlyif>
 	<add> 200 </add>
 	<max>
 		<copy> 320 </copy>
-		<onlyif src="parent()" trait="_target"/>
+		<onlyif src="parent()" trait="_target" />
 	</max>
 </brightness>

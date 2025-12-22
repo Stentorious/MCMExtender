@@ -4,18 +4,18 @@
 	<visible> 1 </visible>
 	<x>
 		<copy> 0 </copy>
-		<sub src="globals()" trait="_line_thickness"/>
+		<sub src="globals()" trait="_line_thickness" />
 	</x>
 	<y> <copy src="me()" trait="x" /> </y>
 	<width>
 		<copy src="parent()" trait="width" />
-		<add src="globals()" trait="_line_thickness"/>
-		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness" />
 	</width>
 	<height>
 		<copy src="parent()" trait="height" />
-		<add src="globals()" trait="_line_thickness"/>
-		<add src="globals()" trait="_line_thickness"/>
+		<add src="globals()" trait="_line_thickness" />
+		<add src="globals()" trait="_line_thickness" />
 	</height>
 	<depth> -1 </depth>
 	<zoom> -1 </zoom>

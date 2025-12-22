@@ -32,20 +32,20 @@
 		<locus> 1 </locus>
 		<x>
 			<copy src="sibling(MCM_ModList)" trait="x" />
-			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness" />
 			<add> 10 </add>
 		</x>
 		<y>
 			<copy src="parent()" trait="y" />
 			<!-- <add src="sibling(MCM_ModList)" trait="height" /> -->
-			<add src="globals()" trait="_line_thickness"/>
+			<add src="globals()" trait="_line_thickness" />
 			<add> 10 </add>
 		</y>
 		<depth> 50 </depth>
 		<_width>
 			<copy src="sibling(MCM_ModList)" trait="width" />
 			<sub> 20 </sub>
-			<sub src="globals()" trait="_line_thickness"/>
+			<sub src="globals()" trait="_line_thickness" />
 		</_width>
 		<_height> 36 </_height>
 
@@ -81,20 +81,20 @@
 			<image name="Window">
 				<visible> 1 </visible>
 				<x>
-					<copy src="globals()" trait="_line_thickness"/>
+					<copy src="globals()" trait="_line_thickness" />
 					<sub> 4 </sub>
 				</x>
-				<y> <copy src="globals()" trait="_line_thickness"/> </y>
+				<y> <copy src="globals()" trait="_line_thickness" /> </y>
 				<depth> 1 </depth>
 				<width>
 					<copy src="sibling(Background)" trait="width" />
-					<sub src="globals()" trait="_line_thickness"/>
-					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness" />
+					<sub src="globals()" trait="_line_thickness" />
 				</width>
 				<height>
 					<copy src="sibling(Background)" trait="height" />
-					<sub src="globals()" trait="_line_thickness"/>
-					<sub src="globals()" trait="_line_thickness"/>
+					<sub src="globals()" trait="_line_thickness" />
+					<sub src="globals()" trait="_line_thickness" />
 				</height>
 				<systemcolor> 0 </systemcolor>
 				<red> 0 </red>
@@ -190,15 +190,15 @@
 	</rect>
 
 	<text name="MCMExt_Version">
-		<brightness> <copy src="sibling(MCM_Version)" trait="brightness"/> </brightness>
-		<depth> <copy src="sibling(MCM_Version)" trait="depth"/> </depth>
-		<font> <copy src="sibling(MCM_Version)" trait="font"/> </font>
+		<brightness> <copy src="sibling(MCM_Version)" trait="brightness" /> </brightness>
+		<depth> <copy src="sibling(MCM_Version)" trait="depth" /> </depth>
+		<font> <copy src="sibling(MCM_Version)" trait="font" /> </font>
 		<justify> &left; </justify>
-		<string> <copy src="io()" trait="_MCMExt+VersionStr"/> </string>
+		<string> <copy src="io()" trait="_MCMExt+VersionStr" /> </string>
 		<visible>
-			<copy src="parent()" trait="_ShowVer"/>
+			<copy src="parent()" trait="_ShowVer" />
 			<and src="parent" trait="_Menu" />
 		</visible>
-		<x> <copy src="MCM" trait="x"/> <add src="MCM" trait="width"/> <sub src="me()" trait="width"/> <sub> 10 </sub> </x>
-		<y> <copy src="sibling(MCM_Version)" trait="y"/> </y>
+		<x> <copy src="MCM" trait="x" /> <add src="MCM" trait="width" /> <sub src="me()" trait="width" /> <sub> 10 </sub> </x>
+		<y> <copy src="sibling(MCM_Version)" trait="y" /> </y>
 	</text>

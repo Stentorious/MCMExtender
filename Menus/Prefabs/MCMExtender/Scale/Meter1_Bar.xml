@@ -2,6 +2,6 @@
 	<copy> 255 </copy>
 	<max>
 		<copy> 320 </copy>
-		<onlyif src="sibling(Meter1)" trait="_highlight"/>
+		<onlyif src="sibling(Meter1)" trait="_highlight" />
 	</max>
 </brightness>
