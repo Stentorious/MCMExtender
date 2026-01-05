@@ -1,0 +1,7 @@
+<alpha> 255 </alpha>
+<systemcolor> <copy src="parent()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+<red> <copy src="parent()" trait="_MCMExt+Red" /> </red>
+<green> <copy src="parent()" trait="_MCMExt+Green" /> </green>
+<blue> <copy src="parent()" trait="_MCMExt+Blue" /> </blue>
+<brightness> <copy src="parent()" trait="_MCMExt+Brightness" /> </brightness>
+<font> <copy src="parent()" trait="_MCMExt+Font" /> </font>

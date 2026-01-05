@@ -141,6 +141,7 @@ Begin Function {}
 		endif
 		Goo1.AuxVarSetFlt "*MCMExt_callClose" iOption 0
 		Goo1.AuxVarSetStr "*MCMExt_callClose" (aFunction["value"]) 1
+		Goo1.AuxVarSetFlt "*MCMExt_callClose" (GetUIFloat "StartMenu/MCM/*:2/_scales") 2
 	endif
 
 	aJSON = aOption = aVariables = aForE = aFunction = Ar_Null

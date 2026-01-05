@@ -1,0 +1,6 @@
+<_MCMExt+Systemcolor> <copy src="grandparent()" trait="_MCMExt+Systemcolor" /> </_MCMExt+Systemcolor>
+<_MCMExt+Red> <copy src="grandparent()" trait="_MCMExt+Red" /> </_MCMExt+Red>
+<_MCMExt+Green> <copy src="grandparent()" trait="_MCMExt+Green" /> </_MCMExt+Green>
+<_MCMExt+Blue> <copy src="grandparent()" trait="_MCMExt+Blue" /> </_MCMExt+Blue>
+<_MCMExt+Brightness> <copy src="grandparent()" trait="_MCMExt+Brightness" /> </_MCMExt+Brightness>
+<_MCMExt+Font> <copy src="grandparent()" trait="_MCMExt+Font" /> </_MCMExt+Font>

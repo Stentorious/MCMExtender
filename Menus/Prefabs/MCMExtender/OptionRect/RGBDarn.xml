@@ -1,3 +1,5 @@
+<_MCMExt+Systemcolor> <copy src="grandparent()" trait="_MCMExt+Systemcolor" /> </_MCMExt+Systemcolor>
+<_MCMExt+Brightness> <copy src="grandparent()" trait="_MCMExt+Brightness" /> </_MCMExt+Brightness>
 <y> -4.5 </y>
 <locus> 1 </locus>
 <depth> 1 </depth>
@@ -22,6 +24,7 @@
 	</height>
 	<depth> -1 </depth>
 	<zoom> -1 </zoom>
-	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<systemcolor> <copy src="parent()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<brightness> <copy src="parent()" trait="_MCMExt+Brightness" /> </brightness>
 	<filename> Interface\Shared\solid.dds </filename>
 </image>

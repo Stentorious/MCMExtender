@@ -1,1 +1,5 @@
 <mouseoversound> UIMenuFocus </mouseoversound>
+<_target>
+	<copy src="me()" trait="mouseover" />
+	<or src="me()" trait="_altTarget" />
+</_target>

@@ -43,6 +43,8 @@ MCMExtender\ModListRect\ModListRect.xml::@Prefabs\MCM\ModListRect.xml
 true
 MCMExtender\ModListRect\highlight.xml::@Prefabs\MCM\ModListRect.xml::highlight
 true
+MCMExtender\ModListRect\text.xml::@Prefabs\MCM\ModListRect.xml::text
+true
 
 ; Options.xml
 MCMExtender\Options\ArrowDown.xml::@Prefabs\MCM\Options.xml::ArrowDown
@@ -53,12 +55,28 @@ MCMExtender\Options\Scrollbar.xml::@Prefabs\MCM\Options.xml::MCM_Options
 true
 
 ; OptionRect.xml
+MCMExtender\OptionRect\OptionRect.xml::@Prefabs\MCM\OptionRect.xml
+true
+MCMExtender\OptionRect\toggle_text.xml::@Prefabs\MCM\OptionRect.xml::title
+true
+MCMExtender\OptionRect\value_text.xml::@Prefabs\MCM\OptionRect.xml::text
+true
+MCMExtender\OptionRect\value_text.xml::@Prefabs\MCM\OptionRect.xml::prefix
+true
+MCMExtender\OptionRect\value_text.xml::@Prefabs\MCM\OptionRect.xml::suffix
+true
+MCMExtender\OptionRect\toggle.xml::@Prefabs\MCM\OptionRect.xml::toggle
+true
+MCMExtender\OptionRect\toggle_text.xml::@Prefabs\MCM\OptionRect.xml::toggle_off
+true
+MCMExtender\OptionRect\toggle_text.xml::@Prefabs\MCM\OptionRect.xml::toggle_on
+true
+MCMExtender\OptionRect\toggle_check.xml::@Prefabs\MCM\OptionRect.xml::toggle_check
+true
 MCMExtender\OptionRect\RGB.xml::@Prefabs\MCM\OptionRect.xml::RGB
 !darnui
 MCMExtender\OptionRect\RGBDarn.xml::@Prefabs\MCM\OptionRect.xml::RGB
 darnui
-MCMExtender\OptionRect\OptionRect.xml::@Prefabs\MCM\OptionRect.xml
-true
 
 ; Scale.xml
 MCMExtender\Scale\Scale_RGB.xml::@Prefabs\MCM\Scale.xml::Scale_RGB

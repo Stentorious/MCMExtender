@@ -123,8 +123,9 @@ Begin Function {}
 	if eval iModIndex != 255
 		; Reset JSON menu
 		if eval Goo1.AuxVarGetFlt "*MCMExt_State" 0 == 1
-			SetMCMFloatMass 1 1 30 "MCMExtImage/visible" 0
-			SetMCMFloatMass 1 1 30 "_brightnessMul" 1
+			SetMCMFloatMass 1 1 36 "MCMExtImage/visible" 0
+			SetMCMFloatMass 1 1 36 "_brightnessMul" 1
+			SetMCMFloatMass 1 1 36 "_MCMExt+Systemcolor" (GetUIFloatAlt "StartMenu/_MCMExt+Systemcolor")
 			Goo1.AuxVarSetFlt "*MCMExt_State" 0 0
 			SetUIFloat "StartMenu/_MCMExt+Menu" 0
 			DispatchEventAlt "MCMExtMenuState" "" 0
@@ -287,7 +288,7 @@ Begin Function {}
 		iSubmenu = GetUIFloat "StartMenu/MCM/_ActiveSubMenu"
 		iOption = GetUIFloat "StartMenu/MCM/_ActiveOption"
 
-		iTemp = GetUIFloat "StartMenu/MCM/*:2/_scales"
+		iTemp = Goo1.AuxVarGetFlt "*MCMExt_callClose" 2
 		aTemp = ar_Construct "array"
 		ar_Append aTemp MCMScale.fVTemp1
 		if eval iTemp > 1

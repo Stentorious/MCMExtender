@@ -1,4 +1,6 @@
 int iSize
+int iOption
+int iDefaultSystemcolor
 float fTemp
 float fType
 array_var aJSON
@@ -36,10 +38,14 @@ Begin Function {}
 	sConfigPath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 
 	; Hide images
-	SetMCMFloatMass 1 1 30 "MCMExtImage/visible" 0
+	SetMCMFloatMass 1 1 36 "MCMExtImage/visible" 0
 
 	; Reset brightness
-	SetMCMFloatMass 1 1 30 "_brightnessMul" 1
+	SetMCMFloatMass 1 1 36 "_brightnessMul" 1
+
+	; Systemcolor
+	iDefaultSystemcolor = GetUIFloatAlt "StartMenu/_MCMExt+Systemcolor"
+	SetMCMFloatMass 1 1 36 "_MCMExt+Systemcolor" iDefaultSystemcolor
 
 	; Element types
 	aElementNumeric = Ar_List "type", "enable", "refresh", "indent", "brightnessMul"
@@ -48,6 +54,7 @@ Begin Function {}
 	; Reset options
 	foreach aForE <- (aJSON["submenus"][(sSubmenu)]["options"])
 		aTemp = (aForE["value"])
+		iOption = #aForE["key"]
 
 		; Image display
 		if eval Ar_HasKey aTemp "filename" || Ar_HasKey aTemp "image"
@@ -58,15 +65,17 @@ Begin Function {}
 				SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["filename"])
 				SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["width"])
 				SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["height"])
-				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["systemcolor"])
 				SetUIFloat ((sTemp) + "/MCMExtImage/x") ((GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["width"]) / 2))
 				SetUIFloat ((sTemp) + "/MCMExtImage/y") ((GetUIFloat "StartMenu/MCM/y") + ((GetUIFloat "StartMenu/MCM/height") / 2) - ((aTemp["height"]) / 2))
+				if eval (fTemp = aTemp["systemcolor"]) == 1 || fTemp == 5
+					fTemp = iDefaultSystemcolor
+				endif
+				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") fTemp
 			; 1.3.0+
 			else
 				SetUIString ((sTemp) + "/MCMExtImage/filename") (aTemp["image"]["filename"])
 				SetUIFloat ((sTemp) + "/MCMExtImage/width") (aTemp["image"]["width"])
 				SetUIFloat ((sTemp) + "/MCMExtImage/height") (aTemp["image"]["height"])
-				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") (aTemp["image"]["systemcolor"])
 				fTemp = (GetUIFloat "StartMenu/MCM/MCM_Options/x") + ((GetUIFloat "StartMenu/MCM/MCM_Options/width") / 2) - ((aTemp["image"]["width"]) / 2)
 				if eval Ar_HasKey aTemp["image"] "offsetX"
 					fTemp += aTemp["image"]["offsetX"]
@@ -77,6 +86,10 @@ Begin Function {}
 					fTemp += aTemp["image"]["offsetY"]
 				endif
 				SetUIFloat ((sTemp) + "/MCMExtImage/y") fTemp
+				if eval (fTemp = aTemp["image"]["systemcolor"]) == 1 || fTemp == 5
+					fTemp = iDefaultSystemcolor
+				endif
+				SetUIFloat ((sTemp) + "/MCMExtImage/systemcolor") fTemp
 			endif
 
 			SetUIString ((sTemp) + "/_title") " "
@@ -97,7 +110,7 @@ Begin Function {}
 				else
 					fTemp = aForE2["value"]
 				endif
-				SetMCMFloat 1 (#aForE["key"]) ("_" + (aForE2["key"])) (fTemp)
+				SetMCMFloat 1 iOption ("_" + (aForE2["key"])) (fTemp)
 				continue
 
 			; String
@@ -155,6 +168,12 @@ Begin Function {}
 				sText = ""
 				while (iSize -= 1) > -1
 					fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize]
+					; Modified setting highlighting
+					if eval Goo1.AuxVarGetFlt "*MCMExt_Dev" 1
+						if eval ar_HasKey aVariables[iSize] "default" && fTemp != (aVariables[iSize]["default"])
+							SetMCMFloat 1 iOption "_MCMExt+Systemcolor" 2
+						endif
+					endif
 					sText = sv_Construct "%g, %z" fTemp sText
 				loop
 				SetUIString (sTemp) (sText[0:-3])
@@ -163,16 +182,30 @@ Begin Function {}
 			; Color box
 			elseif eval fType == 9
 				while (iSize -= 1) > -1
-					SetUIFloat ("StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_value" + $(iSize + 1)) (Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize])
+					fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[iSize]
+					SetUIFloat ("StartMenu/MCM/*:1/*:" + (aForE["key"]) + "/_value" + $(iSize + 1)) fTemp
+					; Modified setting highlighting
+					if eval Goo1.AuxVarGetFlt "*MCMExt_Dev" 1
+						if eval ar_HasKey aVariables[iSize] "default" && fTemp != (aVariables[iSize]["default"])
+							SetMCMFloat 1 iOption "_MCMExt+Systemcolor" 2
+						endif
+					endif
 				loop
 
 			; Basic
 			else
 				fTemp = Call (CompileScript "MCMExtender\GetValue.gek") aVariables[0]
 
+				; Modified setting highlighting
+				if eval Goo1.AuxVarGetFlt "*MCMExt_Dev" 1
+					if eval ar_HasKey aVariables[0] "default" && fTemp != (aVariables[0]["default"])
+						SetMCMFloat 1 iOption "_MCMExt+Systemcolor" 2
+					endif
+				endif
+
 				; Numeric
 				if eval (ar_Find fType (ar_List 2, 4, 5, 6)) > -1
-					SetMCMFloat 1 (#aForE["key"]) "_value", fTemp
+					SetMCMFloat 1 iOption "_value", fTemp
 					continue
 
 				; String

@@ -1,0 +1,10 @@
+<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+<brightness>
+	<copy> 65 </copy>
+	<onlyifnot src="parent()" trait="_subID" />
+	<add> 190 </add>
+	<max>
+		<copy> 320 </copy>
+		<onlyif src="parent()" trait="_target" />
+	</max>
+</brightness>
