@@ -120,7 +120,7 @@ SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 
 
 ; Default settings confirmation
 Goo1.AuxVarSetFlt "*MCMExt_Dev" (eval GetINIFloat_Cached "General:bDefaultSettingsConfirmation" "Stentorious\MCMExtender.ini" 1) 0
-Goo1.AuxVarSetFlt "*MCMExt_Dev" (eval GetINIFloat_Cached "General:bHighlightModifiedSettings" "Stentorious\MCMExtender.ini" 0) 1
+SetUIFloatAlt "HUDMainMenu\_MCMExt+HighlightModified" (eval GetINIFloat_Cached "General:bHighlightModifiedSettings" "Stentorious\MCMExtender.ini" 0)
 SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#609"
 SetEventHandler "OnButtonDown:32768" (CompileScript "MCMExtender\OnKeyDown.gek")
 CloseFileSO "Stentorious\MCMExtender.ini" 0

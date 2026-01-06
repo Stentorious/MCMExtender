@@ -1,18 +1,35 @@
 <!-- MCM Extender traits -->
-<_MCMExt+DecimalColor> 3067647 </_MCMExt+DecimalColor>
-<_MCMExt+Systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_MCMExt+Systemcolor>
+<_MCMExt+Default> 1 </_MCMExt+Default>
+<_MCMExt+Systemcolor>
+	<copy src="me()" trait="_systemcolor" />
+	<onlyif>
+		<not src="io()" trait="_MCMExt+HighlightModified" />
+		<or src="me()" trait="_MCMExt+Default" />
+		<and>
+			<copy src="me()" trait="_decimalColor" />
+			<lt> 0 </lt>
+		</and>
+	</onlyif>
+	<add>
+		<copy> 2 </copy>
+		<onlyif>
+			<not src="me()" trait="_MCMExt+Default" />
+			<and src="io()" trait="_MCMExt+HighlightModified" />
+		</onlyif>
+	</add>
+</_MCMExt+Systemcolor>
 <_MCMExt+Red>
-	<copy src="me()" trait="_MCMExt+DecimalColor" />
+	<copy src="me()" trait="_decimalColor" />
 	<shr> 16 </shr>
 	<land> 255 </land>
 </_MCMExt+Red>
 <_MCMExt+Green>
-	<copy src="me()" trait="_MCMExt+DecimalColor" />
+	<copy src="me()" trait="_decimalColor" />
 	<shr> 8 </shr>
 	<land> 255 </land>
 </_MCMExt+Green>
 <_MCMExt+Blue>
-	<copy src="me()" trait="_MCMExt+DecimalColor" />
+	<copy src="me()" trait="_decimalColor" />
 	<land> 255 </land>
 </_MCMExt+Blue>
 <_MCMExt+Brightness>
@@ -28,6 +45,8 @@
 </_MCMExt+Brightness>
 <_MCMExt+Font> <copy src="MCM_Font" trait="_Options" /> </_MCMExt+Font>
 <_brightnessMul> 1 </_brightnessMul>
+<_decimalColor> -1 </_decimalColor>
+<_systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_systemcolor>
 
 <mouseoversound> UIMenuFocus </mouseoversound>
 <_target>

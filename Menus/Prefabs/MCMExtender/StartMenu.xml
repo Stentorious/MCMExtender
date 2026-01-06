@@ -6,6 +6,7 @@
 <_MCMExt+Version> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+Version" /></_MCMExt+Version>
 <_MCMExt+VersionStr> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+VersionStr" /> </_MCMExt+VersionStr>
 <_MCMExt+Systemcolor> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+Systemcolor" /> </_MCMExt+Systemcolor>
+<_MCMExt+HighlightModified> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+HighlightModified" /> </_MCMExt+HighlightModified>
 <_MCMExt+Font>
 	<copy> 3 </copy>
 	<onlyifnot src="child(MCM)" trait="_dUI" />

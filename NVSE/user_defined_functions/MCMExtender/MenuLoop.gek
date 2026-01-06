@@ -123,9 +123,11 @@ Begin Function {}
 	if eval iModIndex != 255
 		; Reset JSON menu
 		if eval Goo1.AuxVarGetFlt "*MCMExt_State" 0 == 1
+			SetMCMFloatMass 1 1 36 "_MCMExt+Default" 1
 			SetMCMFloatMass 1 1 36 "MCMExtImage/visible" 0
 			SetMCMFloatMass 1 1 36 "_brightnessMul" 1
-			SetMCMFloatMass 1 1 36 "_MCMExt+Systemcolor" (GetUIFloatAlt "StartMenu/_MCMExt+Systemcolor")
+			SetMCMFloatMass 1 1 36 "_decimalColor" -1
+			SetMCMFloatMass 1 1 36 "_systemcolor" (GetUIFloatAlt "StartMenu/_MCMExt+Systemcolor")
 			Goo1.AuxVarSetFlt "*MCMExt_State" 0 0
 			SetUIFloat "StartMenu/_MCMExt+Menu" 0
 			DispatchEventAlt "MCMExtMenuState" "" 0
