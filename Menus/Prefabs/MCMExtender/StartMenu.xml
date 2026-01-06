@@ -7,10 +7,16 @@
 <_MCMExt+VersionStr> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+VersionStr" /> </_MCMExt+VersionStr>
 <_MCMExt+Systemcolor> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+Systemcolor" /> </_MCMExt+Systemcolor>
 <_MCMExt+HighlightModified> <copy src="sibling(HUDMainMenu)" trait="_MCMExt+HighlightModified" /> </_MCMExt+HighlightModified>
-<_MCMExt+Font>
-	<copy> 3 </copy>
-	<onlyifnot src="child(MCM)" trait="_dUI" />
-</_MCMExt+Font>
+<_MCMExt+FontGeneral>
+	<copy> -2 </copy>
+	<onlyif src="globals()" trait="_duiHUDOffset" />
+	<add> 3 </add>
+</_MCMExt+FontGeneral>
+<_MCMExt+FontTitle>
+	<copy> 1 </copy>
+	<onlyif src="globals()" trait="_duiHUDOffset" />
+	<add> 1 </add>
+</_MCMExt+FontTitle>
 
 <!-- Game -->
 <_controller> <copy src="globals()" trait="_Has360Controller" /> </_controller>

@@ -4,4 +4,9 @@
 <green> <copy src="parent()" trait="_MCMExt+Green" /> </green>
 <blue> <copy src="parent()" trait="_MCMExt+Blue" /> </blue>
 <brightness> <copy src="parent()" trait="_MCMExt+Brightness" /> </brightness>
-<font> <copy src="io()" trait="_MCMExt+FontGeneral" /> </font>
+<font>
+	<copy src="io()" trait="_MCMExt+FontGeneral" />
+	<sub src="io()" trait="_MCMExt+FontTitle" />
+	<onlyif src="parent()" trait="_type"/>
+	<add src="io()" trait="_MCMExt+FontTitle" />
+</font>

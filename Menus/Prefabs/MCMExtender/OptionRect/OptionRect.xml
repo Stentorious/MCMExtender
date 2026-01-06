@@ -43,7 +43,6 @@
 	<div src="me()" trait="_alpha" />
 	<mul src="me()" trait="_brightnessMul" />
 </_MCMExt+Brightness>
-<_MCMExt+Font> <copy src="MCM_Font" trait="_Options" /> </_MCMExt+Font>
 <_brightnessMul> 1 </_brightnessMul>
 <_decimalColor> -1 </_decimalColor>
 <_systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_systemcolor>

@@ -57,7 +57,7 @@ true
 ; OptionRect.xml
 MCMExtender\OptionRect\OptionRect.xml::@Prefabs\MCM\OptionRect.xml
 true
-MCMExtender\OptionRect\toggle_text.xml::@Prefabs\MCM\OptionRect.xml::title
+MCMExtender\OptionRect\title.xml::@Prefabs\MCM\OptionRect.xml::title
 true
 MCMExtender\OptionRect\value_text.xml::@Prefabs\MCM\OptionRect.xml::text
 true
