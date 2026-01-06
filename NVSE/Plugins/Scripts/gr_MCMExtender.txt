@@ -94,6 +94,7 @@ aFiles = aJSON = aModID = Ar_Null
 sv_Destruct sFilePath
 
 ; Init aux
+; State
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 0		; Is JSON menu open
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 1		; MenuID
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 2		; Active mouseover
@@ -101,6 +102,11 @@ Goo1.AuxVarSetStr "*MCMExt_State" ("") 3	; JSON path
 Goo1.AuxVarSetStr "*MCMExt_State" ("") 4	; modName
 Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 6		; Mod index
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 7		; Message box open
+
+; Key
+Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 0
+Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 1
 
 ; Get screen dimensions
 Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
