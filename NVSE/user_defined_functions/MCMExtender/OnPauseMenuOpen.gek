@@ -13,6 +13,9 @@ Begin Function {iMenuID}
 	endif
 	SetUIFloatAlt "StartMenu\_MCMExt+Init" 1
 
+	; Reset message box flag
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 7
+
 	; Init menu loop
 	SGMLC (CompileScript "MCMExtender\MenuLoop.gek") 1 1 10
 

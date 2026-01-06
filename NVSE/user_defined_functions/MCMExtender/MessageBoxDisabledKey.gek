@@ -1,0 +1,18 @@
+int iButton
+
+Begin Function {iButton}
+
+	MCMInstalled = 1
+	CallAfterFrames 1 ({} => Goo1.AuxVarSetFlt "*MCMExt_State" 0 7) 1
+
+	if iButton == 0
+		return
+	endif
+
+	SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+	SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
+	SetMCMFloat 1 0 "_selected" 0
+	SetMCMFloat 0 0 "_NewValue" 1
+	SetMCMFloat 0 0 "_Value" (Goo1.AuxVarGetFlt "*MCMExt_Keys" 1)
+
+End
