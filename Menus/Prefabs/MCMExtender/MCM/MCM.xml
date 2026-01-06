@@ -4,9 +4,9 @@
 	<!-- Fix: Disable menu interaction during keybind selection -->
 	<_TargetMain>
 		<not>
-			<copy src="me()" trait="_ShowList"/>
-			<or src="me()" trait="_ShowScale"/>
-			<or src="child(MCM_PressControl)" trait="visible"/>
+			<copy src="me()" trait="_ShowList" />
+			<or src="me()" trait="_ShowScale" />
+			<or src="child(MCM_PressControl)" trait="visible" />
 		</not>
 	</_TargetMain>
 
