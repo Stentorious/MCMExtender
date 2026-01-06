@@ -7,6 +7,6 @@
 <font>
 	<copy src="io()" trait="_MCMExt+FontGeneral" />
 	<sub src="io()" trait="_MCMExt+FontTitle" />
-	<onlyif src="parent()" trait="_type"/>
+	<onlyif src="parent()" trait="_type" />
 	<add src="io()" trait="_MCMExt+FontTitle" />
 </font>
