@@ -178,7 +178,7 @@ Begin Function {}
 		AuxStringMapSetFromArr "*MCMExt_Translations" aTemp
 
 		; Build submenus
-		if eval (Ar_Size (aJSON["submenus"])) > 1 && (GetUIFloat "StartMenu/MCM/*:5/SubMenu1/_enable") == 0
+		if eval Ar_HasKey aJSON["submenus"] "1" && (GetUIFloat "StartMenu/MCM/*:5/SubMenu1/_enable") == 0
 			Call (CompileScript "MCMExtender\RefreshSubmenus.gek") 0 0 0 0 aJSON
 		endif
 
