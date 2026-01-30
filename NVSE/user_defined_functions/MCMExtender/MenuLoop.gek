@@ -199,32 +199,32 @@ Begin Function {}
 	endif
 
 	; ===== DEFAULT =====
-	; Stent: Runs when the "Defaults" button is pressed in the MCM menu
+	; Runs when the "Defaults" button is pressed in the MCM menu
 	if GetUIFloat "StartMenu/MCM/_Default"
 		Call (CompileScript "MCMExtender\MenuDefault.gek")
 	endif
 
 	; ===== NEW VALUE =====
-	; Stent: Runs after setting any option
+	; Runs after setting any option
 	if GetUIFloat "StartMenu/MCM/_NewValue"
 		Call (CompileScript "MCMExtender\MenuNew.gek")
 	endif
 
 	; ===== SHOW LIST =====
-	; Stent: Runs a string list option is selected
+	; Runs a string list option is selected
 	if eval (GetUIFloat "StartMenu/MCM/_ShowList") == 1
 		Call (CompileScript "MCMExtender\MenuShowList.gek")
 	endif
 
 	; ===== SHOW SCALE =====
-	; Stent: Runs a scale option is selected
+	; Runs a scale option is selected
 	; Eg. Int, Float, RBG, Multi Value. Type: 2, 2.5, 8, 9
 	if eval (GetUIFloat "StartMenu/MCM/_ShowScale") == 1
 		Call (CompileScript "MCMExtender\MenuShowScale.gek")
 	endif
 
 	; ===== DEFAULT SCALE =====
-	; Stent: Runs when the "Default" button is pressed in scale slider menu
+	; Runs when the "Default" button is pressed in scale slider menu
 	; Eg. Int, Float, RBG, Multi Value. Type: 2, 2.5, 8, 9
 	if GetUIFloat "StartMenu/MCM/_DefaultScale"
 		Call (CompileScript "MCMExtender\MenuDefaultScale.gek")
