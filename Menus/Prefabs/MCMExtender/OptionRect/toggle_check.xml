@@ -1,4 +1,9 @@
 <alpha> 255 </alpha>
+<x>
+	<copy src="parent()" trait="width" />
+	<sub src="MCM_Options" trait="_padding" />
+	<sub> 20 </sub>
+</x>
 <systemcolor> <copy src="grandparent()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 <red> <copy src="grandparent()" trait="_MCMExt+Red" /> </red>
 <green> <copy src="grandparent()" trait="_MCMExt+Green" /> </green>
