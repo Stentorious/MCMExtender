@@ -23,9 +23,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.50
+float MCMExtenderVersion = 1.51
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.5.0"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.5.1"
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
@@ -111,14 +111,6 @@ Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 1
 ; Get screen dimensions
 Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
 Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")
-
-; Set MCM systemcolor
-if eval (iSize = GetUIFloatAlt "StartMenu\MCM\systemcolor") > -1
-elseif eval (iSize = GetUIFloatAlt "StartMenu\systemcolor") > -1
-else
-	iSize = 1
-endif
-SetUIFloatAlt "HUDMainMenu\_MCMExt+Systemcolor" iSize
 
 ; Menu events
 SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013

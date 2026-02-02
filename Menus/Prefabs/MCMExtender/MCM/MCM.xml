@@ -1,3 +1,6 @@
+	<!-- Fix: Systemcolor inheritance -->
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+
 	<!-- Fix: Support controller hot swapping -->
 	<_AltInput> <copy src="io()" trait="_controller" /> </_AltInput>
 
@@ -210,4 +213,5 @@
 		</visible>
 		<x> <copy src="MCM" trait="x" /> <add src="MCM" trait="width" /> <sub src="me()" trait="width" /> <sub> 10 </sub> </x>
 		<y> <copy src="sibling(MCM_Version)" trait="y" /> </y>
+		<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 	</text>

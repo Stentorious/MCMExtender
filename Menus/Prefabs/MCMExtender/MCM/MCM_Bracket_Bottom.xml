@@ -1,0 +1,28 @@
+<image name="bracket_h1_clone">
+	<brightness> <copy src="sibling(bracket_h1)" trait="brightness" /> </brightness>
+	<depth> <copy src="sibling(bracket_h1)" trait="depth" />  </depth>
+	<filename> <copy src="sibling(bracket_h1)" trait="filename" /> </filename>
+	<height> <copy src="sibling(bracket_h1)" trait="height" /> </height>
+	<width> <copy src="sibling(bracket_h1)" trait="width" /> </width>
+	<x> <copy src="sibling(bracket_h1)" trait="x" /> </x>
+	<y> <copy src="sibling(bracket_h1)" trait="y" /> </y>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+</image>
+<image name="bracket_v1_clone">
+	<include src="vertical_fade_line.xml" />
+	<depth> <copy src="sibling(bracket_v1)" trait="depth" /> </depth>
+	<height> <copy src="sibling(bracket_v1)" trait="height" /> </height>
+	<x> <copy src="sibling(bracket_v1)" trait="x" /> </x>
+	<y> <copy src="sibling(bracket_v1)" trait="y" /> </y>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<_bottom_to_top> &true; </_bottom_to_top>
+</image>
+<image name="bracket_v2_clone">
+	<include src="vertical_fade_line.xml" />
+	<depth> <copy src="sibling(bracket_v2)" trait="depth" /> </depth>
+	<height> <copy src="sibling(bracket_v2)" trait="height" /> </height>
+	<x> <copy src="sibling(bracket_v2)" trait="x" /> </x>
+	<y> <copy src="sibling(bracket_v2)" trait="y" /> </y>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<_bottom_to_top> &true; </_bottom_to_top>
+</image>

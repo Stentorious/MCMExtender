@@ -1,0 +1,8 @@
+<systemcolor>
+	<copy src="io()" trait="_MCMExt+Systemcolor" />
+	<onlyifnot>
+		<not src="grandparent()" trait="_Menu" />
+		<and src="parent()" trait="mouseover" />
+		<and src="parent()" trait="_enabled" />
+	</onlyifnot>
+</systemcolor>

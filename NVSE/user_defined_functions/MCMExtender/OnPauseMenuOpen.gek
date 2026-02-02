@@ -62,6 +62,14 @@ Begin Function {iMenuID}
 		loop
 	endif
 
+	; Set tile visibility
+	SetUIFloatAlt "StartMenu\MCM\MCM_Bracket\MCM_Bracket_Bottom\bracket_h1\visible" 0
+	SetUIFloatAlt "StartMenu\MCM\MCM_Bracket\MCM_Bracket_Bottom\bracket_v1\visible" 0
+	SetUIFloatAlt "StartMenu\MCM\MCM_Bracket\MCM_Bracket_Bottom\bracket_v2\visible" 0
+	SetUIFloatAlt "StartMenu\MCM\MCM_Scale\Scale_Accept\text\visible" 0
+	SetUIFloatAlt "StartMenu\MCM\MCM_Scale\Scale_Default\text\visible" 0
+	SetUIFloatAlt "StartMenu\MCM\MCM_Scale\Scale_Cancel\text\visible" 0
+
 	aCache = Ar_Null
 	sv_Destruct sName
 

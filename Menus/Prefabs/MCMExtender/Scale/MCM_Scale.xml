@@ -1,3 +1,5 @@
+<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+
 <rect name="HSVColorPicker">
 	<include src="MCMExtender\_Prefabs\HSVColorPicker.xml" />
 	<visible>

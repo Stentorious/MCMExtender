@@ -1,0 +1,17 @@
+<text name="text_clone">
+	<alpha> <copy src="sibling(text)" trait="alpha" /> </alpha>
+	<depth> <copy src="sibling(text)" trait="depth" /> </depth>
+	<font> <copy src="sibling(text)" trait="font" /> </font>
+	<justify> <copy src="sibling(text)" trait="justify" /> </justify>
+	<string> <copy src="sibling(text)" trait="string" /> </string>
+	<x> <copy src="sibling(text)" trait="x" /> </x>
+	<y> <copy src="sibling(text)" trait="y" /> </y>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+	<brightness>
+		<copy> 255 </copy>
+		<max>
+			<copy> 320 </copy>
+			<onlyif src="parent()" trait="mouseover" />
+		</max>
+	</brightness>
+</text>

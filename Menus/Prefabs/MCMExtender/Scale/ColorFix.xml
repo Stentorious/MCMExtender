@@ -1,0 +1,8 @@
+<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
+<brightness>
+	<copy> 204 </copy>
+	<max>
+		<copy> 320 </copy>
+		<onlyif src="parent()" trait="mouseover" />
+	</max>
+</brightness>

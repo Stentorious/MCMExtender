@@ -21,4 +21,5 @@
 	<_number_of_visible_items> <copy src="parent" trait="_lines_visible" /> </_number_of_visible_items>
 	<_current_value> <copy src="parent()" trait="_offset" /> </_current_value>
 	<_SetInCode> 1 </_SetInCode>
+	<systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </systemcolor>
 </hotrect>
