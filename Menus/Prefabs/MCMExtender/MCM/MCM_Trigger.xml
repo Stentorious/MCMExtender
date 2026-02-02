@@ -1,0 +1,8 @@
+<target>
+	<not src="MCM_Return" trait="_clicked" />
+	<and src="me()" trait="_target" />
+	<and src="parent()" trait="_TargetMain" />
+	<and> <not src="parent()" trait="_Menu" /> </and>
+	<and src="parent" trait="visible" />
+	<and> <not src="main_container" trait="target" /> </and>
+</target>
