@@ -26,12 +26,12 @@ begin Function {sTimerName, rOwner}
 			if eval iInput == 4
 				MCMScale.iTask = 5
 				if eval IsButtonPressed 4
-					AuxTimerStart "*MCMExt_QBut" 0.05 13
+					Goo1.AuxTimerStart "*MCMExt_QBut" 0.05 13
 				endif
 			elseif eval iInput == 8
 				MCMScale.iTask = 6
 				if eval IsButtonPressed 8
-					AuxTimerStart "*MCMExt_QBut" 0.05 13
+					Goo1.AuxTimerStart "*MCMExt_QBut" 0.05 13
 				endif
 			endif
 
@@ -44,7 +44,7 @@ begin Function {sTimerName, rOwner}
 				MCMNavigate.iTask = 1
 			endif
 			if eval IsButtonPressed 1
-				AuxTimerStart "*MCMExt_QBut" 0.075 13
+				Goo1.AuxTimerStart "*MCMExt_QBut" 0.075 13
 			endif
 
 		elseif eval iInput == 2
@@ -55,7 +55,7 @@ begin Function {sTimerName, rOwner}
 				MCMNavigate.iTask = 2
 			endif
 			if eval IsButtonPressed 2
-				AuxTimerStart "*MCMExt_QBut" 0.075 13
+				Goo1.AuxTimerStart "*MCMExt_QBut" 0.075 13
 			endif
 
 		endif

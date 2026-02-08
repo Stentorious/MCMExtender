@@ -162,6 +162,6 @@ SetEventHandler "OnButtonUp:15" (begin function {int iKeyCode}
 	if eval Goo1.AuxVarType "*MCMExt_QBut" == 0
 		return
 	endif
-	AuxTimerStop "*MCMExt_QBut"
+	Goo1.AuxTimerStop "*MCMExt_QBut"
 	Goo1.AuxVarErase "*MCMExt_QBut"
 end)

@@ -5,6 +5,7 @@
 	<visible>
 		<copy src="parent()" trait="_type" /> <eq> 2 </eq>
 		<and> <not src="io()" trait="_controller" /> </and>
+		<and src="io()" trait="_MCMExt+Menu" />
 	</visible>
 	<_x>
 		<copy src="parent()" trait="width" />

@@ -13,6 +13,6 @@ begin function {int iButtonID}
 	else
 		PlaySound UIMenuFocus 1
 	endif
-	AuxTimerStart "*MCMExt_QBut" 0.5 13
+	Goo1.AuxTimerStart "*MCMExt_QBut" 0.5 13
 	Goo1.AuxVarSetFlt "*MCMExt_QBut" iButtonID
 end
