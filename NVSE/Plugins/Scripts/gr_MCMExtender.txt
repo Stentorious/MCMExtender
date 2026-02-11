@@ -13,7 +13,7 @@ if GetPluginVersion "JohnnyGuitarNVSE" < 360
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 	return
 endif
-if GetPluginVersion "ShowOffNVSE Plugin" < 181
+if GetPluginVersion "ShowOffNVSE Plugin" < 182
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest ShowOff NVSE plugin."
 	return
 endif
@@ -136,10 +136,14 @@ SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 15			; Ta
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 33			; F
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 46			; C
 SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 47			; V
-array_var aKeys = Ar_List 2 3 4 5 6 7 8 9 10 11 16 17 18 19 20 21 22 23 24 25
-array_var aTemp = Ar_List 30 31 32 33 34 35 36 37 38 44 45 46 47 48 49 50 14 28 57
+
+; Search inputs
+array_var aKeys = Ar_List 2 3 4 5 6 7 8 9 10 11 12 13 16 17 18 19 20 21 22 23
+array_var aTemp = Ar_List 24 25 26 27 30 31 32 33 34 35 36 37 38 39 40 43 44 45 46 47
 ar_Cat aKeys aTemp
-aTemp = Ar_List 199 207 203 205
+aTemp = Ar_List 48 49 50 51 52 53
+ar_Cat aKeys aTemp
+aTemp = Ar_List 14 28 57 199 207 203 205
 ar_Cat aKeys aTemp
 if eval (int iSize = ar_Size aKeys) > 0
 	while (iSize -= 1) > -1

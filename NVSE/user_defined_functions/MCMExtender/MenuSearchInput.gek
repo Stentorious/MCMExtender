@@ -64,11 +64,7 @@ begin Function {iKeyID}
 
 	; Characters
 	else
-		if eval IsKeyPressed 42 2 == 0 && IsKeyPressed 54 2 == 0
-			sv_Insert (sv_ToLower (sv_Construct "%k" iKeyID)) sSearch iCursorPos
-		else
-			sv_Insert (sv_Construct "%k" iKeyID) sSearch iCursorPos
-		endif
+		sv_Insert (ToANSIChar iKeyID 0) sSearch iCursorPos
 		iCursorPos += 1
 		iSearch = 2
 		PlaySound UIHackingCharSingle 1
