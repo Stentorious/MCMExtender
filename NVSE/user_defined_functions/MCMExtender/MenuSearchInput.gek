@@ -55,13 +55,6 @@ begin Function {iKeyID}
 		endif
 		PlaySound UIHackingCharSingle 1
 
-	; Space
-	elseif eval iKeyID == 57
-		sv_Insert " " sSearch iCursorPos
-		iCursorPos += 1
-		iSearch = 2
-		PlaySound UIHackingCharSingle 1
-
 	; Characters
 	else
 		sv_Insert (ToANSIChar iKeyID 0) sSearch iCursorPos
