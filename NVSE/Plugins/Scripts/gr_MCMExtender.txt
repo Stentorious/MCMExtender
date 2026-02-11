@@ -5,8 +5,8 @@ if eval IsModLoaded "The Mod Configuration Menu.esp" == 0
 	MessageBoxEx "MCM Extender missing requirement!%rInstall The Mod Configuration Menu."
 	return
 endif
-if eval GetNVSEVersion < 6 || (GetNVSEVersion == 6 && GetNVSERevision < 4)
-	MessageBoxEx "MCM Extender missing requirement!%rInstall xNVSE 6.4.0+."
+if eval GetNVSEVersionFull < 6.45
+	MessageBoxEx "MCM Extender missing requirement!%rInstall xNVSE 6.4.5+."
 	return
 endif
 if GetPluginVersion "JohnnyGuitarNVSE" < 360
