@@ -98,6 +98,6 @@ begin Function {iKeyID}
 		Call (CompileScript "MCMExtender\MenuSearch.gek") (sSearch)
 	endif
 
-	sv_Destruct sSearch sCursor
+	sv_Destruct sSearch sCursor sCharacter
 
 end
