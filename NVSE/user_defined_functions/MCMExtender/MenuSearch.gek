@@ -15,7 +15,7 @@ begin Function {sSearch}
 		return
 	endif
 
-	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" (sSearch)
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" "%z" sSearch
 
 	ListClear MCMMods
 

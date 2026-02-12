@@ -3,8 +3,11 @@ int iKeyID
 int iCursorPos
 int iLength
 int iSearch
+float fWidth
+float fHeight
 string_var sSearch
 string_var sCursor
+string_var sCharacter
 
 begin Function {iKeyID}
 
@@ -57,7 +60,11 @@ begin Function {iKeyID}
 
 	; Characters
 	else
-		sv_Insert (ToANSIChar iKeyID 0) sSearch iCursorPos
+		GetStringUIDimensions (sCharacter = ToANSIChar iKeyID 0) (GetUIFloatAlt "StartMenu\_MCMExt+FontGeneral") 100 (fWidth) (fHeight) (iLength)
+		if eval fWidth <= 2
+			sCharacter = ToANSIChar iKeyID 1
+		endif
+		sv_Insert "%z" sCharacter sSearch iCursorPos
 		iCursorPos += 1
 		iSearch = 2
 		PlaySound UIHackingCharSingle 1
@@ -72,9 +79,9 @@ begin Function {iKeyID}
 	Goo1.AuxVarSetFlt "*MCMExt_Cursor" iCursorPos
 	sCursor = sSearch
 	sv_Insert "|" sCursor iCursorPos
-	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" (sCursor)
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_1" "%z" sCursor
 	sCursor[iCursorPos] = " "
-	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" (sCursor)
+	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" "%z" sCursor
 	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1
 	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1 2.5 1 2
 
