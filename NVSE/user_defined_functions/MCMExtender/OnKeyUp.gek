@@ -1,9 +1,27 @@
 int iKeyID
 
+int iIndex
+array_var aKeyStack
+
 begin function {iKeyID}
+
 	if eval Goo1.AuxVarType "*MCMExt_QKey" == 0
 		return
 	endif
-	Goo1.AuxTimerStop "*MCMExt_QKey"
-	Goo1.AuxVarErase "*MCMExt_QKey"
+	aKeyStack = Goo1.AuxVarGetAsArr "*MCMExt_KeyStack"
+
+	if eval (iIndex = Ar_Find iKeyID aKeyStack) != Ar_BadNumericIndex
+		Goo1.AuxVarErase "*MCMExt_KeyStack" iIndex
+	endif
+
+	if eval Goo1.AuxVarSize "*MCMExt_KeyStack" == 0
+		Goo1.AuxTimerStop "*MCMExt_QKey"
+		Goo1.AuxVarErase "*MCMExt_QKey"
+	else
+		Goo1.AuxTimerStart "*MCMExt_QKey" 0.5 13
+		Goo1.AuxVarSetFlt "*MCMExt_QKey" (Goo1.AuxVarGetFlt "*MCMExt_KeyStack" -1)
+	endif
+
+	aKeyStack = ar_Null
+
 end

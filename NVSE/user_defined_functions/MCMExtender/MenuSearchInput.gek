@@ -55,8 +55,16 @@ begin Function {iKeyID}
 			iCursorPos -= 1
 			sSearch[iCursorPos] = ""
 			iSearch = 1
+			PlaySound UIHackingCharSingle 1
 		endif
-		PlaySound UIHackingCharSingle 1
+
+	; Delete
+	elseif eval iKeyID == 211
+		if eval iCursorPos < (iLength = sv_Length sSearch)
+			sSearch[iCursorPos] = ""
+			iSearch = 1
+			PlaySound UIHackingCharSingle 1
+		endif
 
 	; Characters
 	else
@@ -86,8 +94,9 @@ begin Function {iKeyID}
 	SetUIFloatGradual "StartMenu\_MCMExt+Pulse" 1 2.5 1 2
 
 	; Queue input
-	if eval Goo1.AuxVarType "*MCMExt_QKey" == 0
+	if eval Goo1.AuxVarType "*MCMExt_QKey" == 0 || Goo1.AuxVarGetFlt "*MCMExt_QKey" != iKeyID
 		Goo1.AuxTimerStart "*MCMExt_QKey" 0.5 13
+		Goo1.AuxVarSetFlt "*MCMExt_KeyStack" iKeyID -1
 	else
 		Goo1.AuxTimerStart "*MCMExt_QKey" 0.05 13
 	endif
