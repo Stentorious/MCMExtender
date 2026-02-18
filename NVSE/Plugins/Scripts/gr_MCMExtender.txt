@@ -13,7 +13,7 @@ if GetPluginVersion "JohnnyGuitarNVSE" < 360
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest JohnnyGuitar NVSE plugin."
 	return
 endif
-if GetPluginVersion "ShowOffNVSE Plugin" < 182
+if GetPluginVersion "ShowOffNVSE Plugin" < 183
 	MessageBoxEx "MCM Extender missing requirement!%rInstall latest ShowOff NVSE plugin."
 	return
 endif
@@ -23,9 +23,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.52
+float MCMExtenderVersion = 1.53
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.5.2"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.5.3"
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
