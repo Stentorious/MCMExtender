@@ -1,6 +1,6 @@
 # MCM Extender
 <p align="left">
-    <img height="350px" src="https://staticdelivery.nexusmods.com/mods/130/images/93642/93642-1756777267-1064381590.png">
+	<img height="350px" src="https://staticdelivery.nexusmods.com/mods/130/images/93642/93642-1756777267-1064381590.png">
 </p>
 
 ## Overview
@@ -11,8 +11,22 @@ Allows mod authors to create feature rich, script-free MCM menus with ease.
 Also includes new MCM quality-of-life features for all players.
 
 ### QoL Features
+- Search Bar: Allows you easily find the mod you're looking for in the sidebar.
 - Color Picker: Default MCM color selection sliders is replaced with an easy-to-use HSV color picker.
+- Default Settings Confirmation: Adds a confirmation prompt to the "Defaults" menu button.
+- Bind Disabled Keys: Enables binding disabled keys via a confirmation prompt.
 - Improved Visibility: Adds backgrounds to all MCM color swatches, making them easier to see.
+- Improved Controller Support: Supports controller hotswapping, holding down inputs to repeat actions.
+
+### Bug Fixes
+- Fixes broken menu behavior if duplicate items are added to the MCMMods FormList.
+- Fixes MCM not being reset when exiting Pause Menu into MenuMode.
+- Fixes multiple issues related to menu scrolling.
+- Fixes menu input delay if FPS > 100 while in the MCM.
+- Fixes broken menu behavior after controller hot swap.
+- Fixes being able to select above the top dropdown list option with controller.
+- Fixes MCM_Trigger being selectable from within other StartMenu submenus.
+- Fixes being able to interact with parts of the menu will selecting a keybind.
 
 ## Mod Authors
 MCM Extender introduces a powerful framework that allows you to create complex, feature-rich MCMs entirely from JSON files, with no scripting required.
@@ -47,3 +61,6 @@ It is backwards compatible with any existing MCM.
 
 ## Installation
 Installs like any other mod, manually or using a mod manager.
+
+## Support The Author
+[![Patreon Donation](https://i.imgur.com/TnQwVb6.png)](https://www.patreon.com/stentorious)
