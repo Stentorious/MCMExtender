@@ -49,22 +49,15 @@ Begin Function {iMenuID}
 		Goo1.AuxVarErase "*MCMExt_JSONCache"
 	endif
 
-	; Remove clones from MCM FormList
-	iSize = ListGetCount MCMMods
-	while (iSize -= 1) > -1
-		rTemp = ListGetNthForm MCMMods iSize
-		if eval (GetSourceModIndex rTemp) == 255
-			ListRemoveForm MCMMods rTemp
-			;PrintC "MCM Extender: Remove clone -> %z" (LNGetName rTemp)
-		endif
-	loop
+	; Reset MCM FormList
+	ListClear MCMMods
+	aTemp = Goo1.AuxVarGetAsArr "*MCMListCache"
+	ListAddArray MCMMods aTemp
 
 	; Reset MCM FormList from search
 	if eval Goo1.AuxVarGetFlt "*MCMExt_Search"
 		Goo1.AuxVarSetFlt "*MCMExt_Search" 0
 		Goo1.AuxVarSetFlt "*MCMExt_Cursor" 0
-		aTemp = Goo1.AuxVarGetAsArr "*MCMListCache"
-		ListAddArray MCMMods aTemp
 		EK 18
 	endif
 

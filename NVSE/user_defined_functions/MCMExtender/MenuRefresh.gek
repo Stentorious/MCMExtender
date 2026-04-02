@@ -18,9 +18,8 @@ begin Function {}
 	; Update search term
 	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_term" "%e"
 
-	ListClear MCMMods
-
 	; Add matching forms to list
+	ListClear MCMMods
 	aCache = Goo1.AuxVarGetAsArr "*MCMListCache"
 	ListAddArray MCMMods aCache
 	aCache = ar_Null

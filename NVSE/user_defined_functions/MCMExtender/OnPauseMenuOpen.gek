@@ -28,6 +28,7 @@ Begin Function {iMenuID}
 	SetUIStringAlt "StartMenu\MCM\MCM_Search\_search_cursor_2" " "
 
 	MCMModList.fWidth = 300
+	;MCMMessage6 = 1
 
 	; Get the MCM menu FormList and generate an entry for each mod loaded
 	; Remove clones from FormList
@@ -41,10 +42,9 @@ Begin Function {iMenuID}
 	loop
 
 	; Build search cache, remove extra
-	if eval Goo1.AuxVarSize "*MCMListCache" == 0
-		aCache = Ar_Unique (GetListForms MCMMods)
-		Goo1.AuxVarSetFromArr "*MCMListCache" aCache
-	endif
+	aCache = Ar_Unique (GetListForms MCMMods)
+	Goo1.AuxVarErase "*MCMListCache"
+	Goo1.AuxVarSetFromArr "*MCMListCache" aCache
 
 	; Validate and add temp clone to MCM FormList
 	if eval (iSize = Goo1.AuxVarSize "*MCMExt_ModName") > 0
