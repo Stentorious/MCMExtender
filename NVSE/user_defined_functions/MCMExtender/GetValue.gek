@@ -23,7 +23,7 @@ Begin Function {aVarMap}
 		endif
 		rForm = EditorIDToFormID (sEdID)
 		if eval (IsFormValid rForm) == 0
-			PrintC "MCM Extender: Invalid Form in Variable Object -> (%z)" (aVarMap["form"])
+			PrintC "MCM Extender: Invalid Form in Variable Object -> %z" (aVarMap["form"])
 			SetFunctionValue fTemp
 			return
 		endif
