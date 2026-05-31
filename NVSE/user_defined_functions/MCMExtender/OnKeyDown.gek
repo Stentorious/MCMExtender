@@ -43,11 +43,16 @@ begin Function {iKeyID}
 	; Exit MCM
 	if eval iKeyID == 1
 		if eval iKey == 1
-			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
-			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
-			SetMCMFloat 1 0 "_selected" 0
-			SetMCMFloat 0 0 "_NewValue" 1
-			SetMCMFloat 0 0 "_Value" 0
+			if eval Goo1.AuxVarGetFlt "*MCMExt_State" 8 == 1
+				Call (CompileScript "MCMExtender\BindButton.gek") 0
+			elseif eval Goo1.AuxVarGetFlt "*MCMExt_State" 8 == 2
+				Call (CompileScript "MCMExtender\BindControl.gek") 0
+			else
+				SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+				SetMCMFloat 1 0 "_selected" 0
+				SetMCMFloat 0 0 "_NewValue" 1
+				SetMCMFloat 0 0 "_Value" 0
+			endif
 		else
 			EK 1
 			TK 1
@@ -58,11 +63,12 @@ begin Function {iKeyID}
 	; Exit MCM submenu (Tab)
 	if eval iKeyID == 15
 		if eval iKey == 1
-			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
-			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
-			SetMCMFloat 1 0 "_selected" 0
-			SetMCMFloat 0 0 "_NewValue" 1
-			SetMCMFloat 0 0 "_Value" 15
+			if eval Goo1.AuxVarGetFlt "*MCMExt_State" 8 == 0
+				SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+				SetMCMFloat 1 0 "_selected" 0
+				SetMCMFloat 0 0 "_NewValue" 1
+				SetMCMFloat 0 0 "_Value" 15
+			endif
 		elseif eval iScale == 1
 			ClickMenuTile "StartMenu\MCM\MCM_Scale\Scale_Cancel"
 		elseif eval GetUIFloatAlt "StartMenu/MCM/_ShowList" == 3
@@ -83,11 +89,12 @@ begin Function {iKeyID}
 	; Scroll
 	if eval iKeyID == 264 || iKeyID == 265
 		if eval iKey == 1
-			SetMCMFloat 0 0 "MCM_PressControl/visible" 0
-			SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
-			SetMCMFloat 1 0 "_selected" 0
-			SetMCMFloat 0 0 "_NewValue" 1
-			SetMCMFloat 0 0 "_Value" iKeyID
+			if eval Goo1.AuxVarGetFlt "*MCMExt_State" 8 == 0
+				SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+				SetMCMFloat 1 0 "_selected" 0
+				SetMCMFloat 0 0 "_NewValue" 1
+				SetMCMFloat 0 0 "_Value" iKeyID
+			endif
 			return
 		elseif eval iScale == 1
 			if eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/HSVColorPicker/visible" == 0

@@ -1,7 +1,7 @@
 int	iButtonID
 
 begin function {int iButtonID}
-	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1 || GetActiveMenuMode != 1013
+	if eval GetUIFloatAlt "StartMenu\MCM\_Menu" != 1 || GetActiveMenuMode != 1013 || GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" == 1
 		return
 	elseif eval GetUIFloatAlt "StartMenu/MCM/MCM_Scale/visible"
 		if eval iButtonID < 4

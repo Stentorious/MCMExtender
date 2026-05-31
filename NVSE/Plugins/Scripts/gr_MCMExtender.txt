@@ -1,7 +1,7 @@
 ; MCM Extender - Stentorious
 
 ; Check for requirements
-if eval IsModLoaded "The Mod Configuration Menu.esp" == 0
+if eval IsModLoaded "The Mod Configuration Menu.esp" == 0 || GetPluginVersion "MCM Extensions" < 1
 	MessageBoxEx "MCM Extender missing requirement!%rInstall The Mod Configuration Menu."
 	return
 endif
@@ -23,9 +23,9 @@ if GetPluginVersion "UI Organizer Plugin" < 230
 endif
 
 ; MCM Extender version
-float MCMExtenderVersion = 1.53
+float MCMExtenderVersion = 1.60
 SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
-SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v1.5.3"
+SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v%g.%.1f" (Flr MCMExtenderVersion) ((Fmod MCMExtenderVersion 1) * 10)
 
 ; Cache MCM forms
 Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
@@ -45,7 +45,6 @@ string_var sFilePath
 
 aFiles = GetFilesInFolder "MCM" "*.json"
 if eval (iSize = Ar_Size aFiles) > 0
-	PrintC "MCM Extender: Loading JSON files..."
 	aFiles = Ar_Sort aFiles 1
 	aModID = ar_Construct "array"
 	while (iSize -= 1) > -1
@@ -103,6 +102,8 @@ Goo1.AuxVarSetStr "*MCMExt_State" ("") 4	; modName
 Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 6		; Mod index
 Goo1.AuxVarSetFlt "*MCMExt_State" 0 7		; Message box open
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 8		; Controller binding menu open
+Goo1.AuxVarSetFlt "*MCMExt_State" 0 9		; Controller binding count
 
 ; Key
 Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 0
@@ -169,3 +170,6 @@ SetEventHandler "OnButtonUp:15" (begin function {int iKeyCode}
 	Goo1.AuxTimerStop "*MCMExt_QBut"
 	Goo1.AuxVarErase "*MCMExt_QBut"
 end)
+
+; Mod support
+Goo1.AuxVarSetFlt "*Main And Pause Menus Overhaul.esm" (IsModLoaded "Main And Pause Menus Overhaul.esm")

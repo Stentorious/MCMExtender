@@ -10,7 +10,6 @@ Begin Function {iButton}
 	endif
 
 	SetMCMFloat 0 0 "MCM_PressControl/visible" 0
-	SetMCMFloat 0 0 "MCM_BG/MCM_PressControl/BG/visible" 0
 	SetMCMFloat 1 0 "_selected" 0
 	SetMCMFloat 0 0 "_NewValue" 1
 	SetMCMFloat 0 0 "_Value" (Goo1.AuxVarGetFlt "*MCMExt_Keys" 1)

@@ -82,6 +82,10 @@ Begin Function {iMenuID}
 		ResetQuest rTemp
 	endif
 
+	if eval Goo1.AuxVarGetFlt "*Main And Pause Menus Overhaul.esm"
+		SetScriptDisabled (EditorIDToFormID "MAPMOInputSCRIPT") 0
+	endif
+
 	aTemp = ar_Null
 
 End

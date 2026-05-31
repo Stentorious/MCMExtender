@@ -10,6 +10,8 @@ array_var aTemp
 array_var aVariables
 array_var aElementNumeric
 array_var aElementString
+array_var aButtonNames
+array_var aControlNames
 string_var sSubmenu
 string_var sType
 string_var sText
@@ -43,6 +45,10 @@ Begin Function {}
 	; Hide images
 	SetMCMFloatMass 1 1 36 "MCMExtImage/visible" 0
 
+	; Reset keybind type
+	SetMCMFloatMass 1 1 36 "_keybind" 0
+	SetMCMFloatMass 1 1 36 "_keybindCount" 1
+
 	; Reset brightness
 	SetMCMFloatMass 1 1 36 "_brightnessMul" 1
 
@@ -54,6 +60,12 @@ Begin Function {}
 	; Element types
 	aElementNumeric = Ar_List "type", "enable", "refresh", "indent", "brightnessMul", "systemcolor", "decimalcolor"
 	aElementString = Ar_List "title", "prefix", "suffix", "string", "textOff", "textOn"
+
+	; Controller button names
+	aButtonNames = Ar_List "D-Pad Up", "D-Pad Down", "D-Pad Left", "D-Pad Right", "Start", "Back", "LS", "RS", "LB", "RB", "<Unbound>", "<Unbound>", "A", "B", "X", "Y"
+	;aButtonNames = Ar_List "sXBDPadUp", "sXBDPadDown", "sXBDPadLeft", "sXBDPadRight", "sXBStartBtn", "sXBBackBtn", "sXBLStick", "sXBRStick", "sXBLBumper", "sXBRBumper", "XBOX_GUIDE", "sXBUnboundBtn", "sXBABtn", "sXBBBtn", "sXBXBtn", "sXBYBtn"
+	aControlNames = Ar_List "sUActnForward", "sUActnBack", "sUActnSldleft", "sUActnSldright", "sUActnUse", "sUActnActivate", "sUActnBlock", "sUActnRdyitem", "sUActnCrouch", "sUActnRun", "sUActnTogglerun", "sUActnAutomove", "sUActnJump", "sUActnTogglepov", "sUActnMenumode", "sUActnRestmenu", "sUActnVats"
+	ar_Cat aControlNames (Ar_List "sUActnHotKey1", "sUActnAMmoSwap", "sUActnHotKey3", "sUActnHotKey4", "sUActnHotKey5", "sUActnHotKey6", "sUActnHotKey7", "sUActnHotKey8", "sUActnQuicksave", "sUActnQuickload", "sUActnGrab")
 
 	; Reset options
 	foreach aForE <- (aJSON["submenus"][(sSubmenu)]["options"])
@@ -231,9 +243,64 @@ Begin Function {}
 					SetUIString (sTemp) (sv_Construct ("%." + $(aTemp["scale"]["valueDecimal"]) + "f") fTemp)
 					continue
 
-				; Scan code
+				; Control input
 				elseif eval fType == 3
-					SetUIString (sTemp) (GetKeyName fTemp)
+					if eval ar_HasKey aTemp "keybind" && ar_HasKey aTemp["keybind"] "type"
+
+						; Control Type (Keyboard/Controller/Control)
+						if eval aTemp["keybind"]["type"] == 0
+							sText = GetKeyName fTemp
+						elseif eval aTemp["keybind"]["type"] == 1
+							SetMCMFloat 1 iOption "_keybind" 1
+							if eval fTemp == 0
+								sText = GetStringSetting "sXBUnboundBtn"
+							else
+								sText = ""
+								iSize = 16
+								while (iSize -= 1) > -1
+									if eval GetBit fTemp iSize
+										sText = sv_Construct "%z + %z" sText (aButtonNames[iSize])
+									endif
+								loop
+								sText[0:2] = ""
+							endif
+						elseif eval aTemp["keybind"]["type"] == 2
+							SetMCMFloat 1 iOption "_keybind" 2
+							if eval fTemp == 0
+								sText = GetStringSetting "sXBUnboundBtn"
+							else
+								sText = ""
+								iSize = 28
+								while (iSize -= 1) > -1
+									if eval GetBit fTemp iSize
+										sText = sv_Construct "%z + %z" sText (GetStringSetting (aControlNames[iSize]))
+									endif
+								loop
+								sText[0:2] = ""
+							endif
+						endif
+
+						; Input combo
+						if eval ar_HasKey aTemp["keybind"] "count"
+							SetMCMFloat 1 iOption "_keybindCount" (aTemp["keybind"]["count"])
+						endif
+
+						; Validate inputs
+						if eval ar_HasKey aTemp["keybind"] "validateInput"
+							if eval aTemp["keybind"]["validateInput"] == 1
+								if eval GetUIFloatAlt "StartMenu/MCM/_AltInput" == 1
+									SetUIFloat ("StartMenu/MCM/*:1/*:" + $iOption + "/_enable") 2
+								endif
+							elseif eval aTemp["keybind"]["validateInput"] == 2
+								if eval GetUIFloatAlt "StartMenu/MCM/_AltInput" == 0
+									SetUIFloat ("StartMenu/MCM/*:1/*:" + $iOption + "/_enable") 2
+								endif
+							endif
+						endif
+					else
+						sText = GetKeyName fTemp
+					endif
+					SetUIString (sTemp) (sText)
 					continue
 				endif
 			endif
@@ -241,7 +308,7 @@ Begin Function {}
 		endif
 	loop
 
-	aJSON = aForE = aForE2 = aTemp = aVariables = aElementNumeric = aElementString = Ar_Null
+	aJSON = aForE = aForE2 = aTemp = aVariables = aElementNumeric = aElementString = aButtonNames = aControlNames = Ar_Null
 	sv_Destruct sType sText sTemp sTranslate sConfigPath sSubmenu
 
 End

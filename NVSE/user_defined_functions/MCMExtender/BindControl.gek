@@ -1,0 +1,41 @@
+int	iControlID
+
+int iCount
+int iSize
+int iControlMask
+
+begin function {int iControlID}
+
+	if eval GetUIFloatAlt "StartMenu/MCM/MCM_PressControl/visible" != 1
+		return
+	endif
+
+	; Check for button combinations
+	if eval iControlID > 0
+		iSize = 28
+		while (iSize -= 1) > -1
+			if eval IsControlPressed iSize 2
+				iControlMask = SetBit iControlMask iSize 1
+				iCount += 1
+			endif
+		loop
+		if eval iCount != Goo1.AuxVarGetFlt "*MCMExt_State" 9
+			return
+		endif
+	endif
+
+	SetMCMFloat 0 0 "MCM_PressControl/visible" 0
+	SetMCMFloat 1 0 "_selected" 0
+	SetMCMFloat 0 0 "_NewValue" 1
+	SetMCMFloat 0 0 "_Value" iControlMask
+	SetMCMFloat 0 0 "_TargetOption" (GetVariable "iTargetOption" (Goo1.AuxVarGetRef "*MCMExt_Refs" 0))
+	MCMInstalled = 1
+
+	CallWhen ({} => EnableButton 65535) ({int iTemp} => IsButtonPressed iTemp == 0) 2 (GetPressedButtons)
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 8
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 9
+
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\BindControl.gek") 0
+	RemoveEventHandler "OnButtonDown:65535" (CompileScript "MCMExtender\BindControl.gek")
+
+end
