@@ -1,10 +1,11 @@
 float fValue
 array_var aVarMap
-string_var sFilePath
 
 ref rForm
 array_var aTemp
+string_var sFilePath
 string_var sEdID
+string_var sComment
 
 Begin Function {fValue, aVarMap}
 
@@ -86,15 +87,22 @@ Begin Function {fValue, aVarMap}
 		else
 			sFilePath = Goo1.AuxVarGetStr "*MCMExt_State" 5
 		endif
+		; Comment
+		if eval Ar_HasKey aVarMap "iniComment"
+			sComment = aVarMap["iniComment"]
+			if eval sComment[0] == "$"
+				sComment = AuxStringMapGetStr "*MCMExt_Translations" (sComment)
+			endif
+		endif
 		if eval fValue == Flr fValue
-			SetINIIntC (aVarMap["configINI"]) fValue (sFilePath)
+			SetINIIntC (aVarMap["configINI"]) fValue (sFilePath) (sComment)
 		else
-			SetINIValC (aVarMap["configINI"]) fValue (sFilePath)
+			SetINIValC (aVarMap["configINI"]) fValue (sFilePath) (sComment)
 		endif
 		Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
 	endif
 
 	aVarMap = Ar_Null
-	sv_Destruct sFilePath sEdID
+	sv_Destruct sFilePath sEdID sComment
 
 End
