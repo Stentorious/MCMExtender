@@ -109,10 +109,6 @@ Goo1.AuxVarSetFlt "*MCMExt_State" 0 9		; Controller binding count
 Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 0
 Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 1
 
-; Get screen dimensions
-Goo1.AuxVarSetFlt "*_ScreenWidth" (GetNumericINISetting "iSize W:Display")
-Goo1.AuxVarSetFlt "*_ScreenHeight" (GetNumericINISetting "iSize H:Display")
-
 ; Menu events
 SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013
 SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 1013
