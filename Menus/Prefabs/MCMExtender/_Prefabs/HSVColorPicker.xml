@@ -423,7 +423,7 @@ Displays color gradient and updates automatically based on current selection.
 	<red> <copy src="parent()" trait="_FinalHueRed" /> </red>
 	<green> <copy src="parent()" trait="_FinalHueGreen" /> </green>
 	<blue> <copy src="parent()" trait="_FinalHueBlue" /> </blue>
-	<filename> Interface\Stentorious\HSVColorPicker\Gradient.dds </filename>
+	<filename> Interface\Stentorious\_Common\Menu\Gradient.dds </filename>
 </image>
 <image name="Value">
 	<visible> 1 </visible>
@@ -438,7 +438,7 @@ Displays color gradient and updates automatically based on current selection.
 	<red> 0 </red>
 	<green> 0 </green>
 	<blue> 0 </blue>
-	<filename> Interface\Stentorious\HSVColorPicker\Gradient.dds </filename>
+	<filename> Interface\Stentorious\_Common\Menu\Gradient.dds </filename>
 </image>
 <hotrect name="SV_Picker">
 	<visible> 1 </visible>
@@ -550,7 +550,7 @@ Accepts Hue input in the form of a slider.
 	<height> <copy src="sibling(SV_Window)" trait="height" /> </height>
 	<zoom> -1 </zoom>
 	<systemcolor> 0 </systemcolor>
-	<filename> Interface\Stentorious\HSVColorPicker\Hue.dds </filename>
+	<filename> Interface\Stentorious\_Common\Menu\Hue.dds </filename>
 </image>
 <image name="Hue_Window_Background">
 	<visible> 1 </visible>

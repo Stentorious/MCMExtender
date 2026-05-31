@@ -36,9 +36,9 @@
 		<_search_brightness_0> 75 </_search_brightness_0>
 		<_search_brightness_1> 204 </_search_brightness_1>
 		<_search_brightness_2> 204 </_search_brightness_2>
-		<_icon_search_0> Interface\Stentorious\MCMExtender\SearchInit.dds </_icon_search_0>
-		<_icon_search_1> Interface\Stentorious\MCMExtender\SearchStop.dds </_icon_search_1>
-		<_icon_search_2> Interface\Stentorious\MCMExtender\SearchStop.dds </_icon_search_2>
+		<_icon_search_0> Interface\Stentorious\_Common\Menu\Search\Init.dds </_icon_search_0>
+		<_icon_search_1> Interface\Stentorious\_Common\Menu\Search\Stop.dds </_icon_search_1>
+		<_icon_search_2> Interface\Stentorious\_Common\Menu\Search\Stop.dds </_icon_search_2>
 
 		<visible> <copy src="sibling(MCM_ModList)" trait="visible" /> </visible>
 		<locus> 1 </locus>
