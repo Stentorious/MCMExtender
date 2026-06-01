@@ -63,4 +63,4 @@ It is backwards compatible with any existing MCM.
 Installs like any other mod, manually or using a mod manager.
 
 ## Support The Author
-[![Patreon Donation](https://i.imgur.com/TnQwVb6.png)](https://www.patreon.com/stentorious)
+[![Patreon Donation](https://github.com/Stentorious/NexusModsAssets/blob/main/common/buttons/patreon.png?raw=true)](https://www.patreon.com/stentorious)
