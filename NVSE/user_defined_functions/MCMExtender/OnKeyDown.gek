@@ -6,8 +6,10 @@ int iKey
 int iScrollOffset
 int iScrollVisible
 int iScrollTotal
-float fCursorPosX
-float fCursorPosY
+float fCursorX
+float fCursorY
+float fTileX
+float fTileY
 
 begin Function {iKeyID}
 
@@ -106,9 +108,9 @@ begin Function {iKeyID}
 			endif
 			return
 		elseif eval iList == 0
-			fCursorPosX = GetCursorPos X 1
-			fCursorPosY = GetCursorPos Y 1
-			if eval fCursorPosX > GetUIFloatInherited "StartMenu\MCM\MCM_Options\x" && fCursorPosX < (GetUIFloatInherited "StartMenu\MCM\MCM_Options\x" + GetUIFloatAlt "StartMenu\MCM\MCM_Options\width") && fCursorPosY > GetUIFloatInherited "StartMenu\MCM\MCM_Options\y" && fCursorPosY < (GetUIFloatInherited "StartMenu\MCM\MCM_Options\y" + GetUIFloatAlt "StartMenu\MCM\MCM_Options\height") && GetUIFloatAlt "StartMenu\MCM\MCM_Options\Scrollbar\visible" == 1
+			fCursorX = GetCursorPos X 1
+			fCursorY = GetCursorPos Y 1
+			if eval (fTileX = GetUIFloatInherited "StartMenu\MCM\MCM_Options\x") < fCursorX && fCursorX < (fTileX + GetUIFloatAlt "StartMenu\MCM\MCM_Options\width") && (fTileY = GetUIFloatInherited "StartMenu\MCM\MCM_Options\y") < fCursorY && fCursorY < (fTileY + GetUIFloatAlt "StartMenu\MCM\MCM_Options\height") && GetUIFloatAlt "StartMenu\MCM\MCM_Options\Scrollbar\visible" == 1
 				iScrollOffset = GetUIFloatAlt "StartMenu\MCM\MCM_Options\Scrollbar\_current_value"
 				iScrollVisible = GetUIFloatAlt "StartMenu\MCM\MCM_Options\Scrollbar\_number_of_visible_items"
 				iScrollTotal = GetUIFloatAlt "StartMenu\MCM\MCM_Options\Scrollbar\_number_of_items"
@@ -117,7 +119,7 @@ begin Function {iKeyID}
 				elseif eval iKeyID == 265 && (iScrollOffset + iScrollVisible) < iScrollTotal
 					MCMNavigate.iTask = 12
 				endif
-			elseif eval fCursorPosX > GetUIFloatInherited "StartMenu\MCM\MCM_ModList\x" && fCursorPosX < (GetUIFloatInherited "StartMenu\MCM\MCM_ModList\x" + GetUIFloatAlt "StartMenu\MCM\MCM_ModList\width") && fCursorPosY > GetUIFloatInherited "StartMenu\MCM\MCM_ModList\y" && fCursorPosY < (GetUIFloatInherited "StartMenu\MCM\MCM_ModList\y" + GetUIFloatAlt "StartMenu\MCM\MCM_ModList\height") && GetUIFloatAlt "StartMenu\MCM\MCM_ModList\Scrollbar\visible" == 1
+			elseif eval (fTileX = GetUIFloatInherited "StartMenu\MCM\MCM_ModList\x") < fCursorX && fCursorX < (fTileX + GetUIFloatAlt "StartMenu\MCM\MCM_ModList\width") && (fTileY = GetUIFloatInherited "StartMenu\MCM\MCM_ModList\y") < fCursorY && fCursorY < (fTileY + GetUIFloatAlt "StartMenu\MCM\MCM_ModList\height") && GetUIFloatAlt "StartMenu\MCM\MCM_ModList\Scrollbar\visible" == 1
 				iScrollOffset = GetUIFloatAlt "StartMenu\MCM\MCM_ModList\Scrollbar\_current_value"
 				iScrollVisible = GetUIFloatAlt "StartMenu\MCM\MCM_ModList\Scrollbar\_number_of_visible_items"
 				iScrollTotal = GetUIFloatAlt "StartMenu\MCM\MCM_ModList\Scrollbar\_number_of_items"
