@@ -140,12 +140,45 @@ begin function {}
 	SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013
 	SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 1013
 
-	; Default settings confirmation
-	Goo1.AuxVarSetFlt "*MCMExt_Dev" (eval GetINIFloat_Cached "General:bDefaultSettingsConfirmation" "Stentorious\MCMExtender.ini" 1) 0
+	; MCM Extender config
+	Goo1.AuxVarSetFlt "*MCMExt_INI" (eval GetINIFloat_Cached "General:bDefaultSettingsConfirmation" "Stentorious\MCMExtender.ini" 1) 0
 	SetUIFloatAlt "HUDMainMenu\_MCMExt+HighlightModified" (eval GetINIFloat_Cached "General:bHighlightModifiedSettings" "Stentorious\MCMExtender.ini" 0)
 	SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#609"
 	SetEventHandler "OnButtonDown:32768" (CompileScript "MCMExtender\OnKeyDown.gek")
 	CloseFileSO "Stentorious\MCMExtender.ini" 0
+
+	; JIP LN NVSE patches
+	; Fix
+	AuxStringMapSetFlt "*JIPLN_Patch" "bProjImpactDmgFix" (GetOptionalPatch "bProjImpactDmgFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bGameDaysPassedFix" (GetOptionalPatch "bGameDaysPassedFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bHardcoreNeedsFix" (GetOptionalPatch "bHardcoreNeedsFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bSneakBoundingBoxFix" (GetOptionalPatch "bSneakBoundingBoxFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bNoFailedScriptLocks" (GetOptionalPatch "bNoFailedScriptLocks")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bDoublePrecision" (GetOptionalPatch "bDoublePrecision")
+	; Tweak
+	AuxStringMapSetFlt "*JIPLN_Patch" "bQttSelectShortKeys" (GetOptionalPatch "bQttSelectShortKeys")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bLoadScreenFix" (GetOptionalPatch "bLoadScreenFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bVoiceModulationFix" (GetOptionalPatch "bVoiceModulationFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bEnableNVACAlerts" (GetOptionalPatch "bEnableNVACAlerts")
+	; Balance
+	AuxStringMapSetFlt "*JIPLN_Patch" "bEnableFO3Repair" (GetOptionalPatch "bEnableFO3Repair")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bEnableBigGunsSkill" (GetOptionalPatch "bEnableBigGunsSkill")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bLocalizedDTDR" (GetOptionalPatch "bLocalizedDTDR")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bIgnoreDTDRFix" (GetOptionalPatch "bIgnoreDTDRFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bCreatureSpreadFix" (GetOptionalPatch "bCreatureSpreadFix")
+	AuxStringMapSetFlt "*JIPLN_Patch" "bNPCWeaponMods" (GetOptionalPatch "bNPCWeaponMods")
+	AuxStringMapSetFlt "*JIPLN_Patch" "uNPCPerks" (GetOptionalPatch "uNPCPerks")
+
+	; JohnnyGuitar NVSE patches
+	; Fix
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bLoadEditorIDs" (GetJohnnyPatch 1)
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bFixFleeing" (GetJohnnyPatch 3)
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bFixItemStackCount" (GetJohnnyPatch 4)
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bFixNPCShootingAngle" (GetJohnnyPatch 5)
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bFixJIP" (GetJohnnyPatch 8)
+	; Tweak
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bNoMuzzleFlashCooldown" (GetJohnnyPatch 6)
+	AuxStringMapSetFlt "*JohnnyGuitar_Patch" "bReset3rdPersonCamera" (GetJohnnyPatch 7)
 
 	; Keyboard events
 	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 264			; Wheel Up
