@@ -12,7 +12,7 @@ string_var sPlugin
 begin function {}
 
 	; MCM Extender version
-	float MCMExtenderVersion = 1.60
+	MCMExtenderVersion = 1.60
 	SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
 	SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v%g.%.1f" (Flr MCMExtenderVersion) ((Fmod MCMExtenderVersion 1) * 10)
 
@@ -43,9 +43,13 @@ begin function {}
 				continue
 			endif
 			; Check requirements array
-			if eval ar_HasKey aEntry "requirements" && (Call (CompileScript "MCMExtender\CheckRequirements.gek") aEntry) == 0
-				PrintC "MCM Extender: Missing requirements -> %z" sFile
-				continue
+			if eval ar_HasKey aEntry "requirements"
+				if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") aEntry) == 0
+					PrintC "MCM Extender: Missing requirements -> %z" sFile
+					continue
+				elseif eval (ar_Size aEntry) == 1
+					continue
+				endif
 			endif
 			; Check duplicate IDs
 			if eval (Ar_Find (aEntry["modName"]) aModID) != Ar_BadNumericIndex
@@ -160,9 +164,8 @@ begin function {}
 	; Search inputs
 	aTemp = Ar_List 2 3 4 5 6 7 8 9 10 11 12 13 16 17 18 19 20 21 22 23
 	ar_Cat aTemp (Ar_List 24 25 26 27 30 31 32 33 34 35 36 37 38 39 40 43 44 45 46 47)
-	ar_Cat aTemp (Ar_List 48 49 50 51 52 53 57)
-	ar_Cat aTemp (Ar_List 14 28 199 207 203 205 211)
-	if eval (int iSize = ar_Size aTemp) > 0
+	ar_Cat aTemp (Ar_List 48 49 50 51 52 53 57 14 28 199 207 203 205 211)
+	if eval (iSize = ar_Size aTemp) > 0
 		while (iSize -= 1) > -1
 			SetOnKeyDownEventHandler (CompileScript "MCMExtender\MenuSearchInput.gek") 1 (aTemp[iSize])
 			SetOnKeyUpEventHandler (CompileScript "MCMExtender\OnKeyUp.gek") 1 (aTemp[iSize])
