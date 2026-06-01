@@ -5,11 +5,17 @@ int iSizeTemp
 int iPassed
 int iRequirementsMet
 int iRequirementsTotal
+int iNotify
+float fInstalled
+float fRequired
 array_var aEntry
 string_var sType
 string_var sFile
 
 Begin Function {aJSON}
+
+	; Common requirements
+	AuxStringMapSetFlt "*ReqCheck_dll" "nvse" (GetNVSEVersionFull)
 
 	; Loop
 	if eval (iSize = iRequirementsTotal = Ar_Size (aJSON["requirements"])) > 0
@@ -24,36 +30,61 @@ Begin Function {aJSON}
 						if eval (TypeOf aEntry[iSizeTemp]) != "StringMap"
 							continue
 						endif
+						iNotify = (eval Ar_HasKey aEntry[iSizeTemp] "notify" && aEntry[iSizeTemp]["notify"] == 1)
 						sType = aEntry[iSizeTemp]["type"]
 						if eval (sType) == "nvse"
-							if eval GetNVSEVersionFull >= (aEntry[iSizeTemp]["version"])
+							fInstalled = AuxStringMapGetFlt "*ReqCheck_dll" "nvse"
+							if eval (fRequired = aEntry[iSizeTemp]["version"]) <= fInstalled
 								iPassed = 1
+								break
+							elseif eval iNotify
+								AuxStringMapSetFlt "*ReqCheck_dll_Notify" "nvse" (GetMaxOf fRequired (AuxStringMapGetFlt "*ReqCheck_dll_Notify" "nvse"))
 							endif
 							continue
 						else
 							sFile = aEntry[iSizeTemp]["file"]
 							if eval (sType) == "plugin"
-								if eval IsModLoaded (sFile)
+								if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+									AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (IsModLoaded (sFile)))
+								endif
+								if eval fInstalled == 1
 									iPassed = 1
 									break
+								elseif eval iNotify
+									AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 1
 								endif
 								continue
 							elseif eval (sType) == "file"
-								if eval FileExists (sFile)
+								if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+									AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (eval (FileExists (sFile))))
+								endif
+								if eval fInstalled == 1
 									iPassed = 1
 									break
+								elseif eval iNotify
+									AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 2
 								endif
 								continue
 							elseif eval (sType) == "folder"
-								if eval FileExists (sFile) 1
+								if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+									AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (eval (FileExists (sFile) 1)))
+								endif
+								if eval fInstalled == 1
 									iPassed = 1
 									break
+								elseif eval iNotify
+									AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 3
 								endif
 								continue
 							elseif eval (sType) == "dll"
-								if eval GetPluginVersion (sFile) >= (aEntry[iSizeTemp]["version"])
+								if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_dll" (sFile)) == 0
+									AuxStringMapSetFlt "*ReqCheck_dll" (sFile) (fInstalled = GetPluginVersion (sFile))
+								endif
+								if eval (fRequired = aEntry[iSizeTemp]["version"]) <= fInstalled
 									iPassed = 1
 									break
+								elseif eval iNotify
+									AuxStringMapSetFlt "*ReqCheck_dll_Notify" (sFile) (GetMaxOf fRequired (AuxStringMapGetFlt "*ReqCheck_dll_Notify" (sFile)))
 								endif
 								continue
 							endif
@@ -68,32 +99,56 @@ Begin Function {aJSON}
 				if eval (TypeOf aEntry) != "StringMap"
 					continue
 				endif
+				iNotify = (eval Ar_HasKey aEntry "notify" && aEntry["notify"] == 1)
 				sType = aEntry["type"]
 				if eval (sType) == "nvse"
-					if eval GetNVSEVersionFull >= (aEntry["version"])
+					fInstalled = AuxStringMapGetFlt "*ReqCheck_dll" "nvse"
+					if eval (fRequired = aEntry["version"]) <= fInstalled
 						iRequirementsMet += 1
+					elseif eval iNotify
+						AuxStringMapSetFlt "*ReqCheck_dll_Notify" "nvse" (GetMaxOf fRequired (AuxStringMapGetFlt "*ReqCheck_dll_Notify" "nvse"))
 					endif
 					continue
 				else
 					sFile = aEntry["file"]
 					if eval (sType) == "plugin"
-						if eval IsModLoaded (sFile)
+						if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+							AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (IsModLoaded (sFile)))
+						endif
+						if eval fInstalled == 1
 							iRequirementsMet += 1
+						elseif eval iNotify
+							AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 1
 						endif
 						continue
 					elseif eval (sType) == "file"
-						if eval FileExists (sFile)
+						if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+							AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (eval (FileExists (sFile))))
+						endif
+						if eval fInstalled == 1
 							iRequirementsMet += 1
+						elseif eval iNotify
+							AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 2
 						endif
 						continue
 					elseif eval (sType) == "folder"
-						if eval FileExists (sFile) 1
+						if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_File" (sFile)) == 0
+							AuxStringMapSetFlt "*ReqCheck_File" (sFile) (fInstalled = 2 - (eval (FileExists (sFile) 1)))
+						endif
+						if eval fInstalled == 1
 							iRequirementsMet += 1
+						elseif eval iNotify
+							AuxStringMapSetFlt "*ReqCheck_File_Notify" (sFile) 3
 						endif
 						continue
 					elseif eval (sType) == "dll"
-						if eval GetPluginVersion (sFile) >= (aEntry["version"])
+						if eval (fInstalled = AuxStringMapGetFlt "*ReqCheck_dll" (sFile)) == 0
+							AuxStringMapSetFlt "*ReqCheck_dll" (sFile) (fInstalled = GetPluginVersion (sFile))
+						endif
+						if eval (fRequired = aEntry["version"]) <= fInstalled
 							iRequirementsMet += 1
+						elseif eval iNotify
+							AuxStringMapSetFlt "*ReqCheck_dll_Notify" (sFile) (GetMaxOf fRequired (AuxStringMapGetFlt "*ReqCheck_dll_Notify" (sFile)))
 						endif
 						continue
 					endif

@@ -1,0 +1,195 @@
+float MCMExtenderVersion
+
+int iSize
+float fVersion
+float fRequired
+array_var aTemp
+array_var aEntry
+array_var aModID
+string_var sFile
+string_var sPlugin
+
+begin function {}
+
+	; MCM Extender version
+	float MCMExtenderVersion = 1.60
+	SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
+	SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v%g.%.1f" (Flr MCMExtenderVersion) ((Fmod MCMExtenderVersion 1) * 10)
+
+	; Cache MCM forms
+	Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "ADE") 0 ; MCM
+	;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "AEA") 1 ; MCMModList
+	;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B13") 2 ; MCMNavigate
+	;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B15") 3 ; MCMScale
+	;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "B18") 4 ; MCMList
+	;Goo1.AuxVarSetRef "*MCMExt_Refs" (GFFM "The Mod Configuration Menu.esp" "AE6") 5 ; MCMMods
+
+	; Validate menu JSONs
+	aTemp = GetFilesInFolder "MCM" "*.json"
+	if eval (iSize = Ar_Size aTemp) > 0
+		aTemp = Ar_Sort aTemp 1
+		aModID = ar_Construct "array"
+		while (iSize -= 1) > -1
+			sFile = sv_Construct "Data\MCM\%z" (aTemp[iSize])
+			; Check valid JSON
+			if eval TestExpr (aEntry = ReadFromJSON (sFile))
+			else
+				PrintC "MCM Extender: Invalid -> %z" sFile
+				continue
+			endif
+			; Check MCM Extender version
+			if eval ar_HasKey aEntry "minMCMVersion" == 0 || (aEntry["minMCMVersion"]) > MCMExtenderVersion
+				PrintC "MCM Extender: Requires MCM Extender %.2f+ -> %z" (aEntry["minMCMVersion"]) sFile
+				continue
+			endif
+			; Check requirements array
+			if eval ar_HasKey aEntry "requirements" && (Call (CompileScript "MCMExtender\CheckRequirements.gek") aEntry) == 0
+				PrintC "MCM Extender: Missing requirements -> %z" sFile
+				continue
+			endif
+			; Check duplicate IDs
+			if eval (Ar_Find (aEntry["modName"]) aModID) != Ar_BadNumericIndex
+				PrintC "MCM Extender: Duplicate modName -> %z" sFile
+				continue
+			endif
+			;PrintC "MCM Extender: Loading... -> %z" sFile
+			ar_Append aModID (aEntry["modName"])
+			Goo1.AuxVarSetRef "*MCMExt_Clones" BobbyPin -1
+			Goo1.AuxVarSetStr "*MCMExt_JSON" (sFile) -1
+			; Translate name
+			sFile = aEntry["displayName"]
+			if eval sFile[0] == "$"
+				sFile = GetINIString_Cached ("Translations:" + (sFile)) ("..\MCM\Translations\" + (aEntry["modName"]) + ".ini") (sFile)
+				CloseFileSO ("..\MCM\Translations\" + (aEntry["modName"]) + ".ini") 0
+			endif
+			Goo1.AuxVarSetStr "*MCMExt_ModName" (sFile) -1
+		loop
+		if eval (Ar_Size aModID) > 0
+			Goo1.AuxVarSetFromArr "*MCMExt_ModID" aModID
+		endif
+
+		PrintC "MCM Extender: Loaded %g mod menus." (Ar_Size aModID)
+	endif
+
+
+	; Requirements Checker
+
+	; xNVSE
+	if eval (fRequired = AuxStringMapGetFlt "*ReqCheck_dll_Notify" "nvse") > 0
+		fVersion = AuxStringMapGetFlt "*ReqCheck_dll" "nvse"
+		AuxStringMapEraseKey "*ReqCheck_dll_Notify" "nvse"
+		MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Outdated xNVSE detected!%r%rInstalled Version: %g.%.1f%rRequired Version: %g.%.1f+|Ok" (Flr fVersion) ((Fmod fVersion 1) * 10) (Flr fRequired) ((Fmod fRequired 1) * 10)
+	endif
+
+	; xNVSE Plugins
+	aTemp = AuxStringMapGetAsArr "*ReqCheck_dll_Notify"
+	if eval (Ar_Size aTemp) > 0
+		foreach aEntry <- aTemp
+			sPlugin = Sv_Construct "%z%r> %z: %g -> %g+" sPlugin (aEntry["key"]) (AuxStringMapGetFlt "*ReqCheck_dll" (aEntry["key"])) (*aEntry)
+		loop
+		MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Outdated xNVSE plugins detected!%r%rPlease update the following plugins:%r%z|Ok" sPlugin
+	endif
+
+	; Mod files
+	sPlugin = ""
+	sFile = ""
+	aTemp = AuxStringMapGetAsArr "*ReqCheck_File_Notify"
+	if eval (Ar_Size aTemp) > 0
+		foreach aEntry <- aTemp
+			if eval (fRequired = *aEntry) == 1
+				sPlugin = Sv_Construct "%z%r> %z" sPlugin (aEntry["key"])
+			elseif eval fRequired > 1
+				sFile = Sv_Construct "%z%r> %z" sFile (aEntry["key"])
+			endif
+		loop
+		if eval sPlugin != ""
+			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mods plugins missing!%r%rPlease install/enable the following mod plugins:%r%z|Ok" sPlugin
+		endif
+		if eval sFile != ""
+			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mods files missing!%r%rPlease install the following mod files:%r%z|Ok" sFile
+		endif
+	endif
+
+	AuxStringMapDestroy "*ReqCheck_dll"
+	AuxStringMapDestroy "*ReqCheck_File"
+	AuxStringMapDestroy "*ReqCheck_dll_Notify"
+	AuxStringMapDestroy "*ReqCheck_File_Notify"
+
+	; Init aux
+	; State
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 0		; Is JSON menu open
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 1		; MenuID
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 2		; Active mouseover
+	Goo1.AuxVarSetStr "*MCMExt_State" ("") 3	; JSON path
+	Goo1.AuxVarSetStr "*MCMExt_State" ("") 4	; modName
+	Goo1.AuxVarSetStr "*MCMExt_State" ("") 5	; saveFile
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 6		; Mod index
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 7		; Message box open
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 8		; Controller binding menu open
+	Goo1.AuxVarSetFlt "*MCMExt_State" 0 9		; Controller binding count
+
+	; Key
+	Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 0
+	Goo1.AuxVarSetFlt "*MCMExt_Keys" 0 1
+
+	; Menu events
+	SetOnMenuOpenEventHandler (CompileScript "MCMExtender\OnPauseMenuOpen.gek") 1 1013
+	SetOnMenuCloseEventHandler (CompileScript "MCMExtender\OnPauseMenuClose.gek") 1 1013
+
+	; Default settings confirmation
+	Goo1.AuxVarSetFlt "*MCMExt_Dev" (eval GetINIFloat_Cached "General:bDefaultSettingsConfirmation" "Stentorious\MCMExtender.ini" 1) 0
+	SetUIFloatAlt "HUDMainMenu\_MCMExt+HighlightModified" (eval GetINIFloat_Cached "General:bHighlightModifiedSettings" "Stentorious\MCMExtender.ini" 0)
+	SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#609"
+	SetEventHandler "OnButtonDown:32768" (CompileScript "MCMExtender\OnKeyDown.gek")
+	CloseFileSO "Stentorious\MCMExtender.ini" 0
+
+	; Keyboard events
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 264			; Wheel Up
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 265			; Wheel Down
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 256			; Left Click
+
+	; Search bar events
+	SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#606"
+	SetOnMenuClickEventHandler (CompileScript "MCMExtender\OnMenuClick.gek") 1 "StartMenu#607"
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 1			; Esc
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 15			; Tab
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 33			; F
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 46			; C
+	SetOnKeyDownEventHandler (CompileScript "MCMExtender\OnKeyDown.gek") 1 47			; V
+
+	; Search inputs
+	aTemp = Ar_List 2 3 4 5 6 7 8 9 10 11 12 13 16 17 18 19 20 21 22 23
+	ar_Cat aTemp (Ar_List 24 25 26 27 30 31 32 33 34 35 36 37 38 39 40 43 44 45 46 47)
+	ar_Cat aTemp (Ar_List 48 49 50 51 52 53 57)
+	ar_Cat aTemp (Ar_List 14 28 199 207 203 205 211)
+	if eval (int iSize = ar_Size aTemp) > 0
+		while (iSize -= 1) > -1
+			SetOnKeyDownEventHandler (CompileScript "MCMExtender\MenuSearchInput.gek") 1 (aTemp[iSize])
+			SetOnKeyUpEventHandler (CompileScript "MCMExtender\OnKeyUp.gek") 1 (aTemp[iSize])
+		loop
+	endif
+
+	; Decrease MCM quest delay (High refresh rate fix)
+	SetQuestDelay (Goo1.AuxVarGetRef "*MCMExt_Refs" 0) 0.001
+	SetQuestDelay MCMList 0.001
+	SetQuestDelay MCMModList 0.001
+	SetQuestDelay MCMNavigate 0.001
+	SetQuestDelay MCMScale 0.001
+
+	; Controller scroll events
+	SetEventHandler "OnButtonDown:15" (CompileScript "MCMExtender\OnButtonDown.gek")
+	SetEventHandler "OnButtonUp:15" (begin function {int iKeyCode}
+		if eval Goo1.AuxVarType "*MCMExt_QBut" == 0
+			return
+		endif
+		Goo1.AuxTimerStop "*MCMExt_QBut"
+		Goo1.AuxVarErase "*MCMExt_QBut"
+	end)
+
+	; Mod support
+	Goo1.AuxVarSetFlt "*Main And Pause Menus Overhaul.esm" (IsModLoaded "Main And Pause Menus Overhaul.esm")
+
+	aTemp = aEntry = aModID = Ar_Null
+	sv_Destruct sFile sPlugin
+
+end
