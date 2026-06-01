@@ -49,7 +49,16 @@
 <_decimalColor> -1 </_decimalColor>
 <_systemcolor> <copy src="io()" trait="_MCMExt+Systemcolor" /> </_systemcolor>
 
+<target>
+	<not src="MCM_Options" trait="_selected"/>
+	<and src="me()" trait="_type" />
+	<and>
+		<copy src="me()" trait="_enable"/>
+		<eq> 1 </eq>
+	</and>
+</target>
 <mouseoversound> UIMenuFocus </mouseoversound>
+
 <_target>
 	<copy src="me()" trait="mouseover" />
 	<or>
