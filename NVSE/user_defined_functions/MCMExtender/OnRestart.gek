@@ -47,7 +47,7 @@ begin function {}
 				if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") aEntry) == 0
 					PrintC "MCM Extender: Missing requirements -> %z" sFile
 					continue
-				elseif eval (ar_Size aEntry) == 1
+				elseif eval (ar_Size aEntry) == 2
 					continue
 				endif
 			endif
