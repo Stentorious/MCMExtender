@@ -1,7 +1,5 @@
 # MCM Extender
-<p align="left">
-	<img height="350px" src="https://staticdelivery.nexusmods.com/mods/130/images/93642/93642-1756777267-1064381590.png">
-</p>
+<p align="left"> <img height="350px" src="https://staticdelivery.nexusmods.com/mods/130/images/93642/93642-1756777267-1064381590.png"> </p>
 
 ## Overview
 MCM Extender is an essential add-on for [The Mod Configuration Menu](https://www.nexusmods.com/newvegas/mods/42507).
