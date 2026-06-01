@@ -22,6 +22,9 @@ Begin Function {}
 		if TestExpr aVariables = aForE["value"]["vars"]
 			iSize = Ar_Size aVariables
 			while (iSize -= 1) > -1
+				if eval ar_HasKey aVariables[iSize] "default" == 0
+					continue
+				endif
 
 				; Update value
 				fValue = aVariables[iSize]["default"]
