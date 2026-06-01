@@ -1,6 +1,6 @@
 <image name="bracket_h1_clone">
 	<brightness> <copy src="sibling(bracket_h1)" trait="brightness" /> </brightness>
-	<depth> <copy src="sibling(bracket_h1)" trait="depth" />  </depth>
+	<depth> <copy src="sibling(bracket_h1)" trait="depth" /> </depth>
 	<filename> <copy src="sibling(bracket_h1)" trait="filename" /> </filename>
 	<height> <copy src="sibling(bracket_h1)" trait="height" /> </height>
 	<width> <copy src="sibling(bracket_h1)" trait="width" /> </width>
