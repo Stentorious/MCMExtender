@@ -223,7 +223,7 @@ begin function {}
 	end)
 
 	; Mod support
-	Goo1.AuxVarSetFlt "*Main And Pause Menus Overhaul.esm" (IsModLoaded "Main And Pause Menus Overhaul.esm")
+	AuxStringMapSetFlt "*ReqCheck_Mod" "Main And Pause Menus Overhaul.esm" (IsModLoaded "Main And Pause Menus Overhaul.esm")
 
 	aTemp = aEntry = aModID = Ar_Null
 	sv_Destruct sFile sPlugin

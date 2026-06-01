@@ -82,7 +82,7 @@ Begin Function {iMenuID}
 		ResetQuest rTemp
 	endif
 
-	if eval Goo1.AuxVarGetFlt "*Main And Pause Menus Overhaul.esm"
+	if eval AuxStringMapGetFlt "*ReqCheck_Mod" "Main And Pause Menus Overhaul.esm"
 		SetScriptDisabled (EditorIDToFormID "MAPMOInputSCRIPT") 0
 	endif
 

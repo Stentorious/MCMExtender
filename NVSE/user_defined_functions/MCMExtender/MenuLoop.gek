@@ -28,7 +28,7 @@ Begin Function {}
 			EK 264
 			EK 265
 			EK (Goo1.AuxVarGetFlt "*MCMExt_Keys" 0)
-			if eval Goo1.AuxVarGetFlt "*Main And Pause Menus Overhaul.esm"
+			if eval AuxStringMapGetFlt "*ReqCheck_Mod" "Main And Pause Menus Overhaul.esm"
 				SetScriptDisabled (EditorIDToFormID "MAPMOInputSCRIPT") 0
 			endif
 		endif
@@ -42,7 +42,7 @@ Begin Function {}
 		iTemp = GetControl 26
 		Goo1.AuxVarSetFlt "*MCMExt_Keys" iTemp 0
 		DK iTemp
-		if eval Goo1.AuxVarGetFlt "*Main And Pause Menus Overhaul.esm"
+		if eval AuxStringMapGetFlt "*ReqCheck_Mod" "Main And Pause Menus Overhaul.esm"
 			EnableButton 8192
 			SetScriptDisabled (EditorIDToFormID "MAPMOInputSCRIPT") 1
 		endif
