@@ -107,10 +107,10 @@ begin function {}
 			endif
 		loop
 		if eval sPlugin != ""
-			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mods plugins missing!%r%rPlease install/enable the following mod plugins:%r%z|Ok" sPlugin
+			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mod plugins missing!%r%rPlease install/enable the following mod plugins:%r%z|Ok" sPlugin
 		endif
 		if eval sFile != ""
-			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mods files missing!%r%rPlease install the following mod files:%r%z|Ok" sFile
+			MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Required mod files missing!%r%rPlease install the following mod files:%r%z|Ok" sFile
 		endif
 	endif
 

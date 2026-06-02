@@ -12,13 +12,6 @@ if eval (fVersion = GetNVSEVersionFull) < fRequired
 	iRequirements = 0
 endif
 
-; Incompatible xNVSE Plugins
-fRequired = 57.30
-if eval (fVersion = GetPluginVersion "JIP NVSE Plugin") > fRequired && fVersion < 57.54
-	MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatible xNVSE plugins detected!%r%rPlease remove the following plugins:%r%r> JIP PP LN: %.2f|Ok" fVersion
-;elseif GetJohnnyPatch 8 == 0
-endif
-
 ; xNVSE plugins
 array_var aRequirements = ar_Map "JohnnyGuitarNVSE"::528 "ShowOffNVSE Plugin"::184 "UI Organizer Plugin"::230 "MCM Extensions"::1
 array_var aForE = Ar_Null
@@ -34,6 +27,14 @@ if eval (Ar_Size aRequirements) > 0
 		MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Outdated xNVSE plugins detected!%r%rPlease update the following plugins:%r%z|Ok" sMessage
 		iRequirements = 0
 	endif
+endif
+
+; Incompatible xNVSE Plugins
+fRequired = 57.30
+if eval (fVersion = GetPluginVersion "JIP NVSE Plugin") > fRequired && fVersion < 57.54
+	MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatible xNVSE plugins detected!%r%rPlease remove the following plugins:%r%r> JIP PP LN: %.2f|Ok" fVersion
+	iRequirements = 0
+;elseif GetJohnnyPatch 8 == 0
 endif
 
 ; Mod files
