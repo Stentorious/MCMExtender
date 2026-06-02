@@ -31,7 +31,7 @@ endif
 
 ; Incompatible xNVSE Plugins
 fRequired = 57.30
-if eval (fVersion = GetPluginVersion "JIP NVSE Plugin") > fRequired && fVersion < 57.54
+if eval (fVersion = GetPluginVersion "JIP NVSE Plugin") > fRequired && fVersion <= 57.54
 	MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatible xNVSE plugins detected!%r%rPlease remove the following plugins:%r%r> JIP PP LN: %.2f|Ok" fVersion
 	iRequirements = 0
 ;elseif GetJohnnyPatch 8 == 0
