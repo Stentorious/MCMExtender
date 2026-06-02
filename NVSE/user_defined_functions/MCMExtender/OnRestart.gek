@@ -12,7 +12,7 @@ string_var sPlugin
 begin function {}
 
 	; MCM Extender version
-	MCMExtenderVersion = 1.60
+	MCMExtenderVersion = 1.61
 	SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
 	SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v%g.%.1f" (Flr MCMExtenderVersion) ((Fmod MCMExtenderVersion 1) * 10)
 
