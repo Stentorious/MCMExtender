@@ -30,11 +30,11 @@ if eval (Ar_Size aRequirements) > 0
 endif
 
 ; Incompatible xNVSE Plugins
-;fRequired = 57.30
-;if eval (fVersion = GetPluginVersion "JIP PP LN") > fRequired && fVersion <= 57.54
-;	MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatible xNVSE plugins detected!%r%rPlease remove the following plugins:%r%r> JIP PP LN: %.2f|Ok" fVersion
-;	iRequirements = 0
-;endif
+fRequired = 57.30
+if eval (fVersion = GetPluginVersion "JIP PP LN") > fRequired && fVersion <= 57.54
+	MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatible xNVSE plugins detected!%r%rPlease remove the following plugins:%r%r> JIP PP LN: %.2f|Ok" fVersion
+	iRequirements = 0
+endif
 
 ; Mod files
 if eval IsModLoaded "The Mod Configuration Menu.esp" == 0
