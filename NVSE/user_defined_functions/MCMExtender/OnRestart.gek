@@ -11,6 +11,11 @@ string_var sPlugin
 
 begin function {}
 
+	; JIP fixes check
+	if eval GetJohnnyPatch 8 == 0
+		MessageBoxExAlt ({int iTemp} => 1) "^Requirements Checker^Incompatibility detected!%r%rPlease enable the following JohnnyGuitar patches:%r%r> JIP Fixes: 0 -> 1|Ok"
+	endif
+
 	; MCM Extender version
 	MCMExtenderVersion = 1.61
 	SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
