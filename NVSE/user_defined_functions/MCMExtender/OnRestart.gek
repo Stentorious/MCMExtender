@@ -17,7 +17,7 @@ begin function {}
 	endif
 
 	; MCM Extender version
-	MCMExtenderVersion = 1.62
+	MCMExtenderVersion = 1.63
 	SetUIFloatAlt "HUDMainMenu\_MCMExt+Version" MCMExtenderVersion
 	SetUIStringAlt "HUDMainMenu\_MCMExt+VersionStr" "MCM Extender v%g.%.1f" (Flr MCMExtenderVersion) ((Fmod MCMExtenderVersion 1) * 10)
 
