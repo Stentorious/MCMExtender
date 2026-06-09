@@ -95,9 +95,9 @@ Begin Function {fValue, aVarMap}
 			endif
 		endif
 		if eval fValue == Flr fValue
-			SetINIIntC (aVarMap["configINI"]) fValue (sFilePath) (sComment)
+			SetINIIntC (aVarMap["configINI"]) fValue (sFilePath) (sv_Construct (sComment))
 		else
-			SetINIValC (aVarMap["configINI"]) fValue (sFilePath) (sComment)
+			SetINIValC (aVarMap["configINI"]) fValue (sFilePath) (sv_Construct (sComment))
 		endif
 		Goo1.AuxVarSetStr "*MCMExt_INICache" (sFilePath) -1
 	endif
