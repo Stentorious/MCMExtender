@@ -3,12 +3,14 @@ int iMenu
 int iSubmenu
 int iOption
 int iMouseOver
+int iSize
 int iTemp
 int iScrollUpdate
 int iJSONUpdate
 int iStateUpdate
 ref rTemp
 array_var aJSON
+array_var aSubmenu
 array_var aTemp
 string_var sJSONPath
 string_var sTemp
@@ -97,7 +99,7 @@ Begin Function {}
 				DisableButton 65535
 				Goo1.AuxVarSetFlt "*MCMExt_State" 2 8
 				Goo1.AuxVarSetFlt "*MCMExt_State" (GetMCMFloat 1 iOption "_keybindCount") 9
-				int iSize = 28
+				iSize = 28
 				while (iSize -= 1) > -1
 					if eval (iTemp = GetControl iSize 0) > 0
 						SetOnKeyDownEventHandler (CompileScript "MCMExtender\BindControl.gek") 1 iTemp
@@ -212,6 +214,30 @@ Begin Function {}
 		AuxStringMapDestroy "*MCMExt_Translations"
 		aTemp = GetINISection "Translations" ("../MCM/Translations/" + (aJSON["modName"]) + ".ini")
 		AuxStringMapSetFromArr "*MCMExt_Translations" aTemp
+
+		; Build dynamic submenus
+		if eval Ar_HasKey aJSON["submenus"] "dynamic"
+			Ar_Erase aJSON["submenus"] "dynamic"
+			iTemp = Ar_Size aJSON["submenus"]
+			iTemp -= (eval Ar_HasKey aJSON["submenus"] "0")
+			aTemp = GetFilesInFolder ("MCM\Submenus\" + (aJSON["modName"])) "*.json"
+			if eval (iSize = Ar_Size aTemp) > 0
+				iMenu = -1
+				while (iMenu += 1) < iSize
+					aSubmenu = ReadFromJSON ("Data\MCM\Submenus\" + (aJSON["modName"]) + "\" + (aTemp[iMenu])) "" 0
+					if eval Ar_HasKey aSubmenu "requirements"
+						if eval (Call (CompileScript "MCMExtender\CheckRequirements.gek") (aSubmenu)) == 0
+							continue
+						endif
+						Ar_Erase aSubmenu "requirements"
+					endif
+					iTemp += 1
+					aJSON["submenus"][$(iTemp)] = aSubmenu
+				loop
+				aSubmenu = Ar_Null
+				WriteToJSON (aJSON) (sJSONPath) "" 0 1 0
+			endif
+		endif
 
 		; Build submenus
 		if eval Ar_HasKey aJSON["submenus"] "1" && (GetUIFloat "StartMenu/MCM/*:5/SubMenu1/_enable") == 0
